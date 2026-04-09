@@ -1,0 +1,1 @@
+export { projectsContent as projects } from "@/content/projects";

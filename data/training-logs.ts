@@ -1,0 +1,1 @@
+export { trainingLogContent as trainingLogs } from "@/content/training-log";

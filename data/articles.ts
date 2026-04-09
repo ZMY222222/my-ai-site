@@ -1,0 +1,1 @@
+export { blogContent as articles } from "@/content/blog";
