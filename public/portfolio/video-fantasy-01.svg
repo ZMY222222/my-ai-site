@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" fill="none">
+  <rect width="600" height="400" fill="#0F1020" rx="0"/>
+  <rect x="80" y="40" width="440" height="280" rx="16" fill="#181B34"/>
+  <rect x="100" y="60" width="400" height="30" rx="6" fill="#2A1F58"/>
+  <rect x="120" y="72" width="180" height="8" rx="3" fill="#413080"/>
+  <rect x="100" y="110" width="160" height="90" rx="14" fill="#332870"/>
+  <rect x="280" y="110" width="220" height="45" rx="10" fill="#2A1F58"/>
+  <rect x="280" y="165" width="140" height="35" rx="10" fill="#2A1F58"/>
+  <rect x="100" y="220" width="400" height="12" rx="4" fill="#2A1F58"/>
+  <rect x="100" y="245" width="280" height="12" rx="4" fill="#181B34"/>
+  <circle cx="340" cy="260" r="40" fill="#A855F7" opacity="0.3"/>
+  <polygon points="328,245 328,275 358,260" fill="#C084FC"/>
+  <text x="300" y="360" text-anchor="middle" fill="#C084FC" font-size="16" font-family="sans-serif" font-weight="bold">奇幻 · Grok imagine</text>
+</svg>

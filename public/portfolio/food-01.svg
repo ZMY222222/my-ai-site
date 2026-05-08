@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" fill="none">
+  <rect width="600" height="400" fill="#0D1225"/>
+  <rect x="100" y="50" width="120" height="120" rx="12" fill="#1A2040"/>
+  <circle cx="160" cy="110" r="30" fill="#1E2D5A"/>
+  <rect x="240" y="50" width="120" height="120" rx="12" fill="#1A2040"/>
+  <rect x="160" y="100" width="40" height="40" rx="6" fill="#151B34"/>
+  <rect x="380" y="50" width="120" height="120" rx="12" fill="#1A2040"/>
+  <circle cx="440" cy="110" r="28" fill="#1E2D5A"/>
+  <rect x="100" y="190" width="120" height="120" rx="12" fill="#1A2040"/>
+  <rect x="240" y="190" width="120" height="120" rx="12" fill="#1A2040"/>
+  <rect x="380" y="190" width="120" height="120" rx="12" fill="#1A2040"/>
+  <text x="300" y="365" text-anchor="middle" fill="#4A5580" font-size="14" font-family="sans-serif">食品美食 · Food Photography</text>
+</svg>

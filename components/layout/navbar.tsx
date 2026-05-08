@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { MobileNav } from "@/components/mobile-nav";
 import { Container } from "@/components/ui/container";
 import { siteConfig } from "@/lib/site";
+import { TransitionLink } from "@/components/page-transition";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -13,7 +14,7 @@ export function Navbar() {
     <header className="sticky top-0 z-50 border-b border-white/8 bg-[#0B1020]/80 backdrop-blur-xl">
       <Container>
         <div className="flex h-[76px] items-center justify-between gap-4">
-          <Link href="/" className="flex items-center gap-3">
+          <TransitionLink href="/" className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-[#151B34] text-sm font-semibold text-[#6EA8FE] shadow-[0_0_24px_rgba(110,168,254,0.18)]">
               AI
             </div>
@@ -21,11 +22,11 @@ export function Navbar() {
               <div className="text-sm font-medium text-[#E6EAF2]">
                 {siteConfig.name}
               </div>
-              <div className="text-xs text-[#A7B0C0]">
+              <div className="text-xs text-[#B8C1D0]">
                 Training · Systems · Workflow
               </div>
             </div>
-          </Link>
+          </TransitionLink>
 
           <nav className="hidden items-center gap-8 md:flex">
             {siteConfig.nav.map((item) => {
@@ -35,17 +36,17 @@ export function Navbar() {
                   : pathname.startsWith(item.href);
 
               return (
-                <Link
+                <TransitionLink
                   key={item.href}
                   href={item.href}
                   className={`text-sm transition ${
                     isActive
                       ? "text-[#E6EAF2]"
-                      : "text-[#A7B0C0] hover:text-[#E6EAF2]"
+                      : "text-[#B8C1D0] hover:text-[#E6EAF2]"
                   }`}
                 >
                   {item.label}
-                </Link>
+                </TransitionLink>
               );
             })}
           </nav>

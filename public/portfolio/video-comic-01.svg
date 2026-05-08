@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" fill="none">
+  <rect width="600" height="400" fill="#0E1220"/>
+  <rect x="80" y="40" width="440" height="280" rx="16" fill="#1C1838"/>
+  <rect x="100" y="60" width="400" height="30" rx="6" fill="#2E1F60"/>
+  <rect x="120" y="72" width="140" height="8" rx="3" fill="#4A3090"/>
+  <rect x="100" y="110" width="120" height="100" rx="14" fill="#372578"/>
+  <rect x="240" y="110" width="260" height="50" rx="10" fill="#2E1F60"/>
+  <rect x="240" y="170" width="260" height="40" rx="10" fill="#2E1F60"/>
+  <circle cx="440" cy="250" r="35" fill="#E040FB" opacity="0.3"/>
+  <polygon points="428,238 428,262 452,250" fill="#D500F9"/>
+  <text x="300" y="360" text-anchor="middle" fill="#E040FB" font-size="16" font-family="sans-serif" font-weight="bold">漫剧 · 即梦</text>
+</svg>

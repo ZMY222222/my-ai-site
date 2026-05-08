@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" fill="none">
+  <rect width="600" height="400" fill="#0C141E"/>
+  <rect x="80" y="40" width="440" height="280" rx="16" fill="#161B30"/>
+  <rect x="100" y="60" width="400" height="30" rx="6" fill="#242D50"/>
+  <rect x="120" y="72" width="160" height="8" rx="3" fill="#3A4880"/>
+  <rect x="100" y="110" width="260" height="60" rx="12" fill="#2C3868"/>
+  <rect x="380" y="110" width="120" height="60" rx="12" fill="#242D50"/>
+  <rect x="100" y="185" width="400" height="12" rx="4" fill="#242D50"/>
+  <rect x="100" y="210" width="280" height="12" rx="4" fill="#1C2240"/>
+  <circle cx="280" cy="270" r="30" fill="#00BCD4" opacity="0.25"/>
+  <polygon points="270,258 270,282 290,270" fill="#00E5FF"/>
+  <text x="300" y="360" text-anchor="middle" fill="#00E5FF" font-size="16" font-family="sans-serif" font-weight="bold">风景 · 可灵</text>
+</svg>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" fill="none">
+  <rect width="600" height="400" fill="#0A141E"/>
+  <rect x="80" y="40" width="440" height="280" rx="16" fill="#121D30"/>
+  <rect x="100" y="60" width="400" height="30" rx="6" fill="#1C3048"/>
+  <rect x="120" y="72" width="200" height="8" rx="3" fill="#2A4A70"/>
+  <rect x="100" y="110" width="180" height="100" rx="14" fill="#243D60"/>
+  <rect x="300" y="110" width="200" height="45" rx="10" fill="#1C3048"/>
+  <rect x="300" y="165" width="160" height="45" rx="10" fill="#1C3048"/>
+  <circle cx="200" cy="230" r="30" fill="#00BCD4" opacity="0.2"/>
+  <polygon points="190,218 190,242 210,230" fill="#00E5FF"/>
+  <text x="300" y="360" text-anchor="middle" fill="#00E5FF" font-size="16" font-family="sans-serif" font-weight="bold">风景 · VEO</text>
+</svg>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" fill="none">
+  <rect width="600" height="400" fill="#0E0F1E" rx="0"/>
+  <rect x="80" y="40" width="440" height="280" rx="16" fill="#171832"/>
+  <rect x="100" y="60" width="400" height="30" rx="6" fill="#281E55"/>
+  <rect x="120" y="72" width="200" height="8" rx="3" fill="#3E3080"/>
+  <rect x="100" y="110" width="260" height="100" rx="14" fill="#302670"/>
+  <rect x="380" y="110" width="120" height="100" rx="14" fill="#281E55"/>
+  <rect x="120" y="130" width="180" height="12" rx="3" fill="#3E3080" opacity="0.5"/>
+  <rect x="120" y="155" width="140" height="12" rx="3" fill="#3E3080" opacity="0.3"/>
+  <circle cx="340" cy="260" r="40" fill="#A855F7" opacity="0.3"/>
+  <polygon points="328,245 328,275 358,260" fill="#C084FC"/>
+  <text x="300" y="360" text-anchor="middle" fill="#C084FC" font-size="16" font-family="sans-serif" font-weight="bold">奇幻 · Seedance 2.0</text>
+</svg>

@@ -1,274 +1,254 @@
-import Link from "next/link";
+"use client";
+
+import { useState, useEffect, useCallback } from "react";
 import { CallToAction } from "@/components/call-to-action";
-import { articles } from "@/data/articles";
-import { projects } from "@/data/projects";
+import { AnimatedCard } from "@/components/animated-card";
+import { AvatarRipple } from "@/components/avatar-ripple";
 
-const skills = [
-  "NLP 训练优化",
-  "多模态小模型",
-  "数据处理",
-  "训练流程设计",
-  "模型调优",
-  "误差分析",
-  "实验复盘",
-  "方法沉淀",
+const cards = [
+  {
+    href: "/about",
+    emoji: "⚡",
+    title: "核心优势",
+    desc: "小米+长城双大厂，6个核心项目全流程实操，全链路闭环交付能力",
+    accent: "About",
+  },
+  {
+    href: "/experience",
+    emoji: "📋",
+    title: "工作经历",
+    desc: "从AI训练实习生到AI训练师，2年完整职业成长路径",
+    accent: "Experience",
+  },
+  {
+    href: "/education",
+    emoji: "🎓",
+    title: "教育背景",
+    desc: "湖北汽车工程学院 · 电子信息工程本科 · GPA 3.5 · 优秀毕业生",
+    accent: "Education",
+  },
+  {
+    href: "/skills",
+    emoji: "🛠️",
+    title: "专业技能",
+    desc: "SFT微调 · NLP数据工程 · ASR/TTS · Agent · Prompt工程",
+    accent: "Skills",
+  },
+  {
+    href: "/projects",
+    emoji: "💼",
+    title: "项目经历",
+    desc: "6个大模型核心项目详情，含职责、成果、技术标签",
+    accent: "Projects",
+  },
+  {
+    href: "/portfolio",
+    emoji: "🎨",
+    title: "作品集",
+    desc: "AI文生图 · AI视频 · AI资讯与评测报告",
+    accent: "Portfolio",
+  },
 ];
 
-const workflow = [
-  {
-    title: "任务定义",
-    text: "明确训练目标、输入输出形式、评估边界与真实使用场景，确保训练方向稳定。",
-  },
-  {
-    title: "数据方案",
-    text: "围绕任务组织样本结构、清洗规则与版本策略，让数据真正服务训练目标。",
-  },
-  {
-    title: "训练执行",
-    text: "控制实验节奏、参数调整顺序与日志记录方式，减少无效试错。",
-  },
-  {
-    title: "评估复盘",
-    text: "关注指标变化、错误样本与输出行为，形成下一轮迭代依据。",
-  },
-];
+function EntranceCard({ onClick }: { onClick: () => void }) {
+  return (
+    <div className="flex min-h-[100dvh] items-center justify-center px-4">
+      <button
+        onClick={onClick}
+        className="group block rounded-[32px] border border-white/10 bg-[#11162A] p-10 text-center transition hover:border-[#6EA8FE]/30 hover:bg-[#11162A]/90 hover:shadow-[0_0_64px_rgba(110,168,254,0.12)] animate-fade-in-up"
+        style={{ animationDelay: "200ms" }}
+      >
+        <AvatarRipple>
+          <div className="flex h-36 w-36 mx-auto items-center justify-center rounded-full border-2 border-[#6EA8FE]/40 bg-[#0D1225] shadow-[0_0_48px_rgba(110,168,254,0.12)] transition group-hover:border-[#6EA8FE]/60 group-hover:shadow-[0_0_64px_rgba(110,168,254,0.22)]">
+            <div className="text-center">
+              <div className="text-5xl font-bold text-[#6EA8FE] transition group-hover:scale-110">朱</div>
+              <div className="mt-1 text-[11px] text-[#BFC8D6]">AI Trainer</div>
+            </div>
+          </div>
+        </AvatarRipple>
+
+        <h1 className="mt-6 text-3xl font-semibold tracking-[-0.03em] text-[#E6EAF2]">
+          朱美阳
+        </h1>
+        <div className="mt-2 text-sm uppercase tracking-[0.24em] text-[#6EA8FE]">
+          AI训练师 / 大模型数据专家
+        </div>
+
+        <p className="mt-4 text-sm leading-7 text-[#BFC8D6]">
+          2年经验 · 6个核心项目全流程实操 · 15万+数据处理量
+        </p>
+
+        <div className="mx-auto mt-6 max-w-[260px] border-t border-white/8 pt-5">
+          <div className="grid grid-cols-2 gap-3 text-center text-xs text-[#B8C1D0]">
+            <div className="rounded-xl bg-white/[0.04] px-3 py-2.5">
+              <div className="text-[#E6EAF2] font-semibold">6</div>
+              <div className="mt-0.5">核心项目</div>
+            </div>
+            <div className="rounded-xl bg-white/[0.04] px-3 py-2.5">
+              <div className="text-[#E6EAF2] font-semibold">15万+</div>
+              <div className="mt-0.5">处理数据</div>
+            </div>
+            <div className="rounded-xl bg-white/[0.04] px-3 py-2.5">
+              <div className="text-[#E6EAF2] font-semibold">2</div>
+              <div className="mt-0.5">大厂经历</div>
+            </div>
+            <div className="rounded-xl bg-white/[0.04] px-3 py-2.5">
+              <div className="text-[#E6EAF2] font-semibold">10+</div>
+              <div className="mt-0.5">团队管理</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-6 text-xs text-[#6EA8FE]/40 transition group-hover:text-[#6EA8FE]/70">
+          点击进入 →
+        </div>
+      </button>
+    </div>
+  );
+}
+
+function Sidebar({ onBack, onContact }: { onBack: () => void; onContact: () => void }) {
+  return (
+    <aside className="lg:sticky lg:top-24 lg:h-fit lg:w-[320px] lg:shrink-0 animate-fade-in-up">
+      <div className="rounded-[28px] border border-white/10 bg-[#11162A] p-8">
+        <div className="flex flex-col items-center text-center">
+          <AvatarRipple>
+            <button
+              onClick={onBack}
+              className="flex h-28 w-28 items-center justify-center rounded-full border-2 border-[#6EA8FE]/40 bg-[#0D1225] shadow-[0_0_48px_rgba(110,168,254,0.12)] transition hover:border-[#6EA8FE]/60 hover:shadow-[0_0_56px_rgba(110,168,254,0.20)]"
+              aria-label="返回首页入口"
+              title="点击返回入口"
+            >
+              <div className="text-center">
+                <div className="text-3xl font-bold text-[#6EA8FE]">朱</div>
+                <div className="mt-0.5 text-[10px] text-[#BFC8D6]">AI Trainer</div>
+              </div>
+            </button>
+          </AvatarRipple>
+
+          <h1 className="mt-4 text-xl font-semibold tracking-[-0.03em] text-[#E6EAF2]">
+            朱美阳
+          </h1>
+          <div className="mt-1 text-xs uppercase tracking-[0.2em] text-[#6EA8FE]">
+            AI训练师 / 大模型数据专家
+          </div>
+
+          <p className="mt-3 text-sm leading-7 text-[#BFC8D6]">
+            2年经验 · 6个核心项目全流程实操 · 15万+数据处理量
+          </p>
+
+          <div className="mt-5 flex w-full flex-col gap-2">
+            <button
+              onClick={onContact}
+              className="inline-flex items-center justify-center rounded-xl bg-[#6EA8FE] px-5 py-2.5 text-sm font-medium text-[#0B1020] transition hover:brightness-110 active:brightness-90"
+            >
+              联系我
+            </button>
+          </div>
+
+          <div className="mt-5 w-full border-t border-white/8 pt-5">
+            <div className="grid grid-cols-2 gap-2 text-center text-xs text-[#B8C1D0]">
+              <div className="rounded-xl bg-white/[0.03] px-3 py-2">
+                <div className="text-[#E6EAF2] font-semibold">6</div>
+                <div className="mt-0.5">核心项目</div>
+              </div>
+              <div className="rounded-xl bg-white/[0.03] px-3 py-2">
+                <div className="text-[#E6EAF2] font-semibold">15万+</div>
+                <div className="mt-0.5">处理数据</div>
+              </div>
+              <div className="rounded-xl bg-white/[0.03] px-3 py-2">
+                <div className="text-[#E6EAF2] font-semibold">2</div>
+                <div className="mt-0.5">大厂经历</div>
+              </div>
+              <div className="rounded-xl bg-white/[0.03] px-3 py-2">
+                <div className="text-[#E6EAF2] font-semibold">10+</div>
+                <div className="mt-0.5">团队管理</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  );
+}
 
 export default function HomePage() {
+  const [mounted, setMounted] = useState(false);
+  const [entered, setEntered] = useState(false);
+  const [animateCards, setAnimateCards] = useState(false);
+  const [shakeContact, setShakeContact] = useState(false);
+
+  useEffect(() => {
+    setEntered(sessionStorage.getItem("home-entered") === "1");
+    setAnimateCards(sessionStorage.getItem("home-entered") === "1");
+    setMounted(true);
+  }, []);
+
+  const handleEnter = () => {
+    sessionStorage.setItem("home-entered", "1");
+    setEntered(true);
+  };
+
+  const handleBack = () => {
+    sessionStorage.removeItem("home-entered");
+    setEntered(false);
+  };
+
+  const handleContact = useCallback(() => {
+    setShakeContact(true);
+    setTimeout(() => {
+      const el = document.getElementById("contact");
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }, 50);
+    setTimeout(() => setShakeContact(false), 800);
+  }, []);
+
+  useEffect(() => {
+    if (entered && !animateCards) {
+      const t = setTimeout(() => setAnimateCards(true), 150);
+      return () => clearTimeout(t);
+    }
+    if (!entered) {
+      setAnimateCards(false);
+    }
+  }, [entered, animateCards]);
+
+  if (!mounted) return null;
+
+  if (!entered) {
+    return <EntranceCard onClick={handleEnter} />;
+  }
+
   return (
-    <>
-      <section className="pb-12 pt-12 md:pb-16 md:pt-16">
-        <div className="mx-auto grid max-w-6xl gap-8 px-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
-          <div className="rounded-[32px] border border-white/10 bg-[#11162A] p-8 md:p-12">
-            <div className="text-sm uppercase tracking-[0.24em] text-[#A7B0C0]">
-              AI Trainer
-            </div>
+    <div className="mx-auto max-w-7xl px-4 pb-16 pt-6 md:px-6 md:pt-8 lg:flex lg:gap-8 lg:pt-12">
+      <Sidebar onBack={handleBack} onContact={handleContact} />
 
-            <h1 className="mt-4 text-4xl font-semibold leading-tight tracking-[-0.03em] text-[#E6EAF2] md:text-6xl md:leading-[1.08]">
-              构建可落地的 AI 训练系统
-              <br />
-              聚焦 NLP、多模态小模型优化与训练流程设计
-            </h1>
-
-            <p className="mt-6 max-w-3xl text-base leading-8 text-[#A7B0C0] md:text-lg">
-              我专注于数据处理、训练方案设计、模型调优与实验复盘，持续沉淀围绕真实任务的训练方法、案例经验与技术记录。
-            </p>
-
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-              <Link
-                href="/projects"
-                className="inline-flex items-center justify-center rounded-xl bg-[#6EA8FE] px-6 py-3 text-sm font-medium text-[#0B1020] transition hover:brightness-110"
-              >
-                查看项目案例
-              </Link>
-
-              <Link
-                href="/training-log"
-                className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-medium text-[#E6EAF2] transition hover:border-white/20 hover:bg-white/10"
-              >
-                阅读训练日志
-              </Link>
-            </div>
-          </div>
-
-          <div className="rounded-[32px] border border-white/10 bg-[#151B34]/80 p-6">
-            <div className="text-sm text-[#A7B0C0]">当前关注</div>
-
-            <div className="mt-5 space-y-4">
-              {[
-                "NLP 任务训练优化与指令数据构造",
-                "多模态小模型适配与训练稳定性",
-                "训练前数据处理与版本管理",
-                "围绕错误样本的评估与调优复盘",
-              ].map((item) => (
-                <div
-                  key={item}
-                  className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-4 text-sm text-[#D7DDEA]"
-                >
-                  {item}
+      <main className="mt-6 flex-1 space-y-8 lg:mt-0">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {cards.map((card, i) => (
+            <AnimatedCard key={card.href} index={i} href={card.href} animate={animateCards}>
+              <div className="rounded-[22px] border border-white/10 bg-[#151B34]/80 p-6 transition hover:border-white/20 hover:bg-[#151B34] hover:scale-[1.02] h-full">
+                <div className="flex items-center justify-between">
+                  <span className="text-2xl">{card.emoji}</span>
+                  <span className="text-[10px] uppercase tracking-[0.18em] text-[#6EA8FE]/60">
+                    {card.accent}
+                  </span>
                 </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="pb-14 md:pb-20">
-        <div className="mx-auto max-w-6xl px-6">
-          <div>
-            <div className="text-sm uppercase tracking-[0.24em] text-[#A7B0C0]">
-              Capabilities
-            </div>
-            <h2 className="mt-4 text-3xl font-semibold text-[#E6EAF2]">
-              能力 / 方向概览
-            </h2>
-            <p className="mt-4 max-w-3xl text-base leading-8 text-[#A7B0C0]">
-              围绕训练任务落地，我将问题拆解为数据、策略、过程、评估与迭代几个关键环节，持续优化模型效果与训练效率。
-            </p>
-          </div>
-
-          <div className="mt-8 flex flex-wrap gap-3">
-            {skills.map((skill) => (
-              <span
-                key={skill}
-                className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-[#D7DDEA]"
-              >
-                {skill}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="pb-14 md:pb-20">
-        <div className="mx-auto max-w-6xl px-6">
-          <div>
-            <div className="text-sm uppercase tracking-[0.24em] text-[#A7B0C0]">
-              Projects
-            </div>
-            <h2 className="mt-4 text-3xl font-semibold text-[#E6EAF2]">
-              精选项目
-            </h2>
-            <p className="mt-4 max-w-3xl text-base leading-8 text-[#A7B0C0]">
-              这些案例重点展示训练任务如何被拆解、组织、执行与复盘，而不仅仅是结果展示。
-            </p>
-          </div>
-
-          <div className="mt-8 grid gap-6 lg:grid-cols-3">
-            {projects.slice(0, 3).map((project) => (
-              <article
-                key={project.slug}
-                className="rounded-[28px] border border-white/10 bg-[#151B34]/80 p-6"
-              >
-                <div className="text-sm text-[#A7B0C0]">
-                  {project.category} · {project.year}
+                <h2 className="mt-4 text-lg font-semibold text-[#E6EAF2] group-hover:text-[#6EA8FE] transition-colors">
+                  {card.title}
+                </h2>
+                <p className="mt-2 text-sm leading-6 text-[#B8C1D0]">{card.desc}</p>
+                <div className="mt-4 flex items-center gap-1 text-xs text-[#6EA8FE]/60 transition group-hover:text-[#6EA8FE] group-hover:gap-2">
+                  <span>查看详情</span>
+                  <span className="transition-transform group-hover:translate-x-0.5">→</span>
                 </div>
-                <h3 className="mt-4 text-xl font-medium text-[#E6EAF2]">
-                  {project.title}
-                </h3>
-                <p className="mt-4 text-sm leading-7 text-[#A7B0C0]">
-                  {project.summary}
-                </p>
-                <div className="mt-6">
-                  <Link
-                    href={`/projects/${project.slug}`}
-                    className="text-sm text-[#6EA8FE] transition hover:text-[#8B7CFF]"
-                  >
-                    查看详情 →
-                  </Link>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="pb-14 md:pb-20">
-        <div className="mx-auto max-w-6xl px-6">
-          <div>
-            <div className="text-sm uppercase tracking-[0.24em] text-[#A7B0C0]">
-              Workflow
-            </div>
-            <h2 className="mt-4 text-3xl font-semibold text-[#E6EAF2]">
-              训练流程 / 方法论
-            </h2>
-            <p className="mt-4 max-w-3xl text-base leading-8 text-[#A7B0C0]">
-              相比单次实验结果，我更关注训练工作的结构化推进方式，以及这些方法是否能长期复用。
-            </p>
-          </div>
-
-          <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-            {workflow.map((item, index) => (
-              <div
-                key={item.title}
-                className="rounded-[28px] border border-white/10 bg-[#151B34]/80 p-6"
-              >
-                <div className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-sm text-[#6EA8FE]">
-                  0{index + 1}
-                </div>
-                <h3 className="mt-5 text-xl font-medium text-[#E6EAF2]">
-                  {item.title}
-                </h3>
-                <p className="mt-4 text-sm leading-7 text-[#A7B0C0]">
-                  {item.text}
-                </p>
               </div>
-            ))}
-          </div>
+            </AnimatedCard>
+          ))}
         </div>
-      </section>
 
-      <section className="pb-14 md:pb-20">
-        <div className="mx-auto max-w-6xl px-6">
-          <div>
-            <div className="text-sm uppercase tracking-[0.24em] text-[#A7B0C0]">
-              Writing
-            </div>
-            <h2 className="mt-4 text-3xl font-semibold text-[#E6EAF2]">
-              技术文章推荐
-            </h2>
-            <p className="mt-4 max-w-3xl text-base leading-8 text-[#A7B0C0]">
-              这里记录训练中的判断依据、实验路径、问题分析与方法总结，作为长期更新的技术内容沉淀区。
-            </p>
-          </div>
-
-          <div className="mt-8 grid gap-6 lg:grid-cols-3">
-            {articles.slice(0, 3).map((article) => (
-              <article
-                key={article.slug}
-                className="rounded-[28px] border border-white/10 bg-[#151B34]/80 p-6"
-              >
-                <div className="text-sm text-[#A7B0C0]">
-                  {article.category} · {article.date}
-                </div>
-                <h3 className="mt-4 text-xl font-medium text-[#E6EAF2]">
-                  {article.title}
-                </h3>
-                <p className="mt-4 text-sm leading-7 text-[#A7B0C0]">
-                  {article.summary}
-                </p>
-                <div className="mt-6">
-                  <Link
-                    href={`/blog/${article.slug}`}
-                    className="text-sm text-[#6EA8FE] transition hover:text-[#8B7CFF]"
-                  >
-                    阅读文章 →
-                  </Link>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="pb-14 md:pb-20">
-        <div className="mx-auto grid max-w-6xl gap-6 px-6 lg:grid-cols-[0.9fr_1.1fr]">
-          <div className="rounded-[28px] border border-white/10 bg-[#11162A] p-8">
-            <div className="text-sm uppercase tracking-[0.24em] text-[#A7B0C0]">
-              About
-            </div>
-            <h2 className="mt-4 text-3xl font-semibold text-[#E6EAF2]">
-              关于我
-            </h2>
-          </div>
-
-          <div className="rounded-[28px] border border-white/10 bg-[#151B34]/80 p-8">
-            <p className="text-base leading-8 text-[#A7B0C0]">
-              我是 AI训练师，长期关注
-              NLP、多模态小模型训练优化、数据处理与训练流程设计。相比“做一个模型”，我更在意训练系统是否清晰、可复现、可迭代。这个网站会持续整理项目案例、训练日志与方法沉淀。
-            </p>
-            <div className="mt-6">
-              <Link
-                href="/about"
-                className="inline-flex text-sm text-[#6EA8FE] transition hover:text-[#8B7CFF]"
-              >
-                查看完整介绍 →
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <CallToAction />
-    </>
+        <div id="contact"><CallToAction shake={shakeContact} /></div>
+      </main>
+    </div>
   );
 }

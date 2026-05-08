@@ -1,10 +1,11 @@
 export const siteConfig = {
-  name: "AI Trainer",
+  name: "朱美阳",
+  title: "朱美阳 · AI训练师 / 大模型数据专家",
   nav: [
     { label: "首页", href: "/" },
-    { label: "项目", href: "/projects" },
-    { label: "训练日志", href: "/training-log" },
-    { label: "博客", href: "/blog" },
-    { label: "关于", href: "/about" },
+    { label: "项目经历", href: "/projects" },
+    { label: "作品集", href: "/portfolio" },
+    { label: "技能", href: "/#skills" },
+    { label: "联系", href: "/#contact" },
   ],
 };

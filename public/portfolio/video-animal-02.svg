@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" fill="none">
+  <rect width="600" height="400" fill="#0C141E" rx="0"/>
+  <rect x="80" y="40" width="440" height="280" rx="16" fill="#131E30"/>
+  <rect x="100" y="60" width="400" height="30" rx="6" fill="#1C3148"/>
+  <rect x="120" y="72" width="200" height="8" rx="3" fill="#2C4C70"/>
+  <rect x="100" y="110" width="400" height="55" rx="12" fill="#244060"/>
+  <rect x="120" y="125" width="300" height="8" rx="3" fill="#2C4C70" opacity="0.5"/>
+  <rect x="120" y="142" width="200" height="8" rx="3" fill="#2C4C70" opacity="0.3"/>
+  <rect x="100" y="185" width="260" height="12" rx="4" fill="#1C3148"/>
+  <rect x="100" y="210" width="340" height="12" rx="4" fill="#131E30"/>
+  <circle cx="340" cy="260" r="40" fill="#F59E0B" opacity="0.3"/>
+  <polygon points="328,245 328,275 358,260" fill="#FBBF24"/>
+  <text x="300" y="360" text-anchor="middle" fill="#FBBF24" font-size="16" font-family="sans-serif" font-weight="bold">动物搞笑 · Veo 3.1</text>
+</svg>

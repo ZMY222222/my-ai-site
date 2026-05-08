@@ -1,17 +1,13 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { siteConfig } from "@/lib/site";
+import { TransitionLink } from "@/components/page-transition";
 
 export function MobileNav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-
-  const handleNavigate = () => {
-    setOpen(false);
-  };
 
   return (
     <>
@@ -46,7 +42,9 @@ export function MobileNav() {
           open ? "pointer-events-auto" : "pointer-events-none"
         }`}
       >
-        <div
+        <button
+          type="button"
+          aria-label="关闭导航菜单遮罩"
           onClick={() => setOpen(false)}
           className={`absolute inset-0 bg-[#020617]/70 backdrop-blur-sm transition-opacity duration-300 ${
             open ? "opacity-100" : "opacity-0"
@@ -63,7 +61,7 @@ export function MobileNav() {
               <div className="text-sm font-medium text-[#E6EAF2]">
                 {siteConfig.name}
               </div>
-              <div className="mt-1 text-xs text-[#A7B0C0]">
+              <div className="mt-1 text-xs text-[#B8C1D0]">
                 Training · Systems · Workflow
               </div>
             </div>
@@ -86,25 +84,25 @@ export function MobileNav() {
                   : pathname.startsWith(item.href);
 
               return (
-                <Link
+                <TransitionLink
                   key={item.href}
                   href={item.href}
-                  onClick={handleNavigate}
+                  onClick={() => setOpen(false)}
                   className={`block rounded-2xl border px-4 py-4 text-sm transition ${
                     isActive
                       ? "border-[#6EA8FE]/30 bg-[#6EA8FE]/10 text-[#E6EAF2]"
-                      : "border-white/10 bg-white/[0.03] text-[#A7B0C0] hover:border-white/20 hover:bg-white/[0.05] hover:text-[#E6EAF2]"
+                      : "border-white/10 bg-white/[0.03] text-[#B8C1D0] hover:border-white/20 hover:bg-white/[0.05] hover:text-[#E6EAF2]"
                   }`}
                 >
                   {item.label}
-                </Link>
+                </TransitionLink>
               );
             })}
           </nav>
 
           <div className="mt-8 rounded-[24px] border border-white/10 bg-[#151B34]/80 p-5">
-            <div className="text-sm text-[#A7B0C0]">当前网站定位</div>
-            <p className="mt-3 text-sm leading-7 text-[#D7DDEA]">
+            <div className="text-sm text-[#B8C1D0]">当前网站定位</div>
+            <p className="mt-3 text-sm leading-7 text-[#BFC8D6]">
               面向训练实践、项目沉淀、方法复盘与长期技术内容维护的 AI训练师个人网站。
             </p>
           </div>

@@ -18,14 +18,19 @@ export type ProjectItem = {
   summary: string;
   category: string;
   year: string;
+  period?: string;
+  company?: string;
+  role?: string;
+  background?: string;
+  responsibilities?: string[];
+  results?: string[];
   tags: string[];
-  role: string;
-  objective: string;
-  dataset: string[];
-  strategy: string[];
-  evaluation: string[];
-  result: string;
-  review: string;
+  objective?: string;
+  dataset?: string[];
+  strategy?: string[];
+  evaluation?: string[];
+  result?: string;
+  review?: string;
 };
 
 export type TrainingLogItem = {

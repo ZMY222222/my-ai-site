@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" fill="none">
+  <rect width="600" height="400" fill="#100E20"/>
+  <rect x="80" y="40" width="440" height="280" rx="16" fill="#1A1534"/>
+  <rect x="100" y="60" width="400" height="30" rx="6" fill="#2A1F55"/>
+  <rect x="120" y="72" width="180" height="8" rx="3" fill="#402E80"/>
+  <rect x="100" y="110" width="200" height="45" rx="12" fill="#352870"/>
+  <rect x="320" y="110" width="180" height="80" rx="12" fill="#2A1F55"/>
+  <rect x="100" y="170" width="400" height="12" rx="4" fill="#2A1F55"/>
+  <rect x="100" y="195" width="300" height="12" rx="4" fill="#1C1538"/>
+  <circle cx="380" cy="260" r="36" fill="#E040FB" opacity="0.25"/>
+  <polygon points="368,250 368,270 390,260" fill="#D500F9"/>
+  <text x="300" y="360" text-anchor="middle" fill="#E040FB" font-size="16" font-family="sans-serif" font-weight="bold">漫剧 · 可灵</text>
+</svg>
