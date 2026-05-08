@@ -6,7 +6,7 @@ import { connectAudio } from "@/components/audio-analyser";
 const AUDIO_SRC = "/atlasaudio-nature-piano-519619.mp3";
 
 export function AudioPlayer() {
-  const [playing, setPlaying] = useState(true);
+  const [playing, setPlaying] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -20,15 +20,39 @@ export function AudioPlayer() {
       connectAudio(audio);
     });
     audio.addEventListener("pause", () => setPlaying(false));
+    audio.addEventListener("ended", () => setPlaying(false));
     audioRef.current = audio;
-    audio.play().catch(() => {});
-    return () => { audio.pause(); audio.src = ""; };
+
+    const tryPlay = () => {
+      if (audio.paused) {
+        audio.play().then(() => {}, () => {});
+      }
+    };
+
+    const onInteraction = () => {
+      tryPlay();
+    };
+
+    document.addEventListener("click", onInteraction, { once: true });
+    document.addEventListener("touchstart", onInteraction, { once: true });
+    document.addEventListener("keydown", onInteraction, { once: true });
+
+    // 也尝试立即播放
+    tryPlay();
+
+    return () => {
+      audio.pause();
+      audio.src = "";
+      document.removeEventListener("click", onInteraction);
+      document.removeEventListener("touchstart", onInteraction);
+      document.removeEventListener("keydown", onInteraction);
+    };
   }, []);
 
   const togglePlay = useCallback(() => {
     const audio = audioRef.current;
     if (!audio) return;
-    if (audio.paused) audio.play().catch(() => {});
+    if (audio.paused) audio.play().then(() => {}, () => {});
     else audio.pause();
   }, []);
 

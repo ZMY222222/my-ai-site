@@ -6,7 +6,7 @@ const RAIN_AUDIO = "/rain-sounds.mp3";
 
 export function RainAudio() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [playing, setPlaying] = useState(true);
+  const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
     const audio = new Audio(encodeURI(RAIN_AUDIO));
@@ -14,15 +14,39 @@ export function RainAudio() {
     audio.volume = 0.35;
     audio.addEventListener("play", () => setPlaying(true));
     audio.addEventListener("pause", () => setPlaying(false));
+    audio.addEventListener("ended", () => setPlaying(false));
     audioRef.current = audio;
-    audio.play().catch(() => {});
-    return () => { audio.pause(); audio.src = ""; };
+
+    const tryPlay = () => {
+      if (audio.paused) {
+        audio.play().then(() => {}, () => {});
+      }
+    };
+
+    const onInteraction = () => {
+      tryPlay();
+    };
+
+    document.addEventListener("click", onInteraction, { once: true });
+    document.addEventListener("touchstart", onInteraction, { once: true });
+    document.addEventListener("keydown", onInteraction, { once: true });
+
+    // 也尝试立即播放（如果浏览器策略允许）
+    tryPlay();
+
+    return () => {
+      audio.pause();
+      audio.src = "";
+      document.removeEventListener("click", onInteraction);
+      document.removeEventListener("touchstart", onInteraction);
+      document.removeEventListener("keydown", onInteraction);
+    };
   }, []);
 
   const togglePlay = () => {
     const a = audioRef.current;
     if (!a) return;
-    if (a.paused) a.play().catch(() => {});
+    if (a.paused) a.play().then(() => {}, () => {});
     else a.pause();
   };
 
