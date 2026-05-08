@@ -3,6 +3,7 @@ type Subscriber = (energy: number) => void;
 let audioCtx: AudioContext | null = null;
 let analyser: AnalyserNode | null = null;
 let sourceNode: MediaElementAudioSourceNode | null = null;
+let connectedEl: HTMLAudioElement | null = null;
 const subs = new Set<Subscriber>();
 let raf = 0;
 let lastEnergy = 0;
@@ -17,21 +18,34 @@ function getOrCreateCtx() {
     audioCtx = ctx;
     analyser = an;
   }
+  if (audioCtx!.state === "suspended") {
+    audioCtx!.resume();
+  }
   return { audioCtx: audioCtx!, analyser: analyser! };
 }
 
 export function connectAudio(el: HTMLAudioElement) {
+  // media element source can only be created once per audio element
+  if (connectedEl === el) {
+    startLoop();
+    return;
+  }
+
   const { audioCtx: ctx, analyser: an } = getOrCreateCtx();
+
   if (sourceNode) {
     try { sourceNode.disconnect(); } catch {}
     sourceNode = null;
   }
+
   try {
     sourceNode = ctx.createMediaElementSource(el);
     sourceNode.connect(an);
+    connectedEl = el;
   } catch {
-    // already connected or cross-origin
+    return;
   }
+
   startLoop();
 }
 
