@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ConditionalNavbar } from "@/components/conditional-navbar";
 import { RainBackground } from "@/components/rain-background";
 import { RainAudio } from "@/components/rain-audio";
 import { AudioPlayer } from "@/components/audio-player";
@@ -34,6 +35,7 @@ export default function RootLayout({
           <RainBackground />
           <RainAudio />
           <AudioPlayer />
+          <ConditionalNavbar />
           {children}
         </PageTransitionProvider>
       </body>

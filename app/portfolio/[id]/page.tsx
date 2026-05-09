@@ -24,7 +24,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
       <section className="pb-10 pt-16 md:pb-14 md:pt-20">
         <div className="mx-auto max-w-6xl px-6">
           <TransitionLink
-            href="/#portfolio"
+            href="/portfolio"
             className="inline-flex items-center gap-2 text-sm text-[#B8C1D0] transition hover:text-[#E6EAF2]"
           >
             <span>←</span>
@@ -172,7 +172,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
         <div className="mx-auto max-w-4xl px-6">
           <div className="border-t border-white/10 pt-8">
             <TransitionLink
-              href="/#portfolio"
+              href="/portfolio"
               className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-medium text-[#E6EAF2] transition hover:border-white/20 hover:bg-white/10"
             >
               ← 返回作品集

@@ -148,6 +148,7 @@ export function PageTransitionProvider({ children }: { children: React.ReactNode
     const [oldBase] = prev.split("#");
 
     if (newBase === oldBase) return;
+    if (oldBase === "/") return;
 
     const raf = requestAnimationFrame(() => {
       requestAnimationFrame(() => {
@@ -175,6 +176,9 @@ export function PageTransitionProvider({ children }: { children: React.ReactNode
       const [currentBase] = window.location.pathname.split("#");
 
       if (targetBase === currentBase) return;
+
+      // Skip page transition when leaving the homepage (it has its own GlassBreakTransition)
+      if (currentBase === "/") return;
 
       showOverlay();
     };

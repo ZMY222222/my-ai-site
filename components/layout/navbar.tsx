@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MobileNav } from "@/components/mobile-nav";
 import { Container } from "@/components/ui/container";
@@ -50,15 +49,6 @@ export function Navbar() {
               );
             })}
           </nav>
-
-          <div className="hidden md:block">
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-[#E6EAF2] transition hover:border-white/20 hover:bg-white/10"
-            >
-              联系我
-            </Link>
-          </div>
 
           <MobileNav />
         </div>

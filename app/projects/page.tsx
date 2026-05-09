@@ -21,7 +21,7 @@ export default function ProjectsPage() {
       <section className="pb-10 pt-16 md:pb-14 md:pt-20">
         <div className="mx-auto max-w-6xl px-6">
           <TransitionLink
-            href="/"
+            href="/home"
             className="inline-flex items-center gap-2 text-sm text-[#B8C1D0] transition hover:text-[#E6EAF2]"
           >
             <span>←</span>
@@ -126,7 +126,7 @@ export default function ProjectsPage() {
 
           <div className="mt-16 border-t border-white/10 pt-8">
             <TransitionLink
-              href="/"
+              href="/home"
               className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-medium text-[#E6EAF2] transition hover:border-white/20 hover:bg-white/10"
             >
               ← 返回首页

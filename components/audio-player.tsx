@@ -57,7 +57,7 @@ export function AudioPlayer() {
   }, []);
 
   return (
-    <div className="fixed right-4 top-4 z-50 flex select-none items-center gap-2">
+    <div className="fixed right-4 top-20 z-[60] flex select-none items-center gap-2">
       <div
         className={`flex items-center overflow-hidden rounded-full border transition-all duration-300 ${
           collapsed

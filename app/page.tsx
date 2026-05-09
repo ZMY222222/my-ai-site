@@ -1,254 +1,197 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import { CallToAction } from "@/components/call-to-action";
-import { AnimatedCard } from "@/components/animated-card";
-import { AvatarRipple } from "@/components/avatar-ripple";
+import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import { GlassBreakTransition } from "@/components/glass-break-transition";
 
-const cards = [
-  {
-    href: "/about",
-    emoji: "⚡",
-    title: "核心优势",
-    desc: "小米+长城双大厂，6个核心项目全流程实操，全链路闭环交付能力",
-    accent: "About",
-  },
-  {
-    href: "/experience",
-    emoji: "📋",
-    title: "工作经历",
-    desc: "从AI训练实习生到AI训练师，2年完整职业成长路径",
-    accent: "Experience",
-  },
-  {
-    href: "/education",
-    emoji: "🎓",
-    title: "教育背景",
-    desc: "湖北汽车工程学院 · 电子信息工程本科 · GPA 3.5 · 优秀毕业生",
-    accent: "Education",
-  },
-  {
-    href: "/skills",
-    emoji: "🛠️",
-    title: "专业技能",
-    desc: "SFT微调 · NLP数据工程 · ASR/TTS · Agent · Prompt工程",
-    accent: "Skills",
-  },
-  {
-    href: "/projects",
-    emoji: "💼",
-    title: "项目经历",
-    desc: "6个大模型核心项目详情，含职责、成果、技术标签",
-    accent: "Projects",
-  },
-  {
-    href: "/portfolio",
-    emoji: "🎨",
-    title: "作品集",
-    desc: "AI文生图 · AI视频 · AI资讯与评测报告",
-    accent: "Portfolio",
-  },
+const nodeLines = [
+  "// data.label = 'human_intent'",
+  "> training.set(epochs=∞)",
+  "{} context.window_size = 8192",
+  "// loss converges at step 47k",
+  "<SFT> alignment.check()",
+  "> agent.think() → agent.act()",
+  "// eval.benchmark.pass@1 = 0.94",
 ];
 
-function EntranceCard({ onClick }: { onClick: () => void }) {
-  return (
-    <div className="flex min-h-[100dvh] items-center justify-center px-4">
-      <button
-        onClick={onClick}
-        className="group block rounded-[32px] border border-white/10 bg-[#11162A] p-10 text-center transition hover:border-[#6EA8FE]/30 hover:bg-[#11162A]/90 hover:shadow-[0_0_64px_rgba(110,168,254,0.12)] animate-fade-in-up"
-        style={{ animationDelay: "200ms" }}
-      >
-        <AvatarRipple>
-          <div className="flex h-36 w-36 mx-auto items-center justify-center rounded-full border-2 border-[#6EA8FE]/40 bg-[#0D1225] shadow-[0_0_48px_rgba(110,168,254,0.12)] transition group-hover:border-[#6EA8FE]/60 group-hover:shadow-[0_0_64px_rgba(110,168,254,0.22)]">
-            <div className="text-center">
-              <div className="text-5xl font-bold text-[#6EA8FE] transition group-hover:scale-110">朱</div>
-              <div className="mt-1 text-[11px] text-[#BFC8D6]">AI Trainer</div>
-            </div>
-          </div>
-        </AvatarRipple>
-
-        <h1 className="mt-6 text-3xl font-semibold tracking-[-0.03em] text-[#E6EAF2]">
-          朱美阳
-        </h1>
-        <div className="mt-2 text-sm uppercase tracking-[0.24em] text-[#6EA8FE]">
-          AI训练师 / 大模型数据专家
-        </div>
-
-        <p className="mt-4 text-sm leading-7 text-[#BFC8D6]">
-          2年经验 · 6个核心项目全流程实操 · 15万+数据处理量
-        </p>
-
-        <div className="mx-auto mt-6 max-w-[260px] border-t border-white/8 pt-5">
-          <div className="grid grid-cols-2 gap-3 text-center text-xs text-[#B8C1D0]">
-            <div className="rounded-xl bg-white/[0.04] px-3 py-2.5">
-              <div className="text-[#E6EAF2] font-semibold">6</div>
-              <div className="mt-0.5">核心项目</div>
-            </div>
-            <div className="rounded-xl bg-white/[0.04] px-3 py-2.5">
-              <div className="text-[#E6EAF2] font-semibold">15万+</div>
-              <div className="mt-0.5">处理数据</div>
-            </div>
-            <div className="rounded-xl bg-white/[0.04] px-3 py-2.5">
-              <div className="text-[#E6EAF2] font-semibold">2</div>
-              <div className="mt-0.5">大厂经历</div>
-            </div>
-            <div className="rounded-xl bg-white/[0.04] px-3 py-2.5">
-              <div className="text-[#E6EAF2] font-semibold">10+</div>
-              <div className="mt-0.5">团队管理</div>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-6 text-xs text-[#6EA8FE]/40 transition group-hover:text-[#6EA8FE]/70">
-          点击进入 →
-        </div>
-      </button>
-    </div>
-  );
-}
-
-function Sidebar({ onBack, onContact }: { onBack: () => void; onContact: () => void }) {
-  return (
-    <aside className="lg:sticky lg:top-24 lg:h-fit lg:w-[320px] lg:shrink-0 animate-fade-in-up">
-      <div className="rounded-[28px] border border-white/10 bg-[#11162A] p-8">
-        <div className="flex flex-col items-center text-center">
-          <AvatarRipple>
-            <button
-              onClick={onBack}
-              className="flex h-28 w-28 items-center justify-center rounded-full border-2 border-[#6EA8FE]/40 bg-[#0D1225] shadow-[0_0_48px_rgba(110,168,254,0.12)] transition hover:border-[#6EA8FE]/60 hover:shadow-[0_0_56px_rgba(110,168,254,0.20)]"
-              aria-label="返回首页入口"
-              title="点击返回入口"
-            >
-              <div className="text-center">
-                <div className="text-3xl font-bold text-[#6EA8FE]">朱</div>
-                <div className="mt-0.5 text-[10px] text-[#BFC8D6]">AI Trainer</div>
-              </div>
-            </button>
-          </AvatarRipple>
-
-          <h1 className="mt-4 text-xl font-semibold tracking-[-0.03em] text-[#E6EAF2]">
-            朱美阳
-          </h1>
-          <div className="mt-1 text-xs uppercase tracking-[0.2em] text-[#6EA8FE]">
-            AI训练师 / 大模型数据专家
-          </div>
-
-          <p className="mt-3 text-sm leading-7 text-[#BFC8D6]">
-            2年经验 · 6个核心项目全流程实操 · 15万+数据处理量
-          </p>
-
-          <div className="mt-5 flex w-full flex-col gap-2">
-            <button
-              onClick={onContact}
-              className="inline-flex items-center justify-center rounded-xl bg-[#6EA8FE] px-5 py-2.5 text-sm font-medium text-[#0B1020] transition hover:brightness-110 active:brightness-90"
-            >
-              联系我
-            </button>
-          </div>
-
-          <div className="mt-5 w-full border-t border-white/8 pt-5">
-            <div className="grid grid-cols-2 gap-2 text-center text-xs text-[#B8C1D0]">
-              <div className="rounded-xl bg-white/[0.03] px-3 py-2">
-                <div className="text-[#E6EAF2] font-semibold">6</div>
-                <div className="mt-0.5">核心项目</div>
-              </div>
-              <div className="rounded-xl bg-white/[0.03] px-3 py-2">
-                <div className="text-[#E6EAF2] font-semibold">15万+</div>
-                <div className="mt-0.5">处理数据</div>
-              </div>
-              <div className="rounded-xl bg-white/[0.03] px-3 py-2">
-                <div className="text-[#E6EAF2] font-semibold">2</div>
-                <div className="mt-0.5">大厂经历</div>
-              </div>
-              <div className="rounded-xl bg-white/[0.03] px-3 py-2">
-                <div className="text-[#E6EAF2] font-semibold">10+</div>
-                <div className="mt-0.5">团队管理</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </aside>
-  );
+class Node {
+  x = 0; y = 0; r = 0; baseX = 0; baseY = 0; phase = 0; speed = 0; opacity = 0;
+  text = ""; textOpacity = 0;
+  constructor(w: number, h: number) {
+    this.baseX = Math.random() * w;
+    this.baseY = Math.random() * h;
+    this.x = this.baseX;
+    this.y = this.baseY;
+    this.r = 0.4 + Math.random() * 1.2;
+    this.phase = Math.random() * Math.PI * 2;
+    this.speed = 0.3 + Math.random() * 0.7;
+    this.opacity = 0.08 + Math.random() * 0.22;
+    this.text = nodeLines[Math.floor(Math.random() * nodeLines.length)];
+    this.textOpacity = 0;
+  }
 }
 
 export default function HomePage() {
-  const [mounted, setMounted] = useState(false);
-  const [entered, setEntered] = useState(false);
-  const [animateCards, setAnimateCards] = useState(false);
-  const [shakeContact, setShakeContact] = useState(false);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const btnRef = useRef<HTMLButtonElement>(null);
+  const [visible, setVisible] = useState(false);
+  const [btnHover, setBtnHover] = useState(false);
+  const [breaking, setBreaking] = useState(false);
+  const router = useRouter();
+  const navRef = useRef(false);
 
   useEffect(() => {
-    setEntered(sessionStorage.getItem("home-entered") === "1");
-    setAnimateCards(sessionStorage.getItem("home-entered") === "1");
-    setMounted(true);
-  }, []);
-
-  const handleEnter = () => {
-    sessionStorage.setItem("home-entered", "1");
-    setEntered(true);
-  };
-
-  const handleBack = () => {
-    sessionStorage.removeItem("home-entered");
-    setEntered(false);
-  };
-
-  const handleContact = useCallback(() => {
-    setShakeContact(true);
-    setTimeout(() => {
-      const el = document.getElementById("contact");
-      if (el) el.scrollIntoView({ behavior: "smooth" });
-    }, 50);
-    setTimeout(() => setShakeContact(false), 800);
+    const t = setTimeout(() => setVisible(true), 300);
+    return () => clearTimeout(t);
   }, []);
 
   useEffect(() => {
-    if (entered && !animateCards) {
-      const t = setTimeout(() => setAnimateCards(true), 150);
-      return () => clearTimeout(t);
-    }
-    if (!entered) {
-      setAnimateCards(false);
-    }
-  }, [entered, animateCards]);
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
 
-  if (!mounted) return null;
+    let animId = 0;
+    const NODE_COUNT = 22;
+    const nodeArr: Node[] = [];
 
-  if (!entered) {
-    return <EntranceCard onClick={handleEnter} />;
-  }
+    function resize() {
+      if (!canvas) return;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
+      ctx!.setTransform(1, 0, 0, 1, 0, 0);
+      ctx!.scale(dpr, dpr);
+    }
+
+    function initNodes() {
+      nodeArr.length = 0;
+      for (let i = 0; i < NODE_COUNT; i++) nodeArr.push(new Node(window.innerWidth, window.innerHeight));
+    }
+
+    resize();
+    initNodes();
+    window.addEventListener("resize", () => { resize(); initNodes(); });
+
+    let frame = 0;
+    function loop() {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      ctx!.clearRect(0, 0, w, h);
+      frame++;
+
+      for (let i = 0; i < nodeArr.length; i++) {
+        for (let j = i + 1; j < nodeArr.length; j++) {
+          const a = nodeArr[i];
+          const b = nodeArr[j];
+          const dx = a.x - b.x;
+          const dy = a.y - b.y;
+          const d = Math.sqrt(dx * dx + dy * dy);
+          if (d < 280) {
+            const alpha = (1 - d / 280) * 0.04;
+            ctx!.beginPath();
+            ctx!.moveTo(a.x, a.y);
+            ctx!.lineTo(b.x, b.y);
+            ctx!.strokeStyle = `rgba(110,168,254,${alpha.toFixed(3)})`;
+            ctx!.lineWidth = 0.3;
+            ctx!.stroke();
+          }
+        }
+      }
+
+      for (const n of nodeArr) {
+        n.phase += 0.005 * n.speed;
+        n.x = n.baseX + Math.sin(n.phase) * 14;
+        n.y = n.baseY + Math.cos(n.phase * 1.3) * 10;
+
+        const g = ctx!.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 5);
+        g.addColorStop(0, `rgba(110,168,254,${(n.opacity * 0.6).toFixed(3)})`);
+        g.addColorStop(0.5, `rgba(110,168,254,${(n.opacity * 0.15).toFixed(3)})`);
+        g.addColorStop(1, "rgba(110,168,254,0)");
+        ctx!.beginPath();
+        ctx!.arc(n.x, n.y, n.r * 5, 0, Math.PI * 2);
+        ctx!.fillStyle = g;
+        ctx!.fill();
+
+        ctx!.beginPath();
+        ctx!.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+        ctx!.fillStyle = `rgba(180,210,250,${n.opacity.toFixed(3)})`;
+        ctx!.fill();
+
+        if (frame % 6 === 0) n.textOpacity = Math.max(0, n.textOpacity - 0.003);
+        if (Math.random() < 0.0008) n.textOpacity = 0.12 + Math.random() * 0.2;
+        if (n.textOpacity > 0.005) {
+          ctx!.font = "9px 'JetBrains Mono', monospace";
+          ctx!.fillStyle = `rgba(110,168,254,${n.textOpacity.toFixed(3)})`;
+          ctx!.fillText(n.text, n.x + 8, n.y - 6);
+        }
+      }
+
+      animId = requestAnimationFrame(loop);
+    }
+
+    loop();
+
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener("resize", () => {});
+    };
+  }, []);
+
+  const handleClick = () => {
+    if (navRef.current) return;
+    navRef.current = true;
+    setBreaking(true);
+  };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 pb-16 pt-6 md:px-6 md:pt-8 lg:flex lg:gap-8 lg:pt-12">
-      <Sidebar onBack={handleBack} onContact={handleContact} />
+    <main className="relative min-h-[100dvh] flex flex-col items-center justify-center overflow-hidden">
+      <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }} />
 
-      <main className="mt-6 flex-1 space-y-8 lg:mt-0">
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {cards.map((card, i) => (
-            <AnimatedCard key={card.href} index={i} href={card.href} animate={animateCards}>
-              <div className="rounded-[22px] border border-white/10 bg-[#151B34]/80 p-6 transition hover:border-white/20 hover:bg-[#151B34] hover:scale-[1.02] h-full">
-                <div className="flex items-center justify-between">
-                  <span className="text-2xl">{card.emoji}</span>
-                  <span className="text-[10px] uppercase tracking-[0.18em] text-[#6EA8FE]/60">
-                    {card.accent}
-                  </span>
-                </div>
-                <h2 className="mt-4 text-lg font-semibold text-[#E6EAF2] group-hover:text-[#6EA8FE] transition-colors">
-                  {card.title}
-                </h2>
-                <p className="mt-2 text-sm leading-6 text-[#B8C1D0]">{card.desc}</p>
-                <div className="mt-4 flex items-center gap-1 text-xs text-[#6EA8FE]/60 transition group-hover:text-[#6EA8FE] group-hover:gap-2">
-                  <span>查看详情</span>
-                  <span className="transition-transform group-hover:translate-x-0.5">→</span>
-                </div>
-              </div>
-            </AnimatedCard>
-          ))}
+      <GlassBreakTransition trigger={breaking} onComplete={() => router.push("/home")} sound />
+
+      <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, background: "radial-gradient(ellipse 80% 60% at 50% 40%, transparent 30%, rgba(6,10,20,0.7) 100%)" }} />
+      <div className="absolute inset-0 pointer-events-none opacity-[0.015]" style={{ zIndex: 2, backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.03) 2px, rgba(255,255,255,0.03) 4px)" }} />
+
+      <div className={`relative z-10 flex flex-col items-center text-center px-6 py-16 w-full max-w-3xl transition-all duration-1000 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ marginTop: "calc(10vh - 40px)" }}>
+        <div className="text-[11px] tracking-[0.32em] uppercase text-[#6EA8FE]/50 mb-8 font-mono">AI Training · Data Engineering · Systems</div>
+
+        <h1 className="text-4xl font-bold tracking-[0.12em] sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] italic" style={{ color: "#E6EAF2", textShadow: "0 0 7px rgba(110,168,254,0.8), 0 0 18px rgba(110,168,254,0.5), 0 0 40px rgba(110,168,254,0.3), 0 0 80px rgba(0,212,255,0.2), 0 0 120px rgba(0,212,255,0.1), 0 2px 4px rgba(0,0,0,0.5)", transform: "skewX(-6deg)", animation: "neon-flicker 3.6s ease-in-out infinite" }}>
+          <span style={{ display: "inline-block", transform: "skewX(6deg)" }}>朱 美 阳</span>
+        </h1>
+
+        <div className="mt-5 flex items-center gap-4">
+          <div className="h-[1px] w-8 bg-[#00D4FF]/30 hidden sm:block" />
+          <div className="text-base sm:text-lg tracking-[0.2em] text-[#6EA8FE] font-light">AI训练师 / 大模型数据专家</div>
+          <div className="h-[1px] w-8 bg-[#00D4FF]/30 hidden sm:block" />
         </div>
 
-        <div id="contact"><CallToAction shake={shakeContact} /></div>
-      </main>
-    </div>
+        <p className="mt-8 max-w-lg text-base sm:text-lg leading-[1.8] text-[#8693A8] font-light tracking-[0.03em]">
+          我训练的不只是数据，而是
+          <span className="italic" style={{ color: "#B0C8E8", fontWeight: 500, textShadow: "0 0 6px rgba(110,168,254,0.7), 0 0 14px rgba(110,168,254,0.4), 0 0 30px rgba(110,168,254,0.2), 0 0 60px rgba(0,212,255,0.12), 0 2px 3px rgba(0,0,0,0.4)", display: "inline-block", transform: "skewX(-4deg)", animation: "neon-flicker 4.2s ease-in-out infinite" }}>
+            AI 理解人的方式
+          </span>。
+        </p>
+
+        <div className="mt-10 flex items-center gap-3">
+          <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-[#6EA8FE]/20" />
+          <div className="h-[3px] w-[3px] rounded-full bg-[#00D4FF]/40" />
+          <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-[#6EA8FE]/20" />
+        </div>
+
+        <button ref={btnRef} onClick={handleClick} disabled={breaking} onMouseEnter={() => setBtnHover(true)} onMouseLeave={() => setBtnHover(false)} className="group relative mt-10 inline-flex items-center gap-3 rounded-full border border-[#6EA8FE]/25 bg-[#6EA8FE]/5 px-8 py-3.5 text-sm font-medium tracking-[0.06em] text-[#B0C8E8] transition-all duration-500 hover:border-[#6EA8FE]/50 hover:bg-[#6EA8FE]/12 hover:text-[#E6EAF2] hover:shadow-[0_0_40px_rgba(110,168,254,0.18)] active:scale-[0.97]">
+          <span className={`absolute inset-0 rounded-full transition-opacity duration-700 ${btnHover ? "opacity-100" : "opacity-0"}`} style={{ background: "radial-gradient(circle at center, rgba(110,168,254,0.08) 0%, transparent 70%)" }} />
+          <span className="relative z-10">点击进入</span>
+          <svg className={`relative z-10 w-4 h-4 transition-transform duration-300 ${btnHover ? "translate-x-1" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
+        </button>
+
+        <div className="mt-14 text-[10px] tracking-[0.24em] text-[#6EA8FE]/20 uppercase">Personal Brand · AI Trainer</div>
+      </div>
+    </main>
   );
 }

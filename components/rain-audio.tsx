@@ -51,7 +51,7 @@ export function RainAudio() {
   };
 
   return (
-    <div className="fixed left-4 top-4 z-50 select-none">
+    <div className="fixed left-4 top-20 z-[60] select-none">
       <div
         className={`flex items-center overflow-hidden rounded-full border transition-all duration-300 ${
           !playing

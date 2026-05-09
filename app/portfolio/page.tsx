@@ -12,7 +12,7 @@ export default function PortfolioPage() {
   return (
     <div className="mx-auto max-w-6xl px-4 pb-20 pt-16 md:px-6 md:pt-20">
       <TransitionLink
-        href="/"
+        href="/home"
         className="inline-flex items-center gap-2 text-sm text-[#B8C1D0] transition hover:text-[#E6EAF2]"
       >
         <span>←</span>
