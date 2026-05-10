@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ConditionalNavbar } from "@/components/conditional-navbar";
 import { RainBackground } from "@/components/rain-background";
-import { RainAudio } from "@/components/rain-audio";
-import { AudioPlayer } from "@/components/audio-player";
+import { FloatAudioButton } from "@/components/float-audio-button";
+import { Footer } from "@/components/footer";
 import { PageTransitionProvider } from "@/components/page-transition";
 import { InitialLoader } from "@/components/initial-loader";
 import { ClickEffect } from "@/components/click-effect";
+import { ScrollToTop } from "@/components/scroll-to-top";
+import { PageFadeIn } from "@/components/page-fade-in";
 
 export const metadata: Metadata = {
   title: "朱美阳 | AI训练师 / 大模型数据专家",
@@ -33,10 +35,11 @@ export default function RootLayout({
           <InitialLoader />
           <ClickEffect />
           <RainBackground />
-          <RainAudio />
-          <AudioPlayer />
           <ConditionalNavbar />
-          {children}
+          <PageFadeIn>{children}</PageFadeIn>
+          <FloatAudioButton />
+          <ScrollToTop />
+          <Footer />
         </PageTransitionProvider>
       </body>
     </html>

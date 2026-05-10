@@ -38,10 +38,10 @@ export function Navbar() {
                 <TransitionLink
                   key={item.href}
                   href={item.href}
-                  className={`text-sm transition ${
+                  className={`relative text-sm transition-colors pb-1 ${
                     isActive
-                      ? "text-[#E6EAF2]"
-                      : "text-[#B8C1D0] hover:text-[#E6EAF2]"
+                      ? "text-[#E6EAF2] after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:rounded-full after:bg-[#60A5FA]"
+                      : "text-[#B8C1D0] hover:text-[#60A5FA] after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:rounded-full after:bg-[#60A5FA] after:origin-center after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300"
                   }`}
                 >
                   {item.label}

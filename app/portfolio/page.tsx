@@ -36,10 +36,10 @@ export default function PortfolioPage() {
             <TransitionLink
               key={item.id}
               href={`/portfolio/${item.id}`}
-              className="group relative overflow-hidden rounded-[24px] border border-white/10 bg-[#151B34]/80 transition hover:border-white/20 hover:bg-[#151B34]"
+              className="group relative overflow-hidden rounded-[24px] border border-white/10 bg-[#151B34]/80 transition hover:border-white/20 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(96,165,250,0.15)]"
             >
               <div className="aspect-[4/3] bg-[#0D1225] flex items-center justify-center relative">
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0B1020]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0B1020]/80 via-[#0B1020]/20 to-transparent z-10" />
 
                 <Image
                   src={item.src}

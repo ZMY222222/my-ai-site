@@ -133,7 +133,7 @@ export default function HomePage() {
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {cards.map((card, i) => (
             <AnimatedCard key={card.href} index={i} href={card.href} animate={true}>
-              <div className="rounded-[22px] border border-white/10 bg-[#151B34]/80 p-6 transition hover:border-white/20 hover:bg-[#151B34] hover:scale-[1.02] h-full">
+              <div className="rounded-[22px] border border-white/10 bg-[#151B34]/80 p-6 transition-all duration-300 hover:border-white/20 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(96,165,250,0.15)] h-full">
                 <div className="flex items-center justify-between">
                   <span className="text-2xl">{card.emoji}</span>
                   <span className="text-[10px] uppercase tracking-[0.18em] text-[#6EA8FE]/60">

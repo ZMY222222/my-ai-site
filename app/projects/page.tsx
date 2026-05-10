@@ -15,6 +15,16 @@ const sortedProjects = [...projects].sort((a, b) => {
   return bStart.localeCompare(aStart);
 });
 
+function highlightNumbers(text: string) {
+  const parts = text.split(/(\d[\d,./%≥+\-万]*\s*(?:条|%|人|个|倍|次|以上|左右|级|分|秒|时)?)/g);
+  return parts.map((part, i) => {
+    if (/^\d/.test(part)) {
+      return <span key={i} className="text-[#60A5FA] font-semibold">{part}</span>;
+    }
+    return <span key={i}>{part}</span>;
+  });
+}
+
 export default function ProjectsPage() {
   return (
     <>
@@ -41,28 +51,43 @@ export default function ProjectsPage() {
 
       <section className="pb-20 md:pb-28">
         <div className="mx-auto max-w-6xl px-6">
-          <div className="space-y-6">
-            {sortedProjects.map((project) => (
+          <div className="relative space-y-6">
+            {/* Timeline connector line */}
+            <div className="absolute left-8 top-0 bottom-0 w-[1px] bg-gradient-to-b from-[#3B82F6]/40 via-[#60A5FA]/20 to-transparent hidden md:block" />
+
+            {sortedProjects.map((project, i) => (
               <article
                 key={project.slug}
-                className="rounded-[28px] border border-white/10 bg-[#151B34]/80 p-6 transition hover:border-white/20 md:p-8"
+                className="relative rounded-[28px] border border-white/10 bg-[#151B34]/80 p-6 transition hover:border-white/20 hover:shadow-[0_8px_30px_rgba(96,165,250,0.1)] hover:-translate-y-1 md:p-8"
               >
+                {/* Timeline dot */}
+                <div className="absolute left-[-8px] top-10 h-[17px] w-[17px] rounded-full border-2 border-[#3B82F6] bg-[#151B34] hidden md:block" />
+
                 <div className="flex flex-col gap-6">
-                  <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                    <div>
-                      <div className="flex flex-wrap items-center gap-3 text-sm text-[#B8C1D0]">
-                        {project.company && <span>{project.company}</span>}
-                      </div>
-                      <h2 className="mt-2 text-xl font-semibold text-[#E6EAF2]">
-                        {project.title}
-                      </h2>
-                      <div className="mt-1 flex flex-wrap items-center gap-3 text-sm text-[#B8C1D0]">
-                        {project.role && (
-                          <span className="rounded-full border border-[#6EA8FE]/30 bg-[#6EA8FE]/10 px-3 py-0.5 text-xs text-[#6EA8FE]">
-                            {project.role}
-                          </span>
-                        )}
-                        {project.period && <span>{project.period}</span>}
+                  <div className="flex items-start gap-4">
+                    {/* Badge */}
+                    <div className="hidden sm:flex shrink-0 h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#1E40AF] to-[#3B82F6]/60 text-2xl font-bold text-white/90">
+                      {(i + 1).toString().padStart(2, "0")}
+                    </div>
+
+                    <div className="flex-1">
+                      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                        <div>
+                          <div className="flex flex-wrap items-center gap-3 text-sm text-[#B8C1D0]">
+                            {project.company && <span>{project.company}</span>}
+                          </div>
+                          <h2 className="mt-2 text-xl font-semibold text-[#E6EAF2]">
+                            {project.title}
+                          </h2>
+                          <div className="mt-1 flex flex-wrap items-center gap-3 text-sm text-[#B8C1D0]">
+                            {project.role && (
+                              <span className="rounded-full border border-[#6EA8FE]/30 bg-[#6EA8FE]/10 px-3 py-0.5 text-xs text-[#6EA8FE]">
+                                {project.role}
+                              </span>
+                            )}
+                            {project.period && <span>{project.period}</span>}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -77,13 +102,10 @@ export default function ProjectsPage() {
                         个人职责
                       </div>
                       <div className="space-y-2">
-                        {project.responsibilities.map((r, i) => (
-                          <div
-                            key={i}
-                            className="flex items-start gap-3 text-sm leading-7 text-[#B8C1D0]"
-                          >
+                        {project.responsibilities.map((r, j) => (
+                          <div key={j} className="flex items-start gap-3 text-sm leading-7 text-[#B8C1D0]">
                             <span className="mt-[10px] h-[5px] w-[5px] shrink-0 rounded-full bg-[#6EA8FE]/60" />
-                            {r}
+                            <span>{highlightNumbers(r)}</span>
                           </div>
                         ))}
                       </div>
@@ -96,13 +118,10 @@ export default function ProjectsPage() {
                         核心成果
                       </div>
                       <div className="space-y-2">
-                        {project.results.map((r, i) => (
-                          <div
-                            key={i}
-                            className="flex items-start gap-3 text-sm leading-7 text-[#B8C1D0]"
-                          >
+                        {project.results.map((r, j) => (
+                          <div key={j} className="flex items-start gap-3 text-sm leading-7 text-[#B8C1D0]">
                             <span className="mt-[10px] h-[5px] w-[5px] shrink-0 rounded-full bg-[#8B7CFF]/60" />
-                            {r}
+                            <span>{highlightNumbers(r)}</span>
                           </div>
                         ))}
                       </div>
@@ -113,7 +132,7 @@ export default function ProjectsPage() {
                     {project.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-[#B8C1D0]"
+                        className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-[#B8C1D0] transition hover:bg-white/10 hover:border-white/20 hover:text-[#E6EAF2] cursor-pointer"
                       >
                         {tag}
                       </span>
