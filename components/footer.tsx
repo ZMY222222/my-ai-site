@@ -6,7 +6,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 md:px-6">
         <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:justify-between">
           <div className="text-xs text-[#9CA3AF]">
-            © 2025 朱美阳 · All Rights Reserved
+            © 2026 朱美阳 · All Rights Reserved
           </div>
           <nav className="flex items-center gap-4 text-xs text-[#9CA3AF]">
             <Link href="/home" className="transition hover:text-[#60A5FA]">首页</Link>

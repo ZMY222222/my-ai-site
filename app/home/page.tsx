@@ -1,218 +1,484 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import { CallToAction } from "@/components/call-to-action";
-import { AnimatedCard } from "@/components/animated-card";
-import { StarClickEffect } from "@/components/star-click-effect";
-import { AvatarRipple } from "@/components/avatar-ripple";
+import { useState, useEffect, useRef } from "react";
+import { SKILLS, EXPERIENCES, STATS, RADAR_DATA, PORTFOLIO_HOME } from "@/data/portfolio-home";
+import { useInView } from "@/hooks/use-in-view";
+import { useRouter } from "next/navigation";
+import { FlipRadarCard } from "@/components/flip-radar-card";
+import { IconNavSelector } from "@/components/icon-nav-selector";
+import { ClickRippleCanvas } from "@/components/click-ripple-canvas";
+import { ScrollRevealPhoto } from "@/components/scroll-reveal-photo";
 
-const cards = [
-  {
-    href: "/about",
-    title: "核心优势",
-    desc: "小米+长城双大厂，6个核心项目全流程实操，全链路闭环交付能力",
-    accent: "About",
-    gradient: "from-[#3B82F6] to-[#60A5FA]",
-    bg: "from-[#3B82F6]/5 to-[#60A5FA]/3",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-      </svg>
-    ),
-  },
-  {
-    href: "/experience",
-    title: "工作经历",
-    desc: "从AI训练实习生到AI训练师，2年完整职业成长路径",
-    accent: "Experience",
-    gradient: "from-[#8B5CF6] to-[#A78BFA]",
-    bg: "from-[#8B5CF6]/5 to-[#A78BFA]/3",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
-      </svg>
-    ),
-  },
-  {
-    href: "/education",
-    title: "教育背景",
-    desc: "湖北汽车工程学院 · 电子信息工程本科 · GPA 3.5 · 优秀毕业生",
-    accent: "Education",
-    gradient: "from-[#EC4899] to-[#F472B6]",
-    bg: "from-[#EC4899]/5 to-[#F472B6]/3",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 3.14 3 7 3s7-1.34 7-3v-5"/>
-      </svg>
-    ),
-  },
-  {
-    href: "/skills",
-    title: "专业技能",
-    desc: "SFT微调 · NLP数据工程 · ASR/TTS · Agent · Prompt工程",
-    accent: "Skills",
-    gradient: "from-[#F59E0B] to-[#FBBF24]",
-    bg: "from-[#F59E0B]/5 to-[#FBBF24]/3",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-      </svg>
-    ),
-  },
-  {
-    href: "/projects",
-    title: "项目经历",
-    desc: "6个大模型核心项目详情，含职责、成果、技术标签",
-    accent: "Projects",
-    gradient: "from-[#06B6D4] to-[#22D3EE]",
-    bg: "from-[#06B6D4]/5 to-[#22D3EE]/3",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
-      </svg>
-    ),
-  },
-  {
-    href: "/portfolio",
-    title: "作品集",
-    desc: "AI文生图 · AI视频 · AI资讯与评测报告",
-    accent: "Portfolio",
-    gradient: "from-[#10B981] to-[#34D399]",
-    bg: "from-[#10B981]/5 to-[#34D399]/3",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
-      </svg>
-    ),
-  },
-];
-
-function Sidebar({ onContact }: { onContact: () => void }) {
+function Section({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const visible = useInView(ref);
   return (
-    <aside className="lg:sticky lg:top-24 lg:h-fit lg:w-[320px] lg:shrink-0 animate-fade-in-up">
-      <div className="rounded-[28px] border border-white/10 bg-[#11162A] p-8">
-        <div className="flex flex-col items-center text-center">
-          <AvatarRipple>
-            <StarClickEffect>
-              <div className="flex h-28 w-28 items-center justify-center rounded-full border-2 border-[#6EA8FE]/40 bg-[#0D1225] shadow-[0_0_48px_rgba(110,168,254,0.12)]">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-[#6EA8FE]">朱</div>
-                  <div className="mt-0.5 text-[10px] text-[#BFC8D6]">AI Trainer</div>
-                </div>
-              </div>
-            </StarClickEffect>
-          </AvatarRipple>
-
-          <h1 className="mt-4 text-xl font-semibold tracking-[-0.03em] text-[#E6EAF2]">
-            朱美阳
-          </h1>
-          <div className="mt-1 text-xs uppercase tracking-[0.2em] text-[#6EA8FE]">
-            AI训练师 / 大模型数据专家
-          </div>
-
-          <p className="mt-3 text-sm leading-7 text-[#BFC8D6]">
-            2年经验 · 6个核心项目全流程实操 · 15万+数据处理量
-          </p>
-
-          <div className="mt-5 flex w-full flex-col gap-2">
-            <button
-              onClick={onContact}
-              className="inline-flex items-center justify-center rounded-xl bg-[#6EA8FE] px-5 py-2.5 text-sm font-medium text-[#0B1020] transition hover:brightness-110 active:brightness-90"
-            >
-              联系我
-            </button>
-          </div>
-
-          <div className="mt-5 w-full border-t border-white/8 pt-5">
-            <div className="grid grid-cols-2 gap-2 text-center text-xs text-[#B8C1D0]">
-              <div className="rounded-xl bg-white/[0.03] px-3 py-2">
-                <div className="text-[#E6EAF2] font-semibold">6</div>
-                <div className="mt-0.5">核心项目</div>
-              </div>
-              <div className="rounded-xl bg-white/[0.03] px-3 py-2">
-                <div className="text-[#E6EAF2] font-semibold">15万+</div>
-                <div className="mt-0.5">处理数据</div>
-              </div>
-              <div className="rounded-xl bg-white/[0.03] px-3 py-2">
-                <div className="text-[#E6EAF2] font-semibold">2</div>
-                <div className="mt-0.5">大厂经历</div>
-              </div>
-              <div className="rounded-xl bg-white/[0.03] px-3 py-2">
-                <div className="text-[#E6EAF2] font-semibold">10+</div>
-                <div className="mt-0.5">团队管理</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </aside>
+    <div
+      ref={ref}
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(32px)",
+        transition: `opacity 0.7s ${delay}s cubic-bezier(.16,1,.3,1), transform 0.7s ${delay}s cubic-bezier(.16,1,.3,1)`,
+      }}
+    >
+      {children}
+    </div>
   );
 }
 
-export default function HomePage() {
-  const [shakeContact, setShakeContact] = useState(false);
+const INTRO = "两年AI训练师经验 · 小米+长城双大厂 · 6个核心项目全流程交付";
 
-  const handleContact = useCallback(() => {
-    setShakeContact(true);
-    setTimeout(() => {
-      const el = document.getElementById("contact");
-      if (el) el.scrollIntoView({ behavior: "smooth" });
-    }, 50);
-    setTimeout(() => setShakeContact(false), 800);
+function TypeWriter() {
+  return (
+    <div style={{ textAlign: "center" }}>
+      <h1 className="typewriter-name" style={{
+        fontSize: 58,
+        fontWeight: 700,
+        letterSpacing: "-2px",
+        background: "linear-gradient(180deg, #ffffff 30%, rgba(255,255,255,0.45) 100%)",
+        WebkitBackgroundClip: "text",
+        WebkitTextFillColor: "transparent",
+        lineHeight: 1.1,
+        margin: "0 auto 16px",
+        display: "inline-block",
+      }}>
+        <span className="tw-inner tw-name">朱美阳</span>
+      </h1>
+
+      <br />
+
+      <p className="typewriter-title" style={{
+        fontSize: 18,
+        color: "rgba(255,255,255,0.5)",
+        lineHeight: 1.6,
+        display: "inline-block",
+      }}>
+        <span className="tw-inner tw-title">AI训练师 / 大模型数据专家</span>
+      </p>
+
+      <style>{`
+        .tw-inner {
+          display: inline-block;
+          overflow: hidden;
+          white-space: nowrap;
+          width: 0;
+        }
+        .tw-name {
+          border-right: 2px solid #3b82f6;
+          animation:
+            typeName 0.8s steps(3) 0.5s forwards,
+            cursorBlink 0.6s step-end 0.5s 6,
+            forceShow 0s 5s forwards;
+        }
+        .tw-title {
+          border-right-color: transparent;
+          animation:
+            typeTitle 1.2s steps(14) 1.8s forwards,
+            showCursor 0s 1.8s forwards,
+            cursorBlink 0.6s step-end 1.8s 8,
+            hideCursor 0s 4.5s forwards,
+            forceShow 0s 5s forwards;
+        }
+        @keyframes typeName  { from { width: 0; } to { width: 3em; } }
+        @keyframes typeTitle { from { width: 0; } to { width: 14em; } }
+        @keyframes cursorBlink { 0%,100% { border-right-color: #3b82f6; } 50% { border-right-color: transparent; } }
+        @keyframes showCursor  { to { border-right-color: #3b82f6; } }
+        @keyframes hideCursor  { to { border-right-color: transparent; } }
+        @keyframes forceShow  { to { width: auto; overflow: visible; border-right: none; } }
+      `}</style>
+    </div>
+  );
+}
+
+const navItems = [
+  { label: "作品", id: "portfolio" },
+  { label: "项目 & 经历", id: "projects" },
+  { label: "技能", id: "skills" },
+  { label: "联系", id: "contact" },
+];
+
+export default function HomePage() {
+  const [mouse, setMouse] = useState({ x: 0, y: 0 });
+  const [scrollY, setScrollY] = useState(0);
+  const [selectedPortfolio, setSelectedPortfolio] = useState(PORTFOLIO_HOME[0]?.id ?? null);
+  const router = useRouter();
+
+  // RAF-throttled scroll for parallax
+  useEffect(() => {
+    let ticking = false;
+    const onScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setScrollY(window.scrollY);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const scrollToId = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
-    <div className="mx-auto max-w-7xl px-4 pb-16 pt-6 md:px-6 md:pt-8 lg:flex lg:gap-8 lg:pt-12">
-      <Sidebar onContact={handleContact} />
+    <div
+      className="min-h-screen"
+      style={{
+        background: "transparent",
+        color: "#e2e8f0",
+        fontFamily: "'DM Sans', 'Noto Sans SC', system-ui, sans-serif",
+        position: "relative",
+      }}
+      onMouseMove={(e) => setMouse({ x: e.clientX, y: e.clientY })}
+    >
+      {/* ================================================================
+           LAYER Z-INDEX MAP
+           z=-1 → ParticleNetworkBackground (existing, handled by layout)
+           z=0  → Parallax background (grid + orbs)
+           z=1  → ClickRippleCanvas (click ripple overlay)
+           z=2  → Cursor glow + page content
+      ================================================================ */}
 
-      <main className="mt-6 flex-1 space-y-8 lg:mt-0">
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {cards.map((card, i) => (
-            <AnimatedCard key={card.href} index={i} href={card.href} animate={true}>
-              <div className={`group/card relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br ${card.bg} p-[1px] transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_12px_40px_rgba(96,165,250,0.2)] hover:border-white/20`}>
-                {/* Inner card */}
-                <div className="relative h-full rounded-2xl bg-[#0D1225]/95 p-6 backdrop-blur-sm">
-                  {/* Accent glow dot */}
-                  <div className={`absolute -right-3 -top-3 h-20 w-20 rounded-full bg-gradient-to-br ${card.gradient} opacity-20 blur-2xl`} />
+      {/* Layer 0 — Parallax Background */}
+      <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 1 }}>
+        {/* Layer 0a: Dot grid (farthest, 10% scroll) */}
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: "radial-gradient(rgba(255,255,255,0.4) 1px, transparent 1px)",
+            backgroundSize: "32px 32px",
+            transform: `translateY(${scrollY * 0.1}px)`,
+            willChange: "transform",
+          }}
+        />
 
-                  {/* Header */}
-                  <div className="flex items-start justify-between">
-                    <div className={`flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${card.gradient} bg-opacity-10 text-white/90 shadow-lg`}>
-                      {card.icon}
+        {/* Layer 0b: Blur orbs (middle, 30% scroll) */}
+        <div
+          className="absolute inset-0"
+          style={{
+            transform: `translateY(${scrollY * 0.3}px)`,
+            willChange: "transform",
+          }}
+        >
+          <div style={{
+            position: "absolute", top: "-10%", left: "60%",
+            width: 600, height: 600,
+            background: "radial-gradient(circle, #3b82f6 0%, transparent 70%)",
+            borderRadius: "50%", filter: "blur(80px)", opacity: 0.12,
+          }} />
+          <div style={{
+            position: "absolute", top: "30%", left: "-10%",
+            width: 500, height: 500,
+            background: "radial-gradient(circle, #8b5cf6 0%, transparent 70%)",
+            borderRadius: "50%", filter: "blur(80px)", opacity: 0.12,
+          }} />
+          <div style={{
+            position: "absolute", top: "70%", left: "70%",
+            width: 400, height: 400,
+            background: "radial-gradient(circle, #06b6d4 0%, transparent 70%)",
+            borderRadius: "50%", filter: "blur(80px)", opacity: 0.12,
+          }} />
+        </div>
+      </div>
+
+      {/* Layer 1 — Click Ripple Canvas */}
+      <ClickRippleCanvas />
+
+      {/* Layer 2 — Cursor glow + Content */}
+      <div className="relative" style={{ zIndex: 3 }}>
+        {/* Cursor glow */}
+        <div
+          className="fixed pointer-events-none"
+          style={{
+            left: mouse.x - 200,
+            top: mouse.y - 200,
+            width: 400,
+            height: 400,
+            borderRadius: "50%",
+            background: "radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 70%)",
+            zIndex: 1,
+            transition: "left 0.3s, top 0.3s",
+          }}
+        />
+
+        {/* Nav */}
+        <nav
+          className="sticky top-0 z-10 flex items-center justify-between px-6 py-5 md:px-12"
+          style={{
+            background: scrollY > 50 ? "rgba(6,9,15,0.8)" : "transparent",
+            backdropFilter: scrollY > 50 ? "blur(20px)" : "none",
+            borderBottom: scrollY > 50 ? "0.5px solid rgba(255,255,255,0.06)" : "0.5px solid transparent",
+            transition: "all 0.3s",
+          }}
+        >
+          <button
+            className="flex items-center gap-2.5 cursor-pointer border-none bg-transparent p-0"
+            onClick={() => router.push("/")}
+          >
+            <div
+              className="flex h-8 w-8 items-center justify-center rounded-lg text-[13px] font-bold text-white"
+              style={{
+                background: "linear-gradient(135deg, #3b82f6, #8b5cf6)",
+                fontFamily: "'Space Mono', monospace",
+              }}
+            >
+              朱
+            </div>
+            <span className="text-[15px] font-medium tracking-[0.5px] text-white">Meiyang Zhu</span>
+          </button>
+          <div className="flex gap-8">
+            {navItems.map((item, i) => (
+              <button
+                key={i}
+                onClick={() => scrollToId(item.id)}
+                className="text-[13px] tracking-[0.5px] border-none bg-transparent cursor-pointer p-0 transition-colors duration-200"
+                style={{ color: "rgba(255,255,255,0.4)" }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "#fff")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.4)")}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+        </nav>
+
+        {/* Hero with Typewriter */}
+        <section className="px-6 pb-12 pt-[100px] md:px-12 md:pb-16 md:pt-[120px]" style={{ maxWidth: 800, margin: "0 auto" }}>
+          <TypeWriter />
+
+          <p
+            className="text-sm md:text-[15px] leading-relaxed max-w-[500px] mx-auto mb-12 font-normal"
+            style={{
+              color: "rgba(255,255,255,0.35)",
+              opacity: 1,
+              textAlign: "center",
+            }}
+          >
+            {INTRO}
+          </p>
+
+          <Section delay={0.15}>
+            <div
+              className="grid grid-cols-4 gap-0 rounded-2xl overflow-hidden mb-12 border"
+              style={{
+                background: "rgba(255,255,255,0.04)",
+                borderColor: "rgba(255,255,255,0.06)",
+              }}
+            >
+              {STATS.map((s, i) => (
+                <div
+                  key={i}
+                  className="py-6 px-4 text-center"
+                  style={{
+                    background: "rgba(255,255,255,0.02)",
+                    borderRight: i < 3 ? "0.5px solid rgba(255,255,255,0.04)" : "none",
+                  }}
+                >
+                  <div
+                    className="text-[28px] font-bold tracking-[-1px] text-white"
+                    style={{ fontFamily: "'Space Mono', monospace" }}
+                  >
+                    {s.num}
+                  </div>
+                  <div className="text-[13px] mt-1" style={{ color: "rgba(255,255,255,0.5)" }}>
+                    {s.label}
+                  </div>
+                  <div className="text-[11px] mt-0.5" style={{ color: "rgba(255,255,255,0.25)" }}>
+                    {s.sub}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Section>
+        </section>
+
+        {/* Scroll-Reveal Photo Areas */}
+        <section className="px-6 py-10 md:px-12 md:py-16" style={{ maxWidth: 900, margin: "0 auto" }}>
+          <div className="flex flex-col" style={{ gap: 80 }}>
+            <ScrollRevealPhoto photoA="/A1.jpg" photoB="/B1.jpg" />
+            <ScrollRevealPhoto photoA="/A2.jpg" photoB="/B2.jpg" />
+          </div>
+        </section>
+
+        {/* Portfolio */}
+        <section id="portfolio" className="px-6 py-10 md:px-12 md:py-16" style={{ maxWidth: 900, margin: "0 auto" }}>
+          <Section>
+            <div className="flex items-center gap-3 mb-8">
+              <span
+                className="text-[11px] tracking-[2px]"
+                style={{ fontFamily: "'Space Mono', monospace", color: "rgba(255,255,255,0.25)" }}
+              >
+                01
+              </span>
+              <div className="w-6 h-px" style={{ background: "rgba(255,255,255,0.15)" }} />
+              <span className="text-sm font-medium text-white">作品集</span>
+            </div>
+          </Section>
+
+          <Section delay={0.06}>
+            <IconNavSelector
+              items={PORTFOLIO_HOME.map((p) => ({
+                id: p.id,
+                title: p.title,
+                icon: p.icon,
+                color: p.color,
+              }))}
+              activeId={selectedPortfolio}
+              onSelect={setSelectedPortfolio}
+            />
+          </Section>
+
+          {(() => {
+            const item = PORTFOLIO_HOME.find((p) => p.id === selectedPortfolio);
+            if (!item) return null;
+            return (
+              <Section key={item.id} delay={0.1}>
+                <button
+                  onClick={() => router.push(`/portfolio/${item.id}`)}
+                  className="w-full text-left cursor-pointer border-none bg-transparent p-0 mt-4"
+                >
+                  <div
+                    className="group relative rounded-2xl overflow-hidden border transition-all duration-300 ease-out"
+                    style={{ background: "rgba(255,255,255,0.02)", borderColor: "rgba(255,255,255,0.06)" }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = `${item.color}50`;
+                      e.currentTarget.style.transform = "translateY(-2px)";
+                      e.currentTarget.style.background = "rgba(255,255,255,0.03)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)";
+                      e.currentTarget.style.transform = "translateY(0)";
+                      e.currentTarget.style.background = "rgba(255,255,255,0.02)";
+                    }}
+                  >
+                    <div
+                      className="absolute -top-[40px] -right-[40px] w-[120px] h-[120px] rounded-full pointer-events-none"
+                      style={{ background: `radial-gradient(circle, ${item.color}12 0%, transparent 70%)` }}
+                    />
+                    <div className="flex gap-4 p-5 items-center">
+                      <div className="w-20 h-20 rounded-xl shrink-0 overflow-hidden" style={{ background: `${item.color}10` }}>
+                        <img src={item.cover} alt={item.title} className="w-full h-full object-cover" loading="lazy" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1.5">
+                          <span className="text-lg">{item.icon}</span>
+                          <span className="text-base font-semibold text-white">{item.title}</span>
+                        </div>
+                        <p className="text-[13px] mb-2 leading-relaxed" style={{ color: "rgba(255,255,255,0.4)" }}>{item.desc}</p>
+                        <span className="inline-block text-[11px] px-2.5 py-[3px] rounded-md" style={{ color: item.color, background: `${item.color}10`, fontFamily: "'Space Mono', monospace" }}>{item.count}</span>
+                      </div>
+                      <div className="text-[#ffffff20] group-hover:text-[#ffffff40] transition-colors">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+                      </div>
                     </div>
-                    <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.15em] text-white/40">
-                      {card.accent}
-                    </span>
+                    <div className="h-[2px] w-full rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: `linear-gradient(90deg, transparent, ${item.color}60, transparent)` }} />
                   </div>
+                </button>
+              </Section>
+            );
+          })()}
+        </section>
 
-                  {/* Title */}
-                  <h2 className="mt-5 text-lg font-semibold tracking-[-0.02em] text-[#F1F5F9] transition-colors group-hover/card:text-white">
-                    {card.title}
-                  </h2>
+        {/* Projects & Experience — 3D Flip Card */}
+        <section id="projects" className="px-6 py-10 md:px-12 md:py-16" style={{ maxWidth: 700, margin: "0 auto" }}>
+          <Section>
+            <div className="flex items-center gap-3 mb-8">
+              <span className="text-[11px] tracking-[2px]" style={{ fontFamily: "'Space Mono', monospace", color: "rgba(255,255,255,0.25)" }}>02</span>
+              <div className="w-6 h-px" style={{ background: "rgba(255,255,255,0.15)" }} />
+              <span className="text-sm font-medium text-white">项目 & 经历</span>
+            </div>
+          </Section>
+          <Section delay={0.1}>
+            <FlipRadarCard radarData={RADAR_DATA} experiences={EXPERIENCES} />
+          </Section>
+        </section>
 
-                  {/* Description */}
-                  <p className="mt-2.5 text-sm leading-6 text-[#94A3B8]">
-                    {card.desc}
-                  </p>
-
-                  {/* CTA */}
-                  <div className={`mt-5 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r ${card.gradient} bg-clip-text text-sm font-medium text-transparent transition-all group-hover/card:gap-3`}>
-                    <span>查看详情</span>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-white/60">
-                      <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-                    </svg>
+        {/* Skills */}
+        <section id="skills" className="px-6 py-10 md:px-12 md:py-16" style={{ maxWidth: 900, margin: "0 auto" }}>
+          <Section>
+            <div className="flex items-center gap-3 mb-8">
+              <span className="text-[11px] tracking-[2px]" style={{ fontFamily: "'Space Mono', monospace", color: "rgba(255,255,255,0.25)" }}>03</span>
+              <div className="w-6 h-px" style={{ background: "rgba(255,255,255,0.15)" }} />
+              <span className="text-sm font-medium text-white">专业技能</span>
+            </div>
+          </Section>
+          <div className="flex flex-col gap-5">
+            {SKILLS.map((s, si) => (
+              <Section key={si} delay={si * 0.08}>
+                <div className="flex items-start gap-5">
+                  <span className="text-xs w-16 shrink-0 pt-2" style={{ color: "rgba(255,255,255,0.3)", fontFamily: "'Space Mono', monospace" }}>{s.cat}</span>
+                  <div className="flex flex-wrap gap-2">
+                    {s.items.map((item, ii) => (
+                      <span key={ii} className="inline-block text-[13px] px-4 py-2 rounded-lg cursor-default transition-all duration-200" style={{ color: "rgba(255,255,255,0.6)", background: "rgba(255,255,255,0.03)", border: "0.5px solid rgba(255,255,255,0.06)" }}
+                        onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(59,130,246,0.08)"; e.currentTarget.style.borderColor = "rgba(59,130,246,0.2)"; e.currentTarget.style.color = "#93c5fd"; }}
+                        onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.03)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)"; e.currentTarget.style.color = "rgba(255,255,255,0.6)"; }}
+                      >{item}</span>
+                    ))}
                   </div>
+                </div>
+              </Section>
+            ))}
+          </div>
+        </section>
 
-                  {/* Bottom accent line */}
-                  <div className={`absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r ${card.gradient} rounded-full opacity-0 transition-opacity duration-500 group-hover/card:opacity-100`} />
+        {/* Education */}
+        <section id="education" className="px-6 py-10 md:px-12 md:py-16" style={{ maxWidth: 900, margin: "0 auto" }}>
+          <Section>
+            <div className="flex items-center gap-3 mb-6">
+              <span className="text-[11px] tracking-[2px]" style={{ fontFamily: "'Space Mono', monospace", color: "rgba(255,255,255,0.25)" }}>04</span>
+              <div className="w-6 h-px" style={{ background: "rgba(255,255,255,0.15)" }} />
+              <span className="text-sm font-medium text-white">教育背景</span>
+            </div>
+            <div className="p-6 rounded-2xl flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4" style={{ background: "rgba(255,255,255,0.02)", border: "0.5px solid rgba(255,255,255,0.06)" }}>
+              <div>
+                <div className="text-base font-semibold text-white mb-1">湖北汽车工程学院</div>
+                <div className="text-[13px]" style={{ color: "rgba(255,255,255,0.4)" }}>电子信息工程（本科）</div>
+              </div>
+              <div className="text-right">
+                <div className="text-xs" style={{ color: "rgba(255,255,255,0.25)", fontFamily: "'Space Mono', monospace" }}>2021 — 2025</div>
+                <div className="flex gap-2 mt-2 justify-end">
+                  {["GPA 3.5", "Top 7%", "优秀毕业生"].map((t, i) => (
+                    <span key={i} className="text-[11px] px-2.5 py-[3px] rounded-md" style={{ color: "rgba(255,255,255,0.45)", background: "rgba(255,255,255,0.04)" }}>{t}</span>
+                  ))}
                 </div>
               </div>
-            </AnimatedCard>
-          ))}
-        </div>
+            </div>
+          </Section>
+        </section>
 
-        <div id="contact"><CallToAction shake={shakeContact} /></div>
-      </main>
+        {/* Contact */}
+        <section id="contact" className="px-6 py-20 md:px-12 md:py-16 text-center">
+          <Section>
+            <p className="text-[13px] tracking-[2px] mb-4" style={{ color: "rgba(255,255,255,0.25)", fontFamily: "'Space Mono', monospace" }}>CONTACT</p>
+            <h2 className="text-[32px] font-bold mb-3 gradient-text" style={{ backgroundImage: "linear-gradient(90deg, #fff, rgba(255,255,255,0.6))" }}>期待与您交流</h2>
+            <p className="text-[15px] mb-8" style={{ color: "rgba(255,255,255,0.35)" }}>如果您对我的项目经历感兴趣，欢迎随时联系</p>
+            <div className="flex justify-center gap-4 flex-wrap">
+              {[{ label: "134 0968 7811", icon: "📱" }, { label: "2595617884@qq.com", icon: "✉️" }].map((c, i) => (
+                <div key={i} className="flex items-center gap-2 px-5 py-2.5 rounded-[10px] text-sm cursor-pointer transition-all duration-200"
+                  style={{ background: "rgba(255,255,255,0.03)", border: "0.5px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.6)" }}
+                  onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(59,130,246,0.3)"; e.currentTarget.style.background = "rgba(59,130,246,0.05)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; e.currentTarget.style.background = "rgba(255,255,255,0.03)"; }}
+                ><span>{c.icon}</span> {c.label}</div>
+              ))}
+            </div>
+          </Section>
+        </section>
+
+      </div>
+
+      {/* Inline keyframes for blink cursor */}
+      <style>{`
+        .gradient-text {
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          color: transparent;
+        }
+      `}</style>
     </div>
   );
 }

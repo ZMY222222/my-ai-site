@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { GlassBreakTransition } from "@/components/glass-break-transition";
+import { VortexButton } from "@/components/vortex-button";
 
 const nodeLines = [
   "// data.label = 'human_intent'",
@@ -33,12 +34,20 @@ class Node {
 
 export default function HomePage() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const btnRef = useRef<HTMLButtonElement>(null);
   const [visible, setVisible] = useState(false);
-  const [btnHover, setBtnHover] = useState(false);
   const [breaking, setBreaking] = useState(false);
   const router = useRouter();
   const navRef = useRef(false);
+
+  const handleClick = () => {
+    if (navRef.current) return;
+    navRef.current = true;
+    const voice = new Audio("/ttsmaker-file-2026-5-9-20-0-36.mp3");
+     voice.volume = 0.7;
+     (window as any).__welcomeVoice = voice; // prevent GC during navigation
+     voice.play().catch(() => {});
+    setBreaking(true);
+  };
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 300);
@@ -140,12 +149,6 @@ export default function HomePage() {
     };
   }, []);
 
-  const handleClick = () => {
-    if (navRef.current) return;
-    navRef.current = true;
-    setBreaking(true);
-  };
-
   return (
     <main className="relative min-h-[100dvh] flex flex-col items-center justify-center overflow-hidden">
       <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }} />
@@ -181,14 +184,9 @@ export default function HomePage() {
           <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-[#6EA8FE]/20" />
         </div>
 
-        <button ref={btnRef} onClick={handleClick} disabled={breaking} onMouseEnter={() => setBtnHover(true)} onMouseLeave={() => setBtnHover(false)} className="group relative mt-10 inline-flex items-center gap-3 rounded-full border border-[#6EA8FE]/25 bg-[#6EA8FE]/5 px-8 py-3.5 text-sm font-medium tracking-[0.06em] text-[#B0C8E8] transition-all duration-500 hover:border-[#6EA8FE]/50 hover:bg-[#6EA8FE]/12 hover:text-[#E6EAF2] hover:shadow-[0_0_40px_rgba(110,168,254,0.18)] active:scale-[0.97]">
-          <span className={`absolute inset-0 rounded-full transition-opacity duration-700 ${btnHover ? "opacity-100" : "opacity-0"}`} style={{ background: "radial-gradient(circle at center, rgba(110,168,254,0.08) 0%, transparent 70%)" }} />
-          <span className="relative z-10">点击进入</span>
-          <svg className={`relative z-10 w-4 h-4 transition-transform duration-300 ${btnHover ? "translate-x-1" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12" />
-            <polyline points="12 5 19 12 12 19" />
-          </svg>
-        </button>
+        <div className="mt-14">
+          <VortexButton onClick={handleClick} disabled={breaking} />
+        </div>
 
         <div className="mt-14 text-[10px] tracking-[0.24em] text-[#6EA8FE]/20 uppercase">Personal Brand · AI Trainer</div>
       </div>

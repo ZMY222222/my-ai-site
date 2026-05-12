@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation";
 import { TransitionLink } from "@/components/page-transition";
 import Image from "next/image";
-import { portfolioItems } from "@/data/portfolio";
-import { AdaptiveImage } from "@/components/adaptive-image";
+import { portfolioItems, PARALLAX_IMAGES } from "@/data/portfolio";
+import { ParallaxGallery } from "@/components/parallax-gallery";
+import { GalleryGrid } from "@/components/gallery-grid";
 import { VideoCard } from "@/components/video-card";
 
 type Props = {
@@ -59,6 +60,10 @@ export default async function PortfolioDetailPage({ params }: Props) {
           </div>
         </div>
       </section>
+
+      {id === "ai-text-to-image-gallery" && (
+        <ParallaxGallery images={PARALLAX_IMAGES} />
+      )}
 
       {item.sections && (
         <section className="pb-20 md:pb-28">
@@ -130,42 +135,35 @@ export default async function PortfolioDetailPage({ params }: Props) {
       )}
 
       {item.galleries && (
-        <section className="pb-20 md:pb-28">
-          <div className="mx-auto max-w-6xl px-6">
-            {item.galleries.map((gallery) => (
-              <div key={gallery.category} className="mb-16">
-                <h2 className="mb-6 border-b border-white/10 pb-4 text-2xl font-semibold text-[#E6EAF2]">
-                  {gallery.label}
-                </h2>
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                  {gallery.images?.map((img) => (
-                    <div
-                      key={img.alt}
-                      className="overflow-hidden rounded-[20px] border border-white/10 bg-[#151B34]/80 transition hover:border-white/20"
-                    >
-                      <div className="aspect-[4/3] bg-[#0D1225] relative">
-                        <AdaptiveImage
-                          base={img.base}
-                          alt={img.alt}
-                          className="absolute inset-0 h-full w-full object-cover"
+        <>
+          {item.galleries.some((g) => g.images?.length) ? (
+            <GalleryGrid galleries={item.galleries} />
+          ) : null}
+          {item.galleries.some((g) => g.videos?.length) ? (
+            <section className="pb-20 md:pb-28">
+              <div className="mx-auto max-w-6xl px-6">
+                {item.galleries.map((gallery) => (
+                  <div key={gallery.category} className="mb-16">
+                    <h2 className="mb-6 border-b border-white/10 pb-4 text-2xl font-semibold text-[#E6EAF2]">
+                      {gallery.label}
+                    </h2>
+                    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                      {gallery.videos?.map((vid) => (
+                        <VideoCard
+                          key={vid.alt}
+                          base={vid.base}
+                          alt={vid.alt}
+                          model={vid.model}
+                          videoSrc={vid.videoSrc}
                         />
-                      </div>
+                      ))}
                     </div>
-                  ))}
-                  {gallery.videos?.map((vid) => (
-                    <VideoCard
-                      key={vid.alt}
-                      base={vid.base}
-                      alt={vid.alt}
-                      model={vid.model}
-                      videoSrc={vid.videoSrc}
-                    />
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </section>
+            </section>
+          ) : null}
+        </>
       )}
 
       <section className="pb-20 md:pb-28">

@@ -10,6 +10,65 @@ export type PortfolioItem = {
   news?: { title: string; url: string; insight: string }[];
 };
 
+export interface ParallaxImage {
+  prefix: string;
+  label: string;
+  src: string;
+}
+
+export const PARALLAX_IMAGES: ParallaxImage[] = [
+  // film: jpg, png, png, jpg
+  { prefix: "film-01", label: "影视制作 01", src: "/portfolio/film-01.jpg" },
+  { prefix: "film-02", label: "影视制作 02", src: "/portfolio/film-02.png" },
+  { prefix: "film-03", label: "影视制作 03", src: "/portfolio/film-03.png" },
+  { prefix: "film-04", label: "影视制作 04", src: "/portfolio/film-04.jpg" },
+  // ui: jpg, jpg, jpg, png
+  { prefix: "ui-01", label: "UI 设计 01", src: "/portfolio/ui-01.jpg" },
+  { prefix: "ui-02", label: "UI 设计 02", src: "/portfolio/ui-02.jpg" },
+  { prefix: "ui-03", label: "UI 设计 03", src: "/portfolio/ui-03.jpg" },
+  { prefix: "ui-04", label: "UI 设计 04", src: "/portfolio/ui-04.png" },
+  // game: jpg, jpg, png, jpg
+  { prefix: "game-01", label: "游戏美术 01", src: "/portfolio/game-01.jpg" },
+  { prefix: "game-02", label: "游戏美术 02", src: "/portfolio/game-02.jpg" },
+  { prefix: "game-03", label: "游戏美术 03", src: "/portfolio/game-03.png" },
+  { prefix: "game-04", label: "游戏美术 04", src: "/portfolio/game-04.jpg" },
+  // edu: png, png, png, jpg
+  { prefix: "edu-01", label: "教育知识 01", src: "/portfolio/edu-01.png" },
+  { prefix: "edu-02", label: "教育知识 02", src: "/portfolio/edu-02.png" },
+  { prefix: "edu-03", label: "教育知识 03", src: "/portfolio/edu-03.png" },
+  { prefix: "edu-04", label: "教育知识 04", src: "/portfolio/edu-04.jpg" },
+  // poster: jpg, jpg, jpg, png
+  { prefix: "poster-01", label: "商业海报 01", src: "/portfolio/poster-01.jpg" },
+  { prefix: "poster-02", label: "商业海报 02", src: "/portfolio/poster-02.jpg" },
+  { prefix: "poster-03", label: "商业海报 03", src: "/portfolio/poster-03.jpg" },
+  { prefix: "poster-04", label: "商业海报 04", src: "/portfolio/poster-04.png" },
+  // photo: jpg, png, png, png
+  { prefix: "photo-01", label: "写实摄影 01", src: "/portfolio/photo-01.jpg" },
+  { prefix: "photo-02", label: "写实摄影 02", src: "/portfolio/photo-02.png" },
+  { prefix: "photo-03", label: "写实摄影 03", src: "/portfolio/photo-03.png" },
+  { prefix: "photo-04", label: "写实摄影 04", src: "/portfolio/photo-04.png" },
+  // ecommerce: png, png, png, jpg
+  { prefix: "ecommerce-01", label: "电商产品 01", src: "/portfolio/ecommerce-01.png" },
+  { prefix: "ecommerce-02", label: "电商产品 02", src: "/portfolio/ecommerce-02.png" },
+  { prefix: "ecommerce-03", label: "电商产品 03", src: "/portfolio/ecommerce-03.png" },
+  { prefix: "ecommerce-04", label: "电商产品 04", src: "/portfolio/ecommerce-04.jpg" },
+  // art: all png
+  { prefix: "art-01", label: "艺术插画 01", src: "/portfolio/art-01.png" },
+  { prefix: "art-02", label: "艺术插画 02", src: "/portfolio/art-02.png" },
+  { prefix: "art-03", label: "艺术插画 03", src: "/portfolio/art-03.png" },
+  { prefix: "art-04", label: "艺术插画 04", src: "/portfolio/art-04.png" },
+  // arch: png, jpg, png, png
+  { prefix: "arch-01", label: "建筑效果图 01", src: "/portfolio/arch-01.png" },
+  { prefix: "arch-02", label: "建筑效果图 02", src: "/portfolio/arch-02.jpg" },
+  { prefix: "arch-03", label: "建筑效果图 03", src: "/portfolio/arch-03.png" },
+  { prefix: "arch-04", label: "建筑效果图 04", src: "/portfolio/arch-04.png" },
+  // food: png, jpg, png, jpg
+  { prefix: "food-01", label: "食品美食 01", src: "/portfolio/food-01.png" },
+  { prefix: "food-02", label: "食品美食 02", src: "/portfolio/food-02.jpg" },
+  { prefix: "food-03", label: "食品美食 03", src: "/portfolio/food-03.png" },
+  { prefix: "food-04", label: "食品美食 04", src: "/portfolio/food-04.jpg" },
+];
+
 export type PortfolioGallery = {
   category: string;
   label: string;
