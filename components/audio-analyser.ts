@@ -1,10 +1,12 @@
 type Subscriber = (energy: number) => void;
+type SpectrumSubscriber = (data: Uint8Array, energy: number) => void;
 
 let audioCtx: AudioContext | null = null;
 let analyser: AnalyserNode | null = null;
 let sourceNode: MediaElementAudioSourceNode | null = null;
 let connectedEl: HTMLAudioElement | null = null;
 const subs = new Set<Subscriber>();
+const spectrumSubs = new Set<SpectrumSubscriber>();
 let raf = 0;
 let lastEnergy = 0;
 
@@ -23,6 +25,11 @@ function getOrCreateCtx() {
   }
   return { audioCtx: audioCtx!, analyser: analyser! };
 }
+
+export function getAudioContext() { return audioCtx; }
+export function getAnalyser() { return analyser; }
+export function isConnected() { return connectedEl !== null; }
+export function isMusicPlaying() { return connectedEl !== null && !connectedEl.paused; }
 
 export function connectAudio(el: HTMLAudioElement) {
   // media element source can only be created once per audio element
@@ -63,6 +70,7 @@ function startLoop() {
     // smooth transitions
     lastEnergy = lastEnergy * 0.6 + energy * 0.4;
     for (const fn of subs) fn(lastEnergy);
+    for (const fn of spectrumSubs) fn(data, lastEnergy);
     raf = requestAnimationFrame(tick);
   }
   raf = requestAnimationFrame(tick);
@@ -71,4 +79,9 @@ function startLoop() {
 export function subscribe(fn: Subscriber) {
   subs.add(fn);
   return () => { subs.delete(fn); };
+}
+
+export function subscribeSpectrum(fn: SpectrumSubscriber) {
+  spectrumSubs.add(fn);
+  return () => { spectrumSubs.delete(fn); };
 }

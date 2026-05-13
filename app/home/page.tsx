@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { SKILLS, EXPERIENCES, STATS, RADAR_DATA, PORTFOLIO_HOME } from "@/data/portfolio-home";
+import { EXPERIENCES, STATS, RADAR_DATA, PORTFOLIO_HOME } from "@/data/portfolio-home";
 import { useInView } from "@/hooks/use-in-view";
 import { useRouter } from "next/navigation";
 import { FlipRadarCard } from "@/components/flip-radar-card";
 import { IconNavSelector } from "@/components/icon-nav-selector";
 import { ClickRippleCanvas } from "@/components/click-ripple-canvas";
 import { ScrollRevealPhoto } from "@/components/scroll-reveal-photo";
+import { SkillsPiano } from "@/components/skills-piano";
 
 function Section({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -296,12 +297,9 @@ export default function HomePage() {
           </Section>
         </section>
 
-        {/* Scroll-Reveal Photo Areas */}
+        {/* Scroll-Reveal Photo Area 1 */}
         <section className="px-6 py-10 md:px-12 md:py-16" style={{ maxWidth: 900, margin: "0 auto" }}>
-          <div className="flex flex-col" style={{ gap: 80 }}>
-            <ScrollRevealPhoto photoA="/A1.jpg" photoB="/B1.jpg" />
-            <ScrollRevealPhoto photoA="/A2.jpg" photoB="/B2.jpg" />
-          </div>
+          <ScrollRevealPhoto photoA="/A1.jpg" photoB="/B1.jpg" />
         </section>
 
         {/* Portfolio */}
@@ -383,6 +381,11 @@ export default function HomePage() {
           })()}
         </section>
 
+        {/* Scroll-Reveal Photo Area 2 */}
+        <section className="px-6 py-10 md:px-12 md:py-16" style={{ maxWidth: 900, margin: "0 auto" }}>
+          <ScrollRevealPhoto photoA="/A2.jpg" photoB="/B2.jpg" />
+        </section>
+
         {/* Projects & Experience — 3D Flip Card */}
         <section id="projects" className="px-6 py-10 md:px-12 md:py-16" style={{ maxWidth: 700, margin: "0 auto" }}>
           <Section>
@@ -397,8 +400,13 @@ export default function HomePage() {
           </Section>
         </section>
 
-        {/* Skills */}
-        <section id="skills" className="px-6 py-10 md:px-12 md:py-16" style={{ maxWidth: 900, margin: "0 auto" }}>
+        {/* Scroll-Reveal Photo Area 3 */}
+        <section className="px-6 py-10 md:px-12 md:py-16" style={{ maxWidth: 900, margin: "0 auto" }}>
+          <ScrollRevealPhoto photoA="/A3.jpg" photoB="/B3.jpg" />
+        </section>
+
+        {/* Skills — Piano */}
+        <section id="skills" className="px-6 py-10 md:px-12 md:py-16" style={{ maxWidth: 960, margin: "0 auto" }}>
           <Section>
             <div className="flex items-center gap-3 mb-8">
               <span className="text-[11px] tracking-[2px]" style={{ fontFamily: "'Space Mono', monospace", color: "rgba(255,255,255,0.25)" }}>03</span>
@@ -406,23 +414,9 @@ export default function HomePage() {
               <span className="text-sm font-medium text-white">专业技能</span>
             </div>
           </Section>
-          <div className="flex flex-col gap-5">
-            {SKILLS.map((s, si) => (
-              <Section key={si} delay={si * 0.08}>
-                <div className="flex items-start gap-5">
-                  <span className="text-xs w-16 shrink-0 pt-2" style={{ color: "rgba(255,255,255,0.3)", fontFamily: "'Space Mono', monospace" }}>{s.cat}</span>
-                  <div className="flex flex-wrap gap-2">
-                    {s.items.map((item, ii) => (
-                      <span key={ii} className="inline-block text-[13px] px-4 py-2 rounded-lg cursor-default transition-all duration-200" style={{ color: "rgba(255,255,255,0.6)", background: "rgba(255,255,255,0.03)", border: "0.5px solid rgba(255,255,255,0.06)" }}
-                        onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(59,130,246,0.08)"; e.currentTarget.style.borderColor = "rgba(59,130,246,0.2)"; e.currentTarget.style.color = "#93c5fd"; }}
-                        onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.03)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)"; e.currentTarget.style.color = "rgba(255,255,255,0.6)"; }}
-                      >{item}</span>
-                    ))}
-                  </div>
-                </div>
-              </Section>
-            ))}
-          </div>
+          <Section delay={0.08}>
+            <SkillsPiano />
+          </Section>
         </section>
 
         {/* Education */}
