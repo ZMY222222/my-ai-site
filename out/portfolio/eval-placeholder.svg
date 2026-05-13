@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <rect width="400" height="300" fill="#0D1225"/>
+  <rect x="30" y="20" width="340" height="14" rx="4" fill="#1A2040"/>
+  <rect x="30" y="45" width="200" height="8" rx="3" fill="#151B34"/>
+  <rect x="30" y="75" width="340" height="40" rx="6" fill="#1E2D5A"/>
+  <rect x="50" y="87" width="60" height="16" rx="4" fill="#6EA8FE" opacity="0.3"/>
+  <rect x="120" y="87" width="80" height="16" rx="4" fill="#242B50"/>
+  <rect x="30" y="130" width="340" height="40" rx="6" fill="#1A2040"/>
+  <rect x="50" y="142" width="90" height="16" rx="4" fill="#242B50"/>
+  <rect x="150" y="142" width="70" height="16" rx="4" fill="#242B50"/>
+  <rect x="30" y="185" width="340" height="40" rx="6" fill="#1A2040"/>
+  <rect x="50" y="197" width="75" height="16" rx="4" fill="#242B50"/>
+  <rect x="30" y="240" width="160" height="40" rx="6" fill="#1A2040"/>
+  <rect x="210" y="240" width="160" height="40" rx="6" fill="#1A2040"/>
+  <text x="200" y="298" text-anchor="middle" fill="#4A5580" font-size="11" font-family="sans-serif">评估报告样例</text>
+</svg>

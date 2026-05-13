@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" fill="none">
+  <rect width="600" height="400" fill="#0E1620"/>
+  <rect x="80" y="40" width="440" height="280" rx="16" fill="#171F35"/>
+  <rect x="100" y="60" width="400" height="30" rx="6" fill="#222D50"/>
+  <rect x="120" y="72" width="160" height="8" rx="3" fill="#354A80"/>
+  <rect x="100" y="110" width="300" height="50" rx="12" fill="#2A3A65"/>
+  <rect x="100" y="175" width="400" height="12" rx="4" fill="#222D50"/>
+  <rect x="100" y="200" width="340" height="12" rx="4" fill="#171F35"/>
+  <rect x="100" y="225" width="240" height="12" rx="4" fill="#171F35"/>
+  <circle cx="440" cy="250" r="38" fill="#FF6D00" opacity="0.22"/>
+  <polygon points="428,238 428,262 452,250" fill="#FF9100"/>
+  <text x="300" y="360" text-anchor="middle" fill="#FF9100" font-size="16" font-family="sans-serif" font-weight="bold">广告 · 即梦</text>
+</svg>

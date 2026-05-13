@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" fill="none">
+  <rect width="600" height="400" fill="#0D1225"/>
+  <rect x="100" y="50" width="400" height="260" rx="12" fill="#1A2040"/>
+  <circle cx="230" cy="150" r="40" fill="#1E2D5A"/>
+  <circle cx="370" cy="160" r="25" fill="#151B34"/>
+  <circle cx="180" cy="200" r="20" fill="#151B34"/>
+  <circle cx="290" cy="210" r="15" fill="#1E2D5A"/>
+  <rect x="150" y="240" width="120" height="8" rx="3" fill="#2A3560"/>
+  <rect x="150" y="258" width="80" height="8" rx="3" fill="#242B50"/>
+  <text x="300" y="370" text-anchor="middle" fill="#4A5580" font-size="14" font-family="sans-serif">艺术插画 · Art Illustration</text>
+</svg>

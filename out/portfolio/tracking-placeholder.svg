@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <rect width="400" height="300" fill="#0D1225"/>
+  <rect x="30" y="20" width="340" height="30" rx="6" fill="#1A2040"/>
+  <rect x="45" y="29" width="80" height="12" rx="3" fill="#2A3560"/>
+  <rect x="140" y="29" width="80" height="12" rx="3" fill="#2A3560"/>
+  <rect x="30" y="65" width="340" height="8" rx="3" fill="#151B34"/>
+  <rect x="30" y="85" width="120" height="50" rx="6" fill="#1A2040"/>
+  <rect x="165" y="85" width="120" height="50" rx="6" fill="#1A2040"/>
+  <rect x="300" y="85" width="70" height="50" rx="6" fill="#1A2040"/>
+  <rect x="30" y="150" width="340" height="8" rx="3" fill="#151B34"/>
+  <rect x="30" y="170" width="340" height="100" rx="8" fill="#1A2040"/>
+  <rect x="50" y="185" width="120" height="12" rx="3" fill="#242B50"/>
+  <rect x="50" y="205" width="300" height="8" rx="3" fill="#151B34"/>
+  <rect x="50" y="220" width="260" height="8" rx="3" fill="#151B34"/>
+  <rect x="50" y="235" width="200" height="8" rx="3" fill="#151B34"/>
+  <text x="200" y="288" text-anchor="middle" fill="#4A5580" font-size="11" font-family="sans-serif">实验追踪与复盘</text>
+</svg>

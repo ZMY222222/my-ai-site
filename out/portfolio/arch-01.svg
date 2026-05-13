@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" fill="none">
+  <rect width="600" height="400" fill="#0D1225"/>
+  <rect x="80" y="40" width="440" height="280" rx="12" fill="#11162A"/>
+  <rect x="100" y="60" width="180" height="100" rx="6" fill="#1A2040"/>
+  <rect x="300" y="60" width="200" height="140" rx="6" fill="#1A2040"/>
+  <rect x="100" y="180" width="200" height="120" rx="6" fill="#1A2040"/>
+  <rect x="320" y="220" width="180" height="80" rx="6" fill="#1A2040"/>
+  <rect x="120" y="80" width="140" height="8" rx="3" fill="#242B50"/>
+  <rect x="120" y="96" width="100" height="8" rx="3" fill="#242B50"/>
+  <text x="300" y="370" text-anchor="middle" fill="#4A5580" font-size="14" font-family="sans-serif">建筑效果图 · Architecture</text>
+</svg>

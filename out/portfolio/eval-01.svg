@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <rect width="400" height="300" fill="#0D1225"/>
+  <rect x="20" y="15" width="360" height="12" rx="3" fill="#1A2040"/>
+  <rect x="20" y="38" width="240" height="8" rx="2" fill="#151B34"/>
+  <rect x="20" y="62" width="360" height="36" rx="5" fill="#1E2D5A"/>
+  <rect x="36" y="74" width="80" height="12" rx="3" fill="#6EA8FE" opacity="0.4"/>
+  <rect x="124" y="74" width="100" height="12" rx="3" fill="#242B50"/>
+  <rect x="20" y="112" width="360" height="36" rx="5" fill="#1A2040"/>
+  <rect x="36" y="124" width="100" height="12" rx="3" fill="#242B50"/>
+  <rect x="144" y="124" width="80" height="12" rx="3" fill="#242B50"/>
+  <rect x="20" y="162" width="360" height="36" rx="5" fill="#1A2040"/>
+  <rect x="36" y="174" width="70" height="12" rx="3" fill="#242B50"/>
+  <rect x="20" y="212" width="172" height="68" rx="6" fill="#151B34"/>
+  <rect x="36" y="228" width="60" height="10" rx="2" fill="#1E2D5A"/>
+  <rect x="36" y="248" width="120" height="6" rx="2" fill="#0D1225"/>
+  <rect x="208" y="212" width="172" height="68" rx="6" fill="#151B34"/>
+  <rect x="224" y="228" width="80" height="10" rx="2" fill="#1E2D5A"/>
+  <rect x="224" y="248" width="100" height="6" rx="2" fill="#0D1225"/>
+  <text x="200" y="298" text-anchor="middle" fill="#4A5580" font-size="11" font-family="sans-serif">评测报告 01</text>
+</svg>
