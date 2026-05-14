@@ -84,7 +84,7 @@ export function FloatAudioButton() {
         <div className="absolute pointer-events-none" style={{ right: 6, bottom: 6 }}>
           {/* Ring 1 */}
           <div
-            className="absolute rounded-full border border-[#6EA8FE]/30"
+            className="absolute rounded-full border border-[#00D4FF]/30"
             style={{
               width: 48, height: 48,
               right: -24, bottom: -24,
@@ -109,7 +109,7 @@ export function FloatAudioButton() {
 
       <button
         onClick={toggleRain}
-        className={`flex items-center gap-2 rounded-full border px-4 py-2 text-xs transition-all backdrop-blur-md ${rainPlaying ? "border-[#6EA8FE]/30 bg-[#6EA8FE]/15 text-[#E6EAF2]" : "border-white/10 bg-[#11162A]/90 text-[#B8C1D0] hover:border-white/20"}`}
+        className={`flex items-center gap-2 rounded-full border px-4 py-2 text-xs transition-all backdrop-blur-md ${rainPlaying ? "border-[#00D4FF]/30 bg-[#00D4FF]/15 text-[#F5F5F5]" : "border-white/10 bg-[#11162A]/90 text-[#E0E0E0] hover:border-white/20"}`}
       >
         <span>🌧</span>
         <span className="whitespace-nowrap">{rainPlaying ? "雨声中" : "开启雨声"}</span>
@@ -117,7 +117,7 @@ export function FloatAudioButton() {
 
       <button
         onClick={toggleMusic}
-        className={`flex items-center gap-2 rounded-full border px-4 py-2 text-xs transition-all backdrop-blur-md ${musicPlaying ? "border-[#6EA8FE]/30 bg-[#6EA8FE]/15 text-[#E6EAF2]" : "border-white/10 bg-[#11162A]/90 text-[#B8C1D0] hover:border-white/20"}`}
+        className={`flex items-center gap-2 rounded-full border px-4 py-2 text-xs transition-all backdrop-blur-md ${musicPlaying ? "border-[#00D4FF]/30 bg-[#00D4FF]/15 text-[#F5F5F5]" : "border-white/10 bg-[#11162A]/90 text-[#E0E0E0] hover:border-white/20"}`}
       >
         <span className={`inline-block ${musicPlaying ? "animate-spin" : ""}`} style={{ animationDuration: "4s" }}>🎵</span>
         <span className="whitespace-nowrap">{musicPlaying ? "音乐中" : "开启音乐"}</span>

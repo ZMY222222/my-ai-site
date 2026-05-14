@@ -16,7 +16,7 @@ export function MobileNav() {
         aria-label={open ? "关闭导航菜单" : "打开导航菜单"}
         aria-expanded={open}
         onClick={() => setOpen((value) => !value)}
-        className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-[#E6EAF2] transition hover:border-white/20 hover:bg-white/10 md:hidden"
+        className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-[#00D4FF]/30 bg-[#151B34] text-[#F5F5F5] transition hover:border-[#00D4FF]/50 hover:bg-[#151B34] md:hidden" style={{ textShadow: "0 0 4px rgba(0,212,255,0.6)" }}
       >
         <span className="relative block h-4 w-5">
           <span
@@ -58,10 +58,10 @@ export function MobileNav() {
         >
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-sm font-medium text-[#E6EAF2]">
+              <div className="text-sm font-bold italic text-[#F5F5F5]" style={{ textShadow: "0 0 4px rgba(0,212,255,0.6), 0 0 10px rgba(0,212,255,0.3)" }}>
                 {siteConfig.name}
               </div>
-              <div className="mt-1 text-xs text-[#B8C1D0]">
+              <div className="mt-1 text-xs text-[#E0E0E0]">
                 Training · Systems · Workflow
               </div>
             </div>
@@ -70,7 +70,7 @@ export function MobileNav() {
               type="button"
               aria-label="关闭导航菜单"
               onClick={() => setOpen(false)}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-[#E6EAF2] transition hover:border-white/20 hover:bg-white/10"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[#00D4FF]/30 bg-[#151B34] text-[#F5F5F5] transition hover:border-[#00D4FF]/50 hover:bg-[#151B34]" style={{ textShadow: "0 0 4px rgba(0,212,255,0.6)" }}
             >
               ×
             </button>
@@ -88,11 +88,12 @@ export function MobileNav() {
                   key={item.href}
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className={`block rounded-2xl border px-4 py-4 text-sm transition ${
+                  className={`block rounded-2xl border px-4 py-4 text-base transition ${
                     isActive
-                      ? "border-[#6EA8FE]/30 bg-[#6EA8FE]/10 text-[#E6EAF2]"
-                      : "border-white/10 bg-white/[0.03] text-[#B8C1D0] hover:border-white/20 hover:bg-white/[0.05] hover:text-[#E6EAF2]"
+                      ? "border-[#00D4FF]/30 bg-[#00D4FF]/10 text-[#F5F5F5]"
+                      : "border-white/10 bg-white/[0.03] text-[#E0E0E0] hover:border-white/20 hover:bg-white/[0.05] hover:text-[#F5F5F5]"
                   }`}
+                  style={isActive ? { textShadow: "0 0 5px rgba(0,212,255,0.7), 0 0 12px rgba(0,212,255,0.4)" } : undefined}
                 >
                   {item.label}
                 </TransitionLink>
@@ -101,8 +102,8 @@ export function MobileNav() {
           </nav>
 
           <div className="mt-8 rounded-[24px] border border-white/10 bg-[#151B34]/80 p-5">
-            <div className="text-sm text-[#B8C1D0]">当前网站定位</div>
-            <p className="mt-3 text-sm leading-7 text-[#BFC8D6]">
+            <div className="text-sm text-[#E0E0E0]">当前网站定位</div>
+            <p className="mt-3 text-sm leading-7 text-[#E0E0E0]">
               面向训练实践、项目沉淀、方法复盘与长期技术内容维护的 AI训练师个人网站。
             </p>
           </div>

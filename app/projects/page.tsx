@@ -19,7 +19,7 @@ function highlightNumbers(text: string) {
   const parts = text.split(/(\d[\d,./%≥+\-万]*\s*(?:条|%|人|个|倍|次|以上|左右|级|分|秒|时)?)/g);
   return parts.map((part, i) => {
     if (/^\d/.test(part)) {
-      return <span key={i} className="text-[#60A5FA] font-semibold">{part}</span>;
+      return <span key={i} className="text-[#00D4FF] font-semibold" style={{ textShadow: "0 0 3px rgba(0,212,255,0.5)" }}>{part}</span>;
     }
     return <span key={i}>{part}</span>;
   });
@@ -32,17 +32,17 @@ export default function ProjectsPage() {
         <div className="mx-auto max-w-6xl px-6">
           <TransitionLink
             href="/home"
-            className="inline-flex items-center gap-2 text-sm text-[#B8C1D0] transition hover:text-[#E6EAF2]"
+            className="inline-flex items-center gap-2 text-sm text-[#E0E0E0] transition hover:text-[#F5F5F5]"
           >
             <span>←</span>
             <span>返回首页</span>
           </TransitionLink>
 
           <div className="mt-6">
-            <h1 className="text-3xl font-semibold tracking-[-0.03em] text-[#E6EAF2] md:text-4xl">
+            <h1 className="text-3xl font-semibold tracking-[-0.03em] text-[#F5F5F5] md:text-4xl">
               项目经历
             </h1>
-            <p className="mt-4 max-w-3xl text-base leading-8 text-[#B8C1D0]">
+            <p className="mt-4 max-w-3xl text-base leading-8 text-[#E0E0E0]">
               6个大模型核心项目全流程实操，覆盖消费级语音助手与车载智能交互两大核心赛道，按时间倒序排列。
             </p>
           </div>
@@ -53,35 +53,35 @@ export default function ProjectsPage() {
         <div className="mx-auto max-w-6xl px-6">
           <div className="relative space-y-6">
             {/* Timeline connector line */}
-            <div className="absolute left-8 top-0 bottom-0 w-[1px] bg-gradient-to-b from-[#3B82F6]/40 via-[#60A5FA]/20 to-transparent hidden md:block" />
+            <div className="absolute left-8 top-0 bottom-0 w-[1px] bg-gradient-to-b from-[#FF6B35]/40 via-[#00D4FF]/20 to-transparent hidden md:block" />
 
             {sortedProjects.map((project, i) => (
               <article
                 key={project.slug}
-                className="relative rounded-[28px] border border-white/10 bg-[#151B34]/80 p-6 transition hover:border-white/20 hover:shadow-[0_8px_30px_rgba(96,165,250,0.1)] hover:-translate-y-1 md:p-8"
+                className="relative rounded-[28px] border border-white/10 bg-[#151B34]/80 p-6 transition hover:border-white/20 hover:shadow-[0_8px_30px_rgba(255,107,53,0.08)] hover:-translate-y-1 md:p-8"
               >
                 {/* Timeline dot */}
-                <div className="absolute left-[-8px] top-10 h-[17px] w-[17px] rounded-full border-2 border-[#3B82F6] bg-[#151B34] hidden md:block" />
+                <div className="absolute left-[-8px] top-10 h-[17px] w-[17px] rounded-full border-2 border-[#FF6B35] bg-[#151B34] hidden md:block" />
 
                 <div className="flex flex-col gap-6">
                   <div className="flex items-start gap-4">
                     {/* Badge */}
-                    <div className="hidden sm:flex shrink-0 h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#1E40AF] to-[#3B82F6]/60 text-2xl font-bold text-white/90">
+                    <div className="hidden sm:flex shrink-0 h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#1E40AF] to-[#00D4FF]/60 text-2xl font-bold text-white/90">
                       {(i + 1).toString().padStart(2, "0")}
                     </div>
 
                     <div className="flex-1">
                       <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                         <div>
-                          <div className="flex flex-wrap items-center gap-3 text-sm text-[#B8C1D0]">
+                          <div className="flex flex-wrap items-center gap-3 text-sm text-[#E0E0E0]">
                             {project.company && <span>{project.company}</span>}
                           </div>
-                          <h2 className="mt-2 text-xl font-semibold text-[#E6EAF2]">
+                          <h2 className="mt-2 text-xl font-semibold text-[#F5F5F5]">
                             {project.title}
                           </h2>
-                          <div className="mt-1 flex flex-wrap items-center gap-3 text-sm text-[#B8C1D0]">
+                          <div className="mt-1 flex flex-wrap items-center gap-3 text-sm text-[#E0E0E0]">
                             {project.role && (
-                              <span className="rounded-full border border-[#6EA8FE]/30 bg-[#6EA8FE]/10 px-3 py-0.5 text-xs text-[#6EA8FE]">
+                              <span className="rounded-full border border-[#00D4FF]/30 bg-[#00D4FF]/10 px-3 py-0.5 text-xs text-[#00D4FF]">
                                 {project.role}
                               </span>
                             )}
@@ -92,19 +92,19 @@ export default function ProjectsPage() {
                     </div>
                   </div>
 
-                  <p className="text-sm leading-7 text-[#B8C1D0]">
+                  <p className="text-sm leading-7 text-[#E0E0E0]">
                     {project.summary}
                   </p>
 
                   {project.responsibilities && (
                     <div>
-                      <div className="mb-3 text-xs uppercase tracking-[0.18em] text-[#6EA8FE]">
+                      <div className="mb-3 text-xs uppercase tracking-[0.18em] text-[#00D4FF]">
                         个人职责
                       </div>
                       <div className="space-y-2">
                         {project.responsibilities.map((r, j) => (
-                          <div key={j} className="flex items-start gap-3 text-sm leading-7 text-[#B8C1D0]">
-                            <span className="mt-[10px] h-[5px] w-[5px] shrink-0 rounded-full bg-[#6EA8FE]/60" />
+                          <div key={j} className="flex items-start gap-3 text-sm leading-7 text-[#E0E0E0]">
+                            <span className="mt-[10px] h-[5px] w-[5px] shrink-0 rounded-full bg-[#00D4FF]/60" />
                             <span>{highlightNumbers(r)}</span>
                           </div>
                         ))}
@@ -119,7 +119,7 @@ export default function ProjectsPage() {
                       </div>
                       <div className="space-y-2">
                         {project.results.map((r, j) => (
-                          <div key={j} className="flex items-start gap-3 text-sm leading-7 text-[#B8C1D0]">
+                          <div key={j} className="flex items-start gap-3 text-sm leading-7 text-[#E0E0E0]">
                             <span className="mt-[10px] h-[5px] w-[5px] shrink-0 rounded-full bg-[#8B7CFF]/60" />
                             <span>{highlightNumbers(r)}</span>
                           </div>
@@ -132,7 +132,7 @@ export default function ProjectsPage() {
                     {project.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-[#B8C1D0] transition hover:bg-white/10 hover:border-white/20 hover:text-[#E6EAF2] cursor-pointer"
+                        className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-[#E0E0E0] transition hover:bg-white/10 hover:border-white/20 hover:text-[#F5F5F5] cursor-pointer"
                       >
                         {tag}
                       </span>
@@ -146,7 +146,7 @@ export default function ProjectsPage() {
           <div className="mt-16 border-t border-white/10 pt-8">
             <TransitionLink
               href="/home"
-              className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-medium text-[#E6EAF2] transition hover:border-white/20 hover:bg-white/10"
+              className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-medium text-[#F5F5F5] transition hover:border-white/20 hover:bg-white/10"
             >
               ← 返回首页
             </TransitionLink>

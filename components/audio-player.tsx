@@ -67,7 +67,7 @@ export function AudioPlayer() {
       >
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="shrink-0 flex h-7 w-7 items-center justify-center rounded-full text-[#B8C1D0] transition hover:text-[#E6EAF2]"
+          className="shrink-0 flex h-7 w-7 items-center justify-center rounded-full text-[#E0E0E0] transition hover:text-[#F5F5F5]"
           aria-label={collapsed ? "展开音乐面板" : "收起音乐面板"}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -80,7 +80,7 @@ export function AudioPlayer() {
         {!collapsed && (
           <button
             onClick={togglePlay}
-            className="shrink-0 flex items-center gap-1.5 text-xs text-[#BFC8D6] transition hover:text-[#E6EAF2]"
+            className="shrink-0 flex items-center gap-1.5 text-xs text-[#E0E0E0] transition hover:text-[#F5F5F5]"
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill={playing ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               {playing ? (
@@ -99,7 +99,7 @@ export function AudioPlayer() {
 
       {!collapsed && (
         <div className="flex h-10 items-center rounded-full border border-white/10 bg-[#11162A]/90 backdrop-blur-md px-3">
-          <span className="text-xs text-[#BFC8D6] whitespace-nowrap">
+          <span className="text-xs text-[#E0E0E0] whitespace-nowrap">
             {playing ? "🎵 正在播放" : "⏸ 已暂停"}
           </span>
         </div>

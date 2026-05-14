@@ -38,15 +38,16 @@ export default function ExperiencePage() {
     <div className="mx-auto max-w-4xl px-4 pb-20 pt-16 md:px-6 md:pt-20">
       <TransitionLink
         href="/home"
-        className="inline-flex items-center gap-2 text-sm text-[#B8C1D0] transition hover:text-[#E6EAF2]"
+        className="inline-flex items-center gap-2 text-sm text-[#E0E0E0] transition hover:text-[#F5F5F5]"
+        style={{ textShadow: "0 0 2px rgba(0,212,255,0.3)" }}
       >
         <span>←</span>
         <span>返回首页</span>
       </TransitionLink>
 
       <div className="mt-8 rounded-[28px] border border-white/10 bg-[#151B34]/80 p-8 md:p-10">
-        <div className="text-xs uppercase tracking-[0.2em] text-[#6EA8FE]">Experience</div>
-        <h1 className="mt-3 text-3xl font-semibold text-[#E6EAF2]">工作经历</h1>
+        <div className="text-xs uppercase tracking-[0.2em] text-[#00D4FF]" style={{ textShadow: "0 0 3px rgba(0,212,255,0.6), 0 0 8px rgba(0,212,255,0.3)" }}>Experience</div>
+        <h1 className="mt-3 text-3xl font-semibold text-[#F5F5F5]">工作经历</h1>
 
         <div className="mt-8 space-y-6">
           {workHistory.map((job, idx) => (
@@ -54,17 +55,17 @@ export default function ExperiencePage() {
               key={idx}
               className="rounded-2xl border border-white/10 bg-white/[0.02] p-6"
             >
-              <div className="flex flex-wrap items-center gap-2 text-sm text-[#B8C1D0]">
-                <span className="font-semibold text-[#6EA8FE]">{job.role}</span>
+              <div className="flex flex-wrap items-center gap-2 text-sm text-[#E0E0E0]">
+                <span className="font-semibold text-[#00D4FF]">{job.role}</span>
                 <span className="text-white/20">|</span>
                 <span>{job.period}</span>
               </div>
-              <h2 className="mt-2 text-xl font-semibold text-[#E6EAF2]">{job.company}</h2>
-              <p className="mt-1 text-sm text-[#B8C1D0]">{job.department}</p>
+              <h2 className="mt-2 text-xl font-semibold text-[#F5F5F5]">{job.company}</h2>
+              <p className="mt-1 text-sm text-[#E0E0E0]">{job.department}</p>
               <div className="mt-4 space-y-2">
                 {job.highlights.map((h, i) => (
-                  <div key={i} className="flex items-start gap-3 text-sm leading-7 text-[#B8C1D0]">
-                    <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#6EA8FE]/60" />
+                  <div key={i} className="flex items-start gap-3 text-sm leading-7 text-[#E0E0E0]">
+                    <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#00D4FF]/60" />
                     {h}
                   </div>
                 ))}
@@ -76,7 +77,7 @@ export default function ExperiencePage() {
         <div className="mt-8">
           <TransitionLink
             href="/projects"
-            className="inline-flex items-center gap-2 rounded-xl border border-[#6EA8FE]/25 bg-[#6EA8FE]/8 px-6 py-3 text-sm font-medium text-[#6EA8FE] transition hover:border-[#6EA8FE]/40 hover:bg-[#6EA8FE]/12 active:scale-95"
+            className="inline-flex items-center gap-2 rounded-xl border border-[#00D4FF]/25 bg-[#00D4FF]/8 px-6 py-3 text-sm font-medium text-[#00D4FF] transition hover:border-[#00D4FF]/40 hover:bg-[#00D4FF]/12 active:scale-95"
           >
             详细项目了解 →
           </TransitionLink>

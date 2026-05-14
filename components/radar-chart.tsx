@@ -79,7 +79,7 @@ export function RadarChart({ data }: { data: RadarDimension[] }) {
       c.moveTo(pts[0].x, pts[0].y);
       for (let i = 1; i < pts.length; i++) c.lineTo(pts[i].x, pts[i].y);
       c.closePath();
-      c.fillStyle = "rgba(59,130,246,0.08)";
+      c.fillStyle = "rgba(0,212,255,0.1)";
       c.fill();
 
       // Stroke
@@ -87,7 +87,7 @@ export function RadarChart({ data }: { data: RadarDimension[] }) {
       c.moveTo(pts[0].x, pts[0].y);
       for (let i = 1; i < pts.length; i++) c.lineTo(pts[i].x, pts[i].y);
       c.closePath();
-      c.strokeStyle = "rgba(59,130,246,0.35)";
+      c.strokeStyle = "rgba(0,212,255,0.45)";
       c.lineWidth = 1.2;
       c.stroke();
 
@@ -116,10 +116,10 @@ export function RadarChart({ data }: { data: RadarDimension[] }) {
         const lr = RADIUS + 22;
         const lx = CENTER + Math.cos(a) * lr;
         const ly = CENTER + Math.sin(a) * lr;
-        c.font = "11px 'Space Mono', monospace";
+        c.font = "14px 'Space Mono', monospace";
         c.textAlign = "center";
         c.textBaseline = "middle";
-        c.fillStyle = hoverI === i ? data[i].color : "rgba(255,255,255,0.35)";
+        c.fillStyle = hoverI === i ? data[i].color : "rgba(255,255,255,0.45)";
         c.fillText(data[i].axis, lx, ly);
       }
 
@@ -131,7 +131,7 @@ export function RadarChart({ data }: { data: RadarDimension[] }) {
         const a = angles[i];
         const vx = p.x + Math.cos(a) * offset;
         const vy = p.y + Math.sin(a) * offset;
-        c.font = "9px 'Space Mono', monospace";
+        c.font = "12px 'Space Mono', monospace";
         c.textAlign = "center";
         c.textBaseline = "middle";
         c.fillStyle = hoverI === i ? data[i].color : "rgba(255,255,255,0.3)";
@@ -147,7 +147,7 @@ export function RadarChart({ data }: { data: RadarDimension[] }) {
         c.fillStyle = d.color;
         c.fillText(d.longName, CENTER, CENTER - 6);
 
-        c.font = "10px 'DM Sans', 'Noto Sans SC', sans-serif";
+        c.font = "14px 'DM Sans', 'Noto Sans SC', sans-serif";
         c.textBaseline = "top";
         c.fillStyle = "rgba(255,255,255,0.45)";
         c.fillText(d.detail, CENTER, CENTER + 6);

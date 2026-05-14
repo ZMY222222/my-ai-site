@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-const DOT_COLORS = ["#6EA8FE", "#6EA8FE", "#8B7CFF", "#8B7CFF", "#A78BFA", "#E6EAF2", "#6EA8FE"];
+const DOT_COLORS = ["#00D4FF", "#00D4FF", "#8B7CFF", "#8B7CFF", "#A78BFA", "#F5F5F5", "#00D4FF"];
 const AI_SYMBOLS = ["<>", "{}", "//", "AI"];
 const DOT_COUNT = 7;
 const MAX_DISTANCE = 120;

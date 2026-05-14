@@ -61,7 +61,7 @@ export function RainAudio() {
       >
         <button
           onClick={togglePlay}
-          className="shrink-0 flex h-7 w-7 items-center justify-center rounded-full text-[#B8C1D0] transition hover:text-[#E6EAF2]"
+          className="shrink-0 flex h-7 w-7 items-center justify-center rounded-full text-[#E0E0E0] transition hover:text-[#F5F5F5]"
           aria-label={playing ? "暂停雨声" : "播放雨声"}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -77,7 +77,7 @@ export function RainAudio() {
         </button>
 
         {playing && (
-          <span className="text-xs text-[#BFC8D6] whitespace-nowrap">🌧 雨声</span>
+          <span className="text-xs text-[#E0E0E0] whitespace-nowrap">🌧 雨声</span>
         )}
       </div>
     </div>

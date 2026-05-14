@@ -6,9 +6,54 @@ import { useInView } from "@/hooks/use-in-view";
 import { useRouter } from "next/navigation";
 import { FlipRadarCard } from "@/components/flip-radar-card";
 import { IconNavSelector } from "@/components/icon-nav-selector";
-import { ClickRippleCanvas } from "@/components/click-ripple-canvas";
 import { ScrollRevealPhoto } from "@/components/scroll-reveal-photo";
 import { SkillsPiano } from "@/components/skills-piano";
+
+const ACCENT_COLORS = ["#FF3AF2", "#00F5D4", "#FFE600", "#FF6B35", "#7B2FFF"];
+
+const SECTION_BG = {
+  hero:      "#0D0D1A",
+  portfolio: "#1E0535",
+  projects:  "#051E35",
+  skills:    "#1A1A0A",
+  education: "#2E0A1A",
+  contact:   "#0A2E1A",
+  footer:    "#0D0D1A",
+};
+
+function ColorDivider({ color, nextColor }: { color: string; nextColor?: string }) {
+  return (
+    <div className="relative" style={{ height: 8 }}>
+      <div
+        className="absolute inset-0"
+        style={{
+          background: nextColor
+            ? `linear-gradient(90deg, ${color}, ${nextColor})`
+            : color,
+        }}
+      />
+      <div
+        className="absolute inset-0"
+        style={{
+          background: nextColor
+            ? `linear-gradient(90deg, ${color}40, ${nextColor}40)`
+            : `${color}40`,
+          filter: "blur(12px)",
+        }}
+      />
+    </div>
+  );
+}
+
+const INTRO = "两年AI训练师经验 · 小米+长城双大厂 · 6个核心项目全流程交付";
+
+const navItems = [
+  { label: "作品", id: "portfolio", color: "#FF3AF2" },
+  { label: "项目 & 经历", id: "projects", color: "#00F5D4" },
+  { label: "技能", id: "skills", color: "#FFE600" },
+  { label: "联系", id: "contact", color: "#7B2FFF" },
+];
+
 
 function Section({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -27,84 +72,179 @@ function Section({ children, delay = 0 }: { children: React.ReactNode; delay?: n
   );
 }
 
-const INTRO = "两年AI训练师经验 · 小米+长城双大厂 · 6个核心项目全流程交付";
+function FloatingChars({ text, baseDelay, baseDuration, className, style, charClassName }: {
+  text: string;
+  baseDelay: number;
+  baseDuration: number;
+  className?: string;
+  style?: React.CSSProperties;
+  charClassName?: string;
+}) {
+  return (
+    <span className={className} style={{ display: "inline-flex", flexWrap: "wrap", justifyContent: "center", ...style }}>
+      {Array.from(text).map((ch, i) => (
+        <span
+          key={i}
+          className={charClassName}
+          style={{
+            display: "inline-block",
+            animation: `float ${baseDuration + (i % 4) * 0.3}s ease-in-out infinite`,
+            animationDelay: `${baseDelay + i * 0.12}s`,
+            whiteSpace: ch === " " ? "pre" : undefined,
+          }}
+        >
+          {ch}
+        </span>
+      ))}
+    </span>
+  );
+}
 
 function TypeWriter() {
   return (
     <div style={{ textAlign: "center" }}>
-      <h1 className="typewriter-name" style={{
-        fontSize: 58,
-        fontWeight: 700,
-        letterSpacing: "-2px",
-        background: "linear-gradient(180deg, #ffffff 30%, rgba(255,255,255,0.45) 100%)",
-        WebkitBackgroundClip: "text",
-        WebkitTextFillColor: "transparent",
-        lineHeight: 1.1,
-        margin: "0 auto 16px",
-        display: "inline-block",
-      }}>
-        <span className="tw-inner tw-name">朱美阳</span>
+      <h1
+        className="font-outfit font-black"
+        style={{
+          fontSize: 72,
+          letterSpacing: "-2px",
+          lineHeight: 1.1,
+          margin: "0 auto 16px",
+        }}
+      >
+        <FloatingChars text="朱美阳" baseDelay={0} baseDuration={2.8} charClassName="gradient-text" />
       </h1>
 
-      <br />
-
-      <p className="typewriter-title" style={{
-        fontSize: 18,
-        color: "rgba(255,255,255,0.5)",
-        lineHeight: 1.6,
-        display: "inline-block",
-      }}>
-        <span className="tw-inner tw-title">AI训练师 / 大模型数据专家</span>
+      <p
+        className="font-outfit font-bold text-shadow-double"
+        style={{
+          fontSize: 22,
+          color: "#E0E0E0",
+          lineHeight: 1.6,
+        }}
+      >
+        <FloatingChars text="AI训练师 / 大模型数据专家" baseDelay={0.3} baseDuration={3} />
       </p>
-
-      <style>{`
-        .tw-inner {
-          display: inline-block;
-          overflow: hidden;
-          white-space: nowrap;
-          width: 0;
-        }
-        .tw-name {
-          border-right: 2px solid #3b82f6;
-          animation:
-            typeName 0.8s steps(3) 0.5s forwards,
-            cursorBlink 0.6s step-end 0.5s 6,
-            forceShow 0s 5s forwards;
-        }
-        .tw-title {
-          border-right-color: transparent;
-          animation:
-            typeTitle 1.2s steps(14) 1.8s forwards,
-            showCursor 0s 1.8s forwards,
-            cursorBlink 0.6s step-end 1.8s 8,
-            hideCursor 0s 4.5s forwards,
-            forceShow 0s 5s forwards;
-        }
-        @keyframes typeName  { from { width: 0; } to { width: 3em; } }
-        @keyframes typeTitle { from { width: 0; } to { width: 14em; } }
-        @keyframes cursorBlink { 0%,100% { border-right-color: #3b82f6; } 50% { border-right-color: transparent; } }
-        @keyframes showCursor  { to { border-right-color: #3b82f6; } }
-        @keyframes hideCursor  { to { border-right-color: transparent; } }
-        @keyframes forceShow  { to { width: auto; overflow: visible; border-right: none; } }
-      `}</style>
     </div>
   );
 }
 
-const navItems = [
-  { label: "作品", id: "portfolio" },
-  { label: "项目 & 经历", id: "projects" },
-  { label: "技能", id: "skills" },
-  { label: "联系", id: "contact" },
-];
+function FloatingEmoji({
+  emoji,
+  style,
+}: {
+  emoji: string;
+  style: React.CSSProperties;
+}) {
+  return (
+    <span
+      aria-hidden="true"
+      className="absolute pointer-events-none select-none text-2xl animate-float"
+      style={{ ...style, opacity: 0.15 }}
+    >
+      {emoji}
+    </span>
+  );
+}
+
+function DashedCircle({
+  size,
+  color,
+  style,
+}: {
+  size: number;
+  color: string;
+  style?: React.CSSProperties;
+}) {
+  return (
+    <div
+      aria-hidden="true"
+      className="absolute pointer-events-none animate-spin-slow"
+      style={{
+        width: size,
+        height: size,
+        border: `2px dashed ${color}`,
+        borderRadius: "50%",
+        opacity: 0.12,
+        ...style,
+      }}
+    />
+  );
+}
+
+function ColorSquare({
+  color,
+  style,
+}: {
+  color: string;
+  style?: React.CSSProperties;
+}) {
+  return (
+    <div
+      aria-hidden="true"
+      className="absolute pointer-events-none animate-wiggle"
+      style={{
+        width: 12,
+        height: 12,
+        background: color,
+        opacity: 0.18,
+        borderRadius: 2,
+        ...style,
+      }}
+    />
+  );
+}
+
+function SectionHeading({
+  num,
+  title,
+  accent,
+  bgText,
+}: {
+  num: string;
+  title: string;
+  accent: string;
+  bgText: string;
+}) {
+  return (
+    <div className="relative mb-12">
+      <span
+        className="absolute -top-16 -left-4 font-outfit font-black text-[120px] md:text-[180px] uppercase leading-none select-none pointer-events-none"
+        style={{ color: accent, opacity: 0.04 }}
+        aria-hidden="true"
+      >
+        {bgText}
+      </span>
+      <div className="relative flex items-center gap-4">
+        <div
+          className="flex items-center justify-center w-14 h-14 rounded-2xl border-4 font-space-mono font-bold text-xl"
+          style={{
+            borderColor: accent,
+            color: accent,
+            background: `${accent}15`,
+            borderStyle: "dashed",
+          }}
+        >
+          {num}
+        </div>
+        <h2
+          className="font-outfit font-black uppercase text-5xl md:text-7xl text-shadow-triple"
+          style={{ color: "#FFFFFF" }}
+        >
+          {title}
+        </h2>
+      </div>
+    </div>
+  );
+}
 
 export default function HomePage() {
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
   const [scrollY, setScrollY] = useState(0);
   const [selectedPortfolio, setSelectedPortfolio] = useState(PORTFOLIO_HOME[0]?.id ?? null);
+  const [activeNav, setActiveNav] = useState<string | null>(null);
   const router = useRouter();
 
-  // RAF-throttled scroll for parallax
   useEffect(() => {
     let ticking = false;
     const onScroll = () => {
@@ -120,6 +260,25 @@ export default function HomePage() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    const ids = navItems.map((n) => n.id);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActiveNav(entry.target.id);
+          }
+        }
+      },
+      { threshold: 0.3 },
+    );
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
+
   const scrollToId = (id: string) => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: "smooth" });
@@ -127,119 +286,81 @@ export default function HomePage() {
 
   return (
     <div
-      className="min-h-screen"
-      style={{
-        background: "transparent",
-        color: "#e2e8f0",
-        fontFamily: "'DM Sans', 'Noto Sans SC', system-ui, sans-serif",
-        position: "relative",
-      }}
+      className="min-h-screen font-dm-sans relative"
+      style={{ color: "#e2e8f0" }}
       onMouseMove={(e) => setMouse({ x: e.clientX, y: e.clientY })}
     >
-      {/* ================================================================
-           LAYER Z-INDEX MAP
-           z=-1 → ParticleNetworkBackground (existing, handled by layout)
-           z=0  → Parallax background (grid + orbs)
-           z=1  → ClickRippleCanvas (click ripple overlay)
-           z=2  → Cursor glow + page content
-      ================================================================ */}
+      <div
+        className="fixed pointer-events-none"
+        style={{
+          left: mouse.x - 250,
+          top: mouse.y - 250,
+          width: 500,
+          height: 500,
+          borderRadius: "50%",
+          background: `radial-gradient(circle, ${ACCENT_COLORS[0]}12 0%, transparent 70%)`,
+          zIndex: 100,
+          transition: "left 0.15s, top 0.15s",
+        }}
+      />
 
-      {/* Layer 0 — Parallax Background */}
-      <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 1 }}>
-        {/* Layer 0a: Dot grid (farthest, 10% scroll) */}
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: "radial-gradient(rgba(255,255,255,0.4) 1px, transparent 1px)",
-            backgroundSize: "32px 32px",
-            transform: `translateY(${scrollY * 0.1}px)`,
-            willChange: "transform",
-          }}
-        />
-
-        {/* Layer 0b: Blur orbs (middle, 30% scroll) */}
-        <div
-          className="absolute inset-0"
-          style={{
-            transform: `translateY(${scrollY * 0.3}px)`,
-            willChange: "transform",
-          }}
-        >
-          <div style={{
-            position: "absolute", top: "-10%", left: "60%",
-            width: 600, height: 600,
-            background: "radial-gradient(circle, #3b82f6 0%, transparent 70%)",
-            borderRadius: "50%", filter: "blur(80px)", opacity: 0.12,
-          }} />
-          <div style={{
-            position: "absolute", top: "30%", left: "-10%",
-            width: 500, height: 500,
-            background: "radial-gradient(circle, #8b5cf6 0%, transparent 70%)",
-            borderRadius: "50%", filter: "blur(80px)", opacity: 0.12,
-          }} />
-          <div style={{
-            position: "absolute", top: "70%", left: "70%",
-            width: 400, height: 400,
-            background: "radial-gradient(circle, #06b6d4 0%, transparent 70%)",
-            borderRadius: "50%", filter: "blur(80px)", opacity: 0.12,
-          }} />
-        </div>
-      </div>
-
-      {/* Layer 1 — Click Ripple Canvas */}
-      <ClickRippleCanvas />
-
-      {/* Layer 2 — Cursor glow + Content */}
-      <div className="relative" style={{ zIndex: 3 }}>
-        {/* Cursor glow */}
-        <div
-          className="fixed pointer-events-none"
-          style={{
-            left: mouse.x - 200,
-            top: mouse.y - 200,
-            width: 400,
-            height: 400,
-            borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 70%)",
-            zIndex: 1,
-            transition: "left 0.3s, top 0.3s",
-          }}
-        />
-
-        {/* Nav */}
         <nav
-          className="sticky top-0 z-10 flex items-center justify-between px-6 py-5 md:px-12"
+          className="sticky top-0 z-50 flex items-center justify-between px-6 py-4 md:px-12"
           style={{
-            background: scrollY > 50 ? "rgba(6,9,15,0.8)" : "transparent",
-            backdropFilter: scrollY > 50 ? "blur(20px)" : "none",
-            borderBottom: scrollY > 50 ? "0.5px solid rgba(255,255,255,0.06)" : "0.5px solid transparent",
+            background: scrollY > 50 ? "rgba(13,13,26,0.85)" : "transparent",
+            backdropFilter: scrollY > 50 ? "blur(24px)" : "none",
+            borderBottom: scrollY > 50 ? `4px solid ${ACCENT_COLORS[0]}` : "4px solid transparent",
             transition: "all 0.3s",
           }}
         >
           <button
-            className="flex items-center gap-2.5 cursor-pointer border-none bg-transparent p-0"
+            className="flex items-center gap-3 cursor-pointer border-none bg-transparent p-0"
             onClick={() => router.push("/")}
           >
             <div
-              className="flex h-8 w-8 items-center justify-center rounded-lg text-[13px] font-bold text-white"
+              className="flex h-10 w-10 items-center justify-center rounded-xl text-[15px] font-black text-white border-4 animate-pulse-glow"
               style={{
-                background: "linear-gradient(135deg, #3b82f6, #8b5cf6)",
+                background: `linear-gradient(135deg, ${ACCENT_COLORS[0]}, ${ACCENT_COLORS[4]})`,
+                borderColor: ACCENT_COLORS[2],
                 fontFamily: "'Space Mono', monospace",
               }}
             >
               朱
             </div>
-            <span className="text-[15px] font-medium tracking-[0.5px] text-white">Meiyang Zhu</span>
+            <span
+              className="text-[17px] font-bold tracking-[1px] text-white font-outfit"
+              style={{
+                textShadow: `0 0 8px ${ACCENT_COLORS[0]}80`,
+              }}
+            >
+              Meiyang Zhu
+            </span>
           </button>
-          <div className="flex gap-8">
-            {navItems.map((item, i) => (
+          <div className="flex gap-6 md:gap-8">
+            {navItems.map((item) => (
               <button
-                key={i}
+                key={item.id}
                 onClick={() => scrollToId(item.id)}
-                className="text-[13px] tracking-[0.5px] border-none bg-transparent cursor-pointer p-0 transition-colors duration-200"
-                style={{ color: "rgba(255,255,255,0.4)" }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "#fff")}
-                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.4)")}
+                className="relative text-[15px] font-bold tracking-[0.5px] border-none bg-transparent cursor-pointer p-0 pb-1 transition-all duration-200 font-outfit uppercase"
+                style={{
+                  color: activeNav === item.id ? item.color : `${item.color}90`,
+                  borderBottom: activeNav === item.id ? `4px solid ${item.color}` : `4px solid ${item.color}30`,
+                  textShadow: activeNav === item.id ? `0 0 12px ${item.color}60` : "none",
+                }}
+                onMouseEnter={(e) => {
+                  if (activeNav !== item.id) {
+                    e.currentTarget.style.color = item.color;
+                    e.currentTarget.style.borderBottom = `4px solid ${item.color}`;
+                    e.currentTarget.style.textShadow = `0 0 12px ${item.color}60`;
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (activeNav !== item.id) {
+                    e.currentTarget.style.color = `${item.color}90`;
+                    e.currentTarget.style.borderBottom = `4px solid ${item.color}30`;
+                    e.currentTarget.style.textShadow = "none";
+                  }
+                }}
               >
                 {item.label}
               </button>
@@ -247,74 +368,116 @@ export default function HomePage() {
           </div>
         </nav>
 
-        {/* Hero with Typewriter */}
-        <section className="px-6 pb-12 pt-[100px] md:px-12 md:pb-16 md:pt-[120px]" style={{ maxWidth: 800, margin: "0 auto" }}>
-          <TypeWriter />
-
-          <p
-            className="text-sm md:text-[15px] leading-relaxed max-w-[500px] mx-auto mb-12 font-normal"
-            style={{
-              color: "rgba(255,255,255,0.35)",
-              opacity: 1,
-              textAlign: "center",
-            }}
+        <section className="relative overflow-hidden" style={{ background: SECTION_BG.hero }}>
+          <div className="relative px-6 pb-20 pt-[100px] md:px-12 md:pb-28 md:pt-[140px]" style={{ maxWidth: 900, margin: "0 auto" }}>
+          <span
+            className="absolute top-8 left-0 font-outfit font-black text-[200px] md:text-[280px] uppercase leading-none select-none pointer-events-none"
+            style={{ color: ACCENT_COLORS[0], opacity: 0.04 }}
+            aria-hidden="true"
           >
-            {INTRO}
-          </p>
+            HELLO
+          </span>
 
-          <Section delay={0.15}>
+          <FloatingEmoji emoji="🚀" style={{ top: "10%", left: "5%" }} />
+          <FloatingEmoji emoji="✨" style={{ top: "20%", right: "8%", animationDelay: "1s" }} />
+          <FloatingEmoji emoji="💫" style={{ bottom: "25%", left: "15%", animationDelay: "2s" }} />
+          <FloatingEmoji emoji="⚡" style={{ top: "35%", right: "15%", animationDelay: "0.5s" }} />
+          <DashedCircle size={120} color={ACCENT_COLORS[0]} style={{ top: "5%", right: "10%" }} />
+          <DashedCircle size={80} color={ACCENT_COLORS[1]} style={{ bottom: "15%", left: "3%" }} />
+          <ColorSquare color={ACCENT_COLORS[2]} style={{ top: "30%", left: "8%" }} />
+          <ColorSquare color={ACCENT_COLORS[3]} style={{ bottom: "30%", right: "5%" }} />
+
+          <div className="relative">
+            <TypeWriter />
+
             <div
-              className="grid grid-cols-4 gap-0 rounded-2xl overflow-hidden mb-12 border"
-              style={{
-                background: "rgba(255,255,255,0.04)",
-                borderColor: "rgba(255,255,255,0.06)",
-              }}
+              className="max-w-[560px] mx-auto mb-16 text-center"
+              style={{ marginTop: 24 }}
             >
-              {STATS.map((s, i) => (
-                <div
-                  key={i}
-                  className="py-6 px-4 text-center"
-                  style={{
-                    background: "rgba(255,255,255,0.02)",
-                    borderRight: i < 3 ? "0.5px solid rgba(255,255,255,0.04)" : "none",
-                  }}
-                >
-                  <div
-                    className="text-[28px] font-bold tracking-[-1px] text-white"
-                    style={{ fontFamily: "'Space Mono', monospace" }}
-                  >
-                    {s.num}
-                  </div>
-                  <div className="text-[13px] mt-1" style={{ color: "rgba(255,255,255,0.5)" }}>
-                    {s.label}
-                  </div>
-                  <div className="text-[11px] mt-0.5" style={{ color: "rgba(255,255,255,0.25)" }}>
-                    {s.sub}
-                  </div>
-                </div>
-              ))}
+              <FloatingChars
+                text={INTRO}
+                baseDelay={0.6}
+                baseDuration={3.2}
+                className="text-lg md:text-xl font-medium font-dm-sans"
+                style={{
+                  color: "#F5F5F5",
+                  textShadow: `0 0 6px ${ACCENT_COLORS[0]}40`,
+                }}
+              />
             </div>
-          </Section>
+
+            <Section delay={0.15}>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-5 mb-16">
+                {STATS.map((s, i) => {
+                  const accent = ACCENT_COLORS[i % 5];
+                  const clashBorder = ACCENT_COLORS[(i + 2) % 5];
+                  const floatDurations = ["3s", "3.5s", "2.8s", "3.2s"];
+                  const floatDelays = ["0s", "0.6s", "1.2s", "0.3s"];
+                  return (
+                    <div
+                      key={i}
+                      className="relative py-8 px-5 text-center rounded-3xl border-4 backdrop-blur-sm"
+                      style={{
+                        background: "#2D1B4E80",
+                        borderColor: clashBorder,
+                        borderStyle: i % 2 === 0 ? "solid" : "dashed",
+                        boxShadow: `8px 8px 0 ${accent}, 16px 16px 0 ${ACCENT_COLORS[(i + 3) % 5]}`,
+                        animation: `float ${floatDurations[i]} ease-in-out infinite`,
+                        animationDelay: floatDelays[i],
+                      }}
+                    >
+                      <div
+                        className="text-[36px] font-black tracking-[-2px] font-space-mono"
+                        style={{ color: accent, textShadow: `0 0 20px ${accent}80` }}
+                      >
+                        {s.num}
+                      </div>
+                      <div
+                        className="text-[15px] font-bold mt-2 font-outfit uppercase"
+                        style={{ color: "#FFFFFF" }}
+                      >
+                        {s.label}
+                      </div>
+                      <div
+                        className="text-[13px] mt-1 font-space-mono"
+                        style={{ color: "rgba(255,255,255,0.55)" }}
+                      >
+                        {s.sub}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </Section>
+          </div>
+          </div>
         </section>
 
-        {/* Scroll-Reveal Photo Area 1 */}
-        <section className="px-6 py-10 md:px-12 md:py-16" style={{ maxWidth: 900, margin: "0 auto" }}>
-          <ScrollRevealPhoto photoA="/A1.jpg" photoB="/B1.jpg" />
+        <ColorDivider color={ACCENT_COLORS[0]} nextColor={ACCENT_COLORS[4]} />
+
+        <section className="relative overflow-hidden" style={{ background: `linear-gradient(180deg, ${SECTION_BG.hero}, ${SECTION_BG.portfolio})` }}>
+          <div className="relative px-6 py-10 md:px-12 md:py-16" style={{ maxWidth: 900, margin: "0 auto" }}>
+          <div className="absolute inset-0 pattern-checker opacity-[0.03]" aria-hidden="true" />
+          <ScrollRevealPhoto photoA="/A1.jpg" photoB="/B1.jpg" borderColor={ACCENT_COLORS[0]} shadowColor={ACCENT_COLORS[2]} shadowColor2={ACCENT_COLORS[4]} />
+          </div>
         </section>
 
-        {/* Portfolio */}
-        <section id="portfolio" className="px-6 py-10 md:px-12 md:py-16" style={{ maxWidth: 900, margin: "0 auto" }}>
+        <ColorDivider color={ACCENT_COLORS[4]} nextColor={ACCENT_COLORS[0]} />
+
+        <section
+          id="portfolio"
+          className="relative overflow-hidden"
+          style={{ background: SECTION_BG.portfolio }}
+        >
+          <div className="relative px-6 py-24 md:px-12 md:py-32" style={{ maxWidth: 900, margin: "0 auto" }}>
+          <FloatingEmoji emoji="🎯" style={{ top: "5%", right: "3%" }} />
+          <FloatingEmoji emoji="🔥" style={{ bottom: "10%", left: "5%", animationDelay: "1.5s" }} />
+          <DashedCircle size={100} color={ACCENT_COLORS[0]} style={{ top: "10%", left: "0%" }} />
+          <ColorSquare color={ACCENT_COLORS[2]} style={{ top: "15%", right: "12%" }} />
+          <ColorSquare color={ACCENT_COLORS[1]} style={{ bottom: "20%", left: "10%" }} />
+
           <Section>
-            <div className="flex items-center gap-3 mb-8">
-              <span
-                className="text-[11px] tracking-[2px]"
-                style={{ fontFamily: "'Space Mono', monospace", color: "rgba(255,255,255,0.25)" }}
-              >
-                01
-              </span>
-              <div className="w-6 h-px" style={{ background: "rgba(255,255,255,0.15)" }} />
-              <span className="text-sm font-medium text-white">作品集</span>
-            </div>
+            <SectionHeading num="01" title="作品集" accent={ACCENT_COLORS[0]} bgText="WORKS" />
           </Section>
 
           <Section delay={0.06}>
@@ -324,6 +487,7 @@ export default function HomePage() {
                 title: p.title,
                 icon: p.icon,
                 color: p.color,
+                cover: p.cover,
               }))}
               activeId={selectedPortfolio}
               onSelect={setSelectedPortfolio}
@@ -337,142 +501,348 @@ export default function HomePage() {
               <Section key={item.id} delay={0.1}>
                 <button
                   onClick={() => router.push(`/portfolio/${item.id}`)}
-                  className="w-full text-left cursor-pointer border-none bg-transparent p-0 mt-4"
+                  className="w-full text-left cursor-pointer border-none bg-transparent p-0 mt-6"
                 >
                   <div
-                    className="group relative rounded-2xl overflow-hidden border transition-all duration-300 ease-out"
-                    style={{ background: "rgba(255,255,255,0.02)", borderColor: "rgba(255,255,255,0.06)" }}
+                    className="group relative rounded-3xl overflow-hidden border-4 transition-all duration-300 ease-out backdrop-blur-sm"
+                    style={{
+                      background: "#2D1B4E80",
+                      borderColor: ACCENT_COLORS[0],
+                      boxShadow: `8px 8px 0 ${ACCENT_COLORS[2]}, 16px 16px 0 ${ACCENT_COLORS[1]}`,
+                    }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = `${item.color}50`;
-                      e.currentTarget.style.transform = "translateY(-2px)";
-                      e.currentTarget.style.background = "rgba(255,255,255,0.03)";
+                      e.currentTarget.style.borderColor = item.color;
+                      e.currentTarget.style.transform = "translateY(-4px) rotate(-0.5deg)";
+                      e.currentTarget.style.boxShadow = `12px 12px 0 ${item.color}, 24px 24px 0 ${ACCENT_COLORS[0]}`;
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)";
-                      e.currentTarget.style.transform = "translateY(0)";
-                      e.currentTarget.style.background = "rgba(255,255,255,0.02)";
+                      e.currentTarget.style.borderColor = ACCENT_COLORS[0];
+                      e.currentTarget.style.transform = "translateY(0) rotate(0deg)";
+                      e.currentTarget.style.boxShadow = `8px 8px 0 ${ACCENT_COLORS[2]}, 16px 16px 0 ${ACCENT_COLORS[1]}`;
                     }}
                   >
                     <div
-                      className="absolute -top-[40px] -right-[40px] w-[120px] h-[120px] rounded-full pointer-events-none"
-                      style={{ background: `radial-gradient(circle, ${item.color}12 0%, transparent 70%)` }}
+                      className="absolute -top-[60px] -right-[60px] w-[160px] h-[160px] rounded-full pointer-events-none"
+                      aria-hidden="true"
+                      style={{ background: `radial-gradient(circle, ${item.color}25 0%, transparent 70%)` }}
                     />
-                    <div className="flex gap-4 p-5 items-center">
-                      <div className="w-20 h-20 rounded-xl shrink-0 overflow-hidden" style={{ background: `${item.color}10` }}>
+                    <div className="flex gap-5 p-6 items-center">
+                      <div
+                        className="w-24 h-24 rounded-2xl shrink-0 overflow-hidden border-4"
+                        style={{ background: `${item.color}15`, borderColor: ACCENT_COLORS[2], borderStyle: "dashed" }}
+                      >
                         <img src={item.cover} alt={item.title} className="w-full h-full object-cover" loading="lazy" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1.5">
-                          <span className="text-lg">{item.icon}</span>
-                          <span className="text-base font-semibold text-white">{item.title}</span>
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="text-2xl">{item.icon}</span>
+                          <span
+                            className="text-xl font-black text-white font-outfit uppercase"
+                            style={{ textShadow: `0 0 10px ${item.color}60` }}
+                          >
+                            {item.title}
+                          </span>
                         </div>
-                        <p className="text-[13px] mb-2 leading-relaxed" style={{ color: "rgba(255,255,255,0.4)" }}>{item.desc}</p>
-                        <span className="inline-block text-[11px] px-2.5 py-[3px] rounded-md" style={{ color: item.color, background: `${item.color}10`, fontFamily: "'Space Mono', monospace" }}>{item.count}</span>
+                        <p
+                          className="text-[14px] mb-3 leading-relaxed font-dm-sans"
+                          style={{ color: "rgba(255,255,255,0.6)" }}
+                        >
+                          {item.desc}
+                        </p>
+                        <span
+                          className="inline-block text-[12px] px-3 py-1 rounded-full border-2 font-space-mono font-bold"
+                          style={{
+                            color: item.color,
+                            background: `${item.color}15`,
+                            borderColor: item.color,
+                          }}
+                        >
+                          {item.count}
+                        </span>
                       </div>
-                      <div className="text-[#ffffff20] group-hover:text-[#ffffff40] transition-colors">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+                      <div className="text-white/20 group-hover:text-white/60 transition-colors">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                          <line x1="5" y1="12" x2="19" y2="12" />
+                          <polyline points="12 5 19 12 12 19" />
+                        </svg>
                       </div>
                     </div>
-                    <div className="h-[2px] w-full rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: `linear-gradient(90deg, transparent, ${item.color}60, transparent)` }} />
                   </div>
                 </button>
               </Section>
             );
           })()}
+          </div>
         </section>
 
-        {/* Scroll-Reveal Photo Area 2 */}
-        <section className="px-6 py-10 md:px-12 md:py-16" style={{ maxWidth: 900, margin: "0 auto" }}>
-          <ScrollRevealPhoto photoA="/A2.jpg" photoB="/B2.jpg" />
+        <ColorDivider color={ACCENT_COLORS[0]} nextColor={ACCENT_COLORS[1]} />
+
+        <section className="relative overflow-hidden" style={{ background: `linear-gradient(180deg, ${SECTION_BG.portfolio}, ${SECTION_BG.projects})` }}>
+          <div className="relative px-6 py-10 md:px-12 md:py-16" style={{ maxWidth: 900, margin: "0 auto" }}>
+          <div className="absolute inset-0 pattern-dots opacity-[0.04]" aria-hidden="true" />
+          <ScrollRevealPhoto photoA="/A2.jpg" photoB="/B2.jpg" borderColor={ACCENT_COLORS[1]} shadowColor={ACCENT_COLORS[3]} shadowColor2={ACCENT_COLORS[0]} />
+          </div>
         </section>
 
-        {/* Projects & Experience — 3D Flip Card */}
-        <section id="projects" className="px-6 py-10 md:px-12 md:py-16" style={{ maxWidth: 700, margin: "0 auto" }}>
+        <ColorDivider color={ACCENT_COLORS[1]} nextColor={ACCENT_COLORS[0]} />
+
+        <section
+          id="projects"
+          className="relative overflow-hidden"
+          style={{ background: SECTION_BG.projects }}
+        >
+          <div className="relative px-6 py-24 md:px-12 md:py-32" style={{ maxWidth: 700, margin: "0 auto" }}>
+          <FloatingEmoji emoji="💬" style={{ top: "8%", left: "2%" }} />
+          <FloatingEmoji emoji="✨" style={{ bottom: "15%", right: "5%", animationDelay: "2s" }} />
+          <DashedCircle size={90} color={ACCENT_COLORS[1]} style={{ bottom: "5%", right: "0%" }} />
+          <ColorSquare color={ACCENT_COLORS[0]} style={{ top: "20%", right: "8%" }} />
+          <ColorSquare color={ACCENT_COLORS[3]} style={{ bottom: "25%", left: "3%" }} />
+
           <Section>
-            <div className="flex items-center gap-3 mb-8">
-              <span className="text-[11px] tracking-[2px]" style={{ fontFamily: "'Space Mono', monospace", color: "rgba(255,255,255,0.25)" }}>02</span>
-              <div className="w-6 h-px" style={{ background: "rgba(255,255,255,0.15)" }} />
-              <span className="text-sm font-medium text-white">项目 & 经历</span>
-            </div>
+            <SectionHeading num="02" title="项目 & 经历" accent={ACCENT_COLORS[1]} bgText="EXPERIENCE" />
           </Section>
           <Section delay={0.1}>
             <FlipRadarCard radarData={RADAR_DATA} experiences={EXPERIENCES} />
           </Section>
+          </div>
         </section>
 
-        {/* Scroll-Reveal Photo Area 3 */}
-        <section className="px-6 py-10 md:px-12 md:py-16" style={{ maxWidth: 900, margin: "0 auto" }}>
-          <ScrollRevealPhoto photoA="/A3.jpg" photoB="/B3.jpg" />
+        <ColorDivider color={ACCENT_COLORS[1]} nextColor={ACCENT_COLORS[2]} />
+
+        <section className="relative overflow-hidden" style={{ background: `linear-gradient(180deg, ${SECTION_BG.projects}, ${SECTION_BG.skills})` }}>
+          <div className="relative px-6 py-10 md:px-12 md:py-16" style={{ maxWidth: 900, margin: "0 auto" }}>
+          <div className="absolute inset-0 pattern-stripes opacity-[0.03]" aria-hidden="true" />
+          <ScrollRevealPhoto photoA="/A3.jpg" photoB="/B3.jpg" borderColor={ACCENT_COLORS[2]} shadowColor={ACCENT_COLORS[4]} shadowColor2={ACCENT_COLORS[1]} />
+          </div>
         </section>
 
-        {/* Skills — Piano */}
-        <section id="skills" className="px-6 py-10 md:px-12 md:py-16" style={{ maxWidth: 960, margin: "0 auto" }}>
+        <ColorDivider color={ACCENT_COLORS[2]} nextColor={ACCENT_COLORS[1]} />
+
+        <section
+          id="skills"
+          className="relative overflow-hidden"
+          style={{ background: SECTION_BG.skills }}
+        >
+          <div className="relative px-6 py-24 md:px-12 md:py-32" style={{ maxWidth: 960, margin: "0 auto" }}>
+          <FloatingEmoji emoji="🎯" style={{ top: "6%", right: "6%" }} />
+          <FloatingEmoji emoji="💫" style={{ bottom: "12%", left: "4%", animationDelay: "1s" }} />
+          <DashedCircle size={110} color={ACCENT_COLORS[2]} style={{ top: "3%", left: "5%" }} />
+          <ColorSquare color={ACCENT_COLORS[4]} style={{ top: "18%", right: "3%" }} />
+          <ColorSquare color={ACCENT_COLORS[0]} style={{ bottom: "15%", right: "10%" }} />
+
           <Section>
-            <div className="flex items-center gap-3 mb-8">
-              <span className="text-[11px] tracking-[2px]" style={{ fontFamily: "'Space Mono', monospace", color: "rgba(255,255,255,0.25)" }}>03</span>
-              <div className="w-6 h-px" style={{ background: "rgba(255,255,255,0.15)" }} />
-              <span className="text-sm font-medium text-white">专业技能</span>
-            </div>
+            <SectionHeading num="03" title="专业技能" accent={ACCENT_COLORS[2]} bgText="SKILLS" />
           </Section>
           <Section delay={0.08}>
             <SkillsPiano />
           </Section>
+          </div>
         </section>
 
-        {/* Education */}
-        <section id="education" className="px-6 py-10 md:px-12 md:py-16" style={{ maxWidth: 900, margin: "0 auto" }}>
+        <ColorDivider color={ACCENT_COLORS[2]} nextColor={ACCENT_COLORS[3]} />
+
+        <section
+          id="education"
+          className="relative overflow-hidden"
+          style={{ background: SECTION_BG.education }}
+        >
+          <div className="relative px-6 py-24 md:px-12 md:py-32" style={{ maxWidth: 900, margin: "0 auto" }}>
+          <FloatingEmoji emoji="🚀" style={{ top: "10%", right: "8%" }} />
+          <FloatingEmoji emoji="⚡" style={{ bottom: "20%", left: "6%", animationDelay: "0.8s" }} />
+          <DashedCircle size={70} color={ACCENT_COLORS[3]} style={{ bottom: "10%", right: "5%" }} />
+          <ColorSquare color={ACCENT_COLORS[1]} style={{ top: "15%", left: "5%" }} />
+
+          <span
+            className="absolute -top-8 -left-4 font-outfit font-black text-[120px] md:text-[180px] uppercase leading-none select-none pointer-events-none"
+            style={{ color: ACCENT_COLORS[3], opacity: 0.04 }}
+            aria-hidden="true"
+          >
+            EDU
+          </span>
+
           <Section>
-            <div className="flex items-center gap-3 mb-6">
-              <span className="text-[11px] tracking-[2px]" style={{ fontFamily: "'Space Mono', monospace", color: "rgba(255,255,255,0.25)" }}>04</span>
-              <div className="w-6 h-px" style={{ background: "rgba(255,255,255,0.15)" }} />
-              <span className="text-sm font-medium text-white">教育背景</span>
-            </div>
-            <div className="p-6 rounded-2xl flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4" style={{ background: "rgba(255,255,255,0.02)", border: "0.5px solid rgba(255,255,255,0.06)" }}>
-              <div>
-                <div className="text-base font-semibold text-white mb-1">湖北汽车工程学院</div>
-                <div className="text-[13px]" style={{ color: "rgba(255,255,255,0.4)" }}>电子信息工程（本科）</div>
+            <div className="relative flex items-center gap-4 mb-12">
+              <div
+                className="flex items-center justify-center w-14 h-14 rounded-2xl border-4 font-space-mono font-bold text-xl"
+                style={{
+                  borderColor: ACCENT_COLORS[3],
+                  color: ACCENT_COLORS[3],
+                  background: `${ACCENT_COLORS[3]}15`,
+                  borderStyle: "solid",
+                }}
+              >
+                04
               </div>
-              <div className="text-right">
-                <div className="text-xs" style={{ color: "rgba(255,255,255,0.25)", fontFamily: "'Space Mono', monospace" }}>2021 — 2025</div>
-                <div className="flex gap-2 mt-2 justify-end">
-                  {["GPA 3.5", "Top 7%", "优秀毕业生"].map((t, i) => (
-                    <span key={i} className="text-[11px] px-2.5 py-[3px] rounded-md" style={{ color: "rgba(255,255,255,0.45)", background: "rgba(255,255,255,0.04)" }}>{t}</span>
-                  ))}
+              <h2
+                className="font-outfit font-black uppercase text-5xl md:text-7xl text-shadow-triple"
+                style={{ color: "#FFFFFF" }}
+              >
+                教育背景
+              </h2>
+            </div>
+
+            <div
+              className="relative p-8 rounded-3xl border-4 backdrop-blur-sm"
+              style={{
+                background: "#2D1B4E80",
+                borderColor: ACCENT_COLORS[2],
+                borderStyle: "dashed",
+                boxShadow: `8px 8px 0 ${ACCENT_COLORS[3]}, 16px 16px 0 ${ACCENT_COLORS[0]}`,
+                transform: "rotate(-0.5deg)",
+              }}
+            >
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+                <div>
+                  <div
+                    className="text-2xl font-black text-white mb-2 font-outfit"
+                    style={{ textShadow: `0 0 12px ${ACCENT_COLORS[3]}60` }}
+                  >
+                    湖北汽车工程学院
+                  </div>
+                  <div
+                    className="text-[15px] font-dm-sans"
+                    style={{ color: "rgba(255,255,255,0.6)" }}
+                  >
+                    电子信息工程（本科）
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div
+                    className="text-sm font-bold font-space-mono"
+                    style={{ color: ACCENT_COLORS[3] }}
+                  >
+                    2021 — 2025
+                  </div>
+                  <div className="flex gap-3 mt-3 justify-end flex-wrap">
+                    {["GPA 3.5", "Top 7%", "优秀毕业生"].map((t, i) => {
+                      const tagColor = ACCENT_COLORS[(i + 3) % 5];
+                      return (
+                        <span
+                          key={i}
+                          className="text-[12px] px-3 py-1 rounded-full border-2 font-bold font-space-mono"
+                          style={{
+                            color: tagColor,
+                            borderColor: tagColor,
+                            background: `${tagColor}15`,
+                          }}
+                        >
+                          {t}
+                        </span>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             </div>
           </Section>
+          </div>
         </section>
 
-        {/* Contact */}
-        <section id="contact" className="px-6 py-20 md:px-12 md:py-16 text-center">
+        <ColorDivider color={ACCENT_COLORS[3]} nextColor={ACCENT_COLORS[4]} />
+
+        <section
+          id="contact"
+          className="relative overflow-hidden"
+          style={{ background: SECTION_BG.contact }}
+        >
+          <div className="relative px-6 py-24 md:px-12 md:py-32 text-center" style={{ maxWidth: 900, margin: "0 auto" }}>
+          <FloatingEmoji emoji="💰" style={{ top: "8%", left: "10%" }} />
+          <FloatingEmoji emoji="🔥" style={{ top: "15%", right: "12%", animationDelay: "1.2s" }} />
+          <FloatingEmoji emoji="✨" style={{ bottom: "20%", left: "8%", animationDelay: "0.5s" }} />
+          <DashedCircle size={140} color={ACCENT_COLORS[4]} style={{ top: "5%", right: "15%" }} />
+          <DashedCircle size={60} color={ACCENT_COLORS[0]} style={{ bottom: "10%", left: "20%" }} />
+          <ColorSquare color={ACCENT_COLORS[2]} style={{ top: "25%", left: "15%" }} />
+          <ColorSquare color={ACCENT_COLORS[3]} style={{ bottom: "30%", right: "18%" }} />
+
+          <span
+            className="absolute top-0 left-1/2 -translate-x-1/2 font-outfit font-black text-[150px] md:text-[220px] uppercase leading-none select-none pointer-events-none"
+            style={{ color: ACCENT_COLORS[4], opacity: 0.04 }}
+            aria-hidden="true"
+          >
+            CONTACT
+          </span>
+
           <Section>
-            <p className="text-[13px] tracking-[2px] mb-4" style={{ color: "rgba(255,255,255,0.25)", fontFamily: "'Space Mono', monospace" }}>CONTACT</p>
-            <h2 className="text-[32px] font-bold mb-3 gradient-text" style={{ backgroundImage: "linear-gradient(90deg, #fff, rgba(255,255,255,0.6))" }}>期待与您交流</h2>
-            <p className="text-[15px] mb-8" style={{ color: "rgba(255,255,255,0.35)" }}>如果您对我的项目经历感兴趣，欢迎随时联系</p>
-            <div className="flex justify-center gap-4 flex-wrap">
-              {[{ label: "134 0968 7811", icon: "📱" }, { label: "2595617884@qq.com", icon: "✉️" }].map((c, i) => (
-                <div key={i} className="flex items-center gap-2 px-5 py-2.5 rounded-[10px] text-sm cursor-pointer transition-all duration-200"
-                  style={{ background: "rgba(255,255,255,0.03)", border: "0.5px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.6)" }}
-                  onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(59,130,246,0.3)"; e.currentTarget.style.background = "rgba(59,130,246,0.05)"; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; e.currentTarget.style.background = "rgba(255,255,255,0.03)"; }}
-                ><span>{c.icon}</span> {c.label}</div>
-              ))}
+            <div className="relative inline-block">
+              <div
+                className="flex items-center justify-center gap-3 mb-6"
+              >
+                <div
+                  className="w-3 h-8 rounded-full"
+                  style={{ background: ACCENT_COLORS[4] }}
+                />
+                <p
+                  className="text-[14px] tracking-[3px] mb-0 font-black font-space-mono uppercase"
+                  style={{ color: ACCENT_COLORS[4] }}
+                >
+                  CONTACT
+                </p>
+              </div>
+              <h2
+                className="text-4xl md:text-6xl font-black mb-4 font-outfit uppercase gradient-text"
+              >
+                期待与您交流
+              </h2>
+              <p
+                className="text-[16px] mb-12 font-dm-sans"
+                style={{
+                  color: "rgba(255,255,255,0.65)",
+                  textShadow: `0 0 6px ${ACCENT_COLORS[4]}30`,
+                }}
+              >
+                如果您对我的项目经历感兴趣，欢迎随时联系
+              </p>
+            </div>
+
+            <div className="flex justify-center gap-6 flex-wrap">
+              {[
+                { label: "134 0968 7811", icon: "📱" },
+                { label: "2595617884@qq.com", icon: "✉️" },
+              ].map((c, i) => {
+                const cardAccent = ACCENT_COLORS[(i + 4) % 5];
+                const borderClash = ACCENT_COLORS[(i + 1) % 5];
+                return (
+                  <div
+                    key={i}
+                    className="flex items-center gap-3 px-7 py-4 rounded-3xl text-base cursor-pointer transition-all duration-300 border-4 font-bold font-dm-sans backdrop-blur-sm"
+                    style={{
+                      background: "#2D1B4E80",
+                      borderColor: borderClash,
+                      color: "rgba(255,255,255,0.8)",
+                      boxShadow: `6px 6px 0 ${cardAccent}`,
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = cardAccent;
+                      e.currentTarget.style.boxShadow = `0 0 30px ${cardAccent}40, 8px 8px 0 ${borderClash}`;
+                      e.currentTarget.style.transform = "translateY(-2px) rotate(-1deg)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = borderClash;
+                      e.currentTarget.style.boxShadow = `6px 6px 0 ${cardAccent}`;
+                      e.currentTarget.style.transform = "translateY(0) rotate(0deg)";
+                    }}
+                  >
+                    <span className="text-2xl">{c.icon}</span>
+                    <span>{c.label}</span>
+                  </div>
+                );
+              })}
             </div>
           </Section>
+          </div>
         </section>
 
-      </div>
+        <ColorDivider color={ACCENT_COLORS[4]} nextColor={ACCENT_COLORS[0]} />
 
-      {/* Inline keyframes for blink cursor */}
-      <style>{`
-        .gradient-text {
-          -webkit-background-clip: text;
-          background-clip: text;
-          -webkit-text-fill-color: transparent;
-          color: transparent;
-        }
-      `}</style>
+        <footer className="relative py-12 text-center" style={{ background: SECTION_BG.footer }}>
+          <div className="pattern-dots opacity-[0.03] absolute inset-0" aria-hidden="true" />
+          <p
+            className="text-sm font-space-mono relative"
+            style={{ color: "rgba(255,255,255,0.35)" }}
+          >
+            © 2025 Meiyang Zhu · Built with 🔥
+          </p>
+        </footer>
     </div>
   );
 }

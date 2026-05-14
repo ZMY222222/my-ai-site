@@ -8,6 +8,9 @@ interface ScrollRevealPhotoProps {
   photoB: string;
   height?: number;
   className?: string;
+  borderColor?: string;
+  shadowColor?: string;
+  shadowColor2?: string;
 }
 
 function clamp(v: number, min: number, max: number) {
@@ -19,6 +22,9 @@ export function ScrollRevealPhoto({
   photoB,
   height = 560,
   className,
+  borderColor = "#FF3AF2",
+  shadowColor = "#FFE600",
+  shadowColor2 = "#00F5D4",
 }: ScrollRevealPhotoProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const imgARef = useRef<HTMLImageElement>(null);
@@ -59,11 +65,13 @@ export function ScrollRevealPhoto({
       style={{
         position: "relative",
         overflow: "hidden",
-        height,
-        width: "100%",
-        borderRadius: 20,
-        border: "0.5px solid rgba(255,255,255,0.08)",
-        background: "rgba(255,255,255,0.02)",
+        width: "fit-content",
+        maxWidth: "100%",
+        margin: "0 auto",
+        borderRadius: 24,
+        border: `4px solid ${borderColor}`,
+        background: "#2D1B4E80",
+        boxShadow: `8px 8px 0 ${shadowColor}, 16px 16px 0 ${shadowColor2}`,
       }}
     >
       <img
@@ -71,11 +79,9 @@ export function ScrollRevealPhoto({
         src={photoA}
         alt=""
         style={{
-          position: "absolute",
-          inset: 0,
+          display: "block",
           width: "100%",
-          height: "100%",
-          objectFit: "cover",
+          height: "auto",
           opacity: 0,
           transform: "translateY(60px) scale(0.85)",
           willChange: "transform, opacity",
@@ -90,7 +96,7 @@ export function ScrollRevealPhoto({
           inset: 0,
           width: "100%",
           height: "100%",
-          objectFit: "cover",
+          objectFit: "contain",
           opacity: 0,
           transform: "translateY(-60px) scale(0.85)",
           willChange: "transform, opacity",

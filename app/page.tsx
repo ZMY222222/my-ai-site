@@ -5,35 +5,20 @@ import { useRouter } from "next/navigation";
 import { GlassBreakTransition } from "@/components/glass-break-transition";
 import { VortexButton } from "@/components/vortex-button";
 
-const nodeLines = [
-  "// data.label = 'human_intent'",
-  "> training.set(epochs=∞)",
-  "{} context.window_size = 8192",
-  "// loss converges at step 47k",
-  "<SFT> alignment.check()",
-  "> agent.think() → agent.act()",
-  "// eval.benchmark.pass@1 = 0.94",
+const ACCENT_COLORS = ["#FF3AF2", "#00F5D4", "#FFE600", "#FF6B35", "#7B2FFF"];
+
+const FLOATING_SHAPES = [
+  { emoji: "✨", top: "8%", left: "5%", size: "text-5xl", anim: "animate-float", delay: "0s" },
+  { emoji: "🚀", top: "15%", right: "8%", size: "text-6xl", anim: "animate-bounce-subtle", delay: "0.5s" },
+  { emoji: "💫", top: "65%", left: "3%", size: "text-4xl", anim: "animate-float-reverse", delay: "1s" },
+  { emoji: "⚡", top: "70%", right: "6%", size: "text-5xl", anim: "animate-wiggle", delay: "0.3s" },
+  { emoji: "🔥", top: "40%", left: "8%", size: "text-4xl", anim: "animate-bounce-subtle", delay: "0.7s" },
+  { emoji: "🎯", top: "35%", right: "5%", size: "text-5xl", anim: "animate-float", delay: "1.2s" },
+  { emoji: "💬", bottom: "15%", left: "10%", size: "text-4xl", anim: "animate-wiggle", delay: "0.4s" },
+  { emoji: "🧠", bottom: "20%", right: "10%", size: "text-5xl", anim: "animate-float-reverse", delay: "0.8s" },
 ];
 
-class Node {
-  x = 0; y = 0; r = 0; baseX = 0; baseY = 0; phase = 0; speed = 0; opacity = 0;
-  text = ""; textOpacity = 0;
-  constructor(w: number, h: number) {
-    this.baseX = Math.random() * w;
-    this.baseY = Math.random() * h;
-    this.x = this.baseX;
-    this.y = this.baseY;
-    this.r = 0.4 + Math.random() * 1.2;
-    this.phase = Math.random() * Math.PI * 2;
-    this.speed = 0.3 + Math.random() * 0.7;
-    this.opacity = 0.08 + Math.random() * 0.22;
-    this.text = nodeLines[Math.floor(Math.random() * nodeLines.length)];
-    this.textOpacity = 0;
-  }
-}
-
 export default function HomePage() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [visible, setVisible] = useState(false);
   const [breaking, setBreaking] = useState(false);
   const router = useRouter();
@@ -43,9 +28,9 @@ export default function HomePage() {
     if (navRef.current) return;
     navRef.current = true;
     const voice = new Audio("/ttsmaker-file-2026-5-9-20-0-36.mp3");
-     voice.volume = 0.7;
-     (window as any).__welcomeVoice = voice; // prevent GC during navigation
-     voice.play().catch(() => {});
+    voice.volume = 0.7;
+    (window as any).__welcomeVoice = voice;
+    voice.play().catch(() => {});
     setBreaking(true);
   };
 
@@ -54,141 +39,76 @@ export default function HomePage() {
     return () => clearTimeout(t);
   }, []);
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    let animId = 0;
-    const NODE_COUNT = 22;
-    const nodeArr: Node[] = [];
-
-    function resize() {
-      if (!canvas) return;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
-      canvas.style.width = `${window.innerWidth}px`;
-      canvas.style.height = `${window.innerHeight}px`;
-      ctx!.setTransform(1, 0, 0, 1, 0, 0);
-      ctx!.scale(dpr, dpr);
-    }
-
-    function initNodes() {
-      nodeArr.length = 0;
-      for (let i = 0; i < NODE_COUNT; i++) nodeArr.push(new Node(window.innerWidth, window.innerHeight));
-    }
-
-    resize();
-    initNodes();
-    window.addEventListener("resize", () => { resize(); initNodes(); });
-
-    let frame = 0;
-    function loop() {
-      const w = window.innerWidth;
-      const h = window.innerHeight;
-      ctx!.clearRect(0, 0, w, h);
-      frame++;
-
-      for (let i = 0; i < nodeArr.length; i++) {
-        for (let j = i + 1; j < nodeArr.length; j++) {
-          const a = nodeArr[i];
-          const b = nodeArr[j];
-          const dx = a.x - b.x;
-          const dy = a.y - b.y;
-          const d = Math.sqrt(dx * dx + dy * dy);
-          if (d < 280) {
-            const alpha = (1 - d / 280) * 0.04;
-            ctx!.beginPath();
-            ctx!.moveTo(a.x, a.y);
-            ctx!.lineTo(b.x, b.y);
-            ctx!.strokeStyle = `rgba(110,168,254,${alpha.toFixed(3)})`;
-            ctx!.lineWidth = 0.3;
-            ctx!.stroke();
-          }
-        }
-      }
-
-      for (const n of nodeArr) {
-        n.phase += 0.005 * n.speed;
-        n.x = n.baseX + Math.sin(n.phase) * 14;
-        n.y = n.baseY + Math.cos(n.phase * 1.3) * 10;
-
-        const g = ctx!.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 5);
-        g.addColorStop(0, `rgba(110,168,254,${(n.opacity * 0.6).toFixed(3)})`);
-        g.addColorStop(0.5, `rgba(110,168,254,${(n.opacity * 0.15).toFixed(3)})`);
-        g.addColorStop(1, "rgba(110,168,254,0)");
-        ctx!.beginPath();
-        ctx!.arc(n.x, n.y, n.r * 5, 0, Math.PI * 2);
-        ctx!.fillStyle = g;
-        ctx!.fill();
-
-        ctx!.beginPath();
-        ctx!.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-        ctx!.fillStyle = `rgba(180,210,250,${n.opacity.toFixed(3)})`;
-        ctx!.fill();
-
-        if (frame % 6 === 0) n.textOpacity = Math.max(0, n.textOpacity - 0.003);
-        if (Math.random() < 0.0008) n.textOpacity = 0.12 + Math.random() * 0.2;
-        if (n.textOpacity > 0.005) {
-          ctx!.font = "9px 'JetBrains Mono', monospace";
-          ctx!.fillStyle = `rgba(110,168,254,${n.textOpacity.toFixed(3)})`;
-          ctx!.fillText(n.text, n.x + 8, n.y - 6);
-        }
-      }
-
-      animId = requestAnimationFrame(loop);
-    }
-
-    loop();
-
-    return () => {
-      cancelAnimationFrame(animId);
-      window.removeEventListener("resize", () => {});
-    };
-  }, []);
-
   return (
-    <main className="relative min-h-[100dvh] flex flex-col items-center justify-center overflow-hidden">
-      <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }} />
-
+    <main className="relative min-h-[100dvh] flex flex-col items-center justify-center overflow-hidden" style={{ background: "#0D0D1A" }}>
       <GlassBreakTransition trigger={breaking} onComplete={() => router.push("/home")} sound />
 
-      <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1, background: "radial-gradient(ellipse 80% 60% at 50% 40%, transparent 30%, rgba(6,10,20,0.7) 100%)" }} />
-      <div className="absolute inset-0 pointer-events-none opacity-[0.015]" style={{ zIndex: 2, backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.03) 2px, rgba(255,255,255,0.03) 4px)" }} />
+      <div className="absolute inset-0 pointer-events-none opacity-[0.06]" style={{ backgroundImage: "radial-gradient(circle, #FF3AF2 1px, transparent 1px)", backgroundSize: "24px 24px" }} aria-hidden="true" />
+      <div className="absolute inset-0 pointer-events-none opacity-[0.04]" style={{ backgroundImage: "repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255, 230, 0, 0.08) 10px, rgba(255, 230, 0, 0.08) 20px)" }} aria-hidden="true" />
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true" style={{ background: "radial-gradient(ellipse at 20% 30%, rgba(255,58,242,0.12) 0%, transparent 50%), radial-gradient(ellipse at 80% 70%, rgba(0,245,212,0.12) 0%, transparent 50%), radial-gradient(ellipse at 50% 50%, rgba(123,47,255,0.08) 0%, transparent 60%)" }} />
 
-      <div className={`relative z-10 flex flex-col items-center text-center px-6 py-16 w-full max-w-3xl transition-all duration-1000 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ marginTop: "calc(10vh - 40px)" }}>
-        <div className="text-[11px] tracking-[0.32em] uppercase text-[#6EA8FE]/50 mb-8 font-mono">AI Training · Data Engineering · Systems</div>
+      <div className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden select-none" aria-hidden="true">
+        <span className="font-outfit font-black uppercase" style={{ fontSize: "clamp(10rem, 25vw, 20rem)", color: "#7B2FFF", opacity: 0.06, letterSpacing: "-0.05em", lineHeight: 1 }}>WOW</span>
+      </div>
 
-        <h1 className="text-4xl font-bold tracking-[0.12em] sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] italic" style={{ color: "#E6EAF2", textShadow: "0 0 7px rgba(110,168,254,0.8), 0 0 18px rgba(110,168,254,0.5), 0 0 40px rgba(110,168,254,0.3), 0 0 80px rgba(0,212,255,0.2), 0 0 120px rgba(0,212,255,0.1), 0 2px 4px rgba(0,0,0,0.5)", transform: "skewX(-6deg)", animation: "neon-flicker 3.6s ease-in-out infinite" }}>
-          <span style={{ display: "inline-block", transform: "skewX(6deg)" }}>朱 美 阳</span>
-        </h1>
+      <div className="absolute top-0 left-0 w-full h-2" style={{ background: `linear-gradient(90deg, ${ACCENT_COLORS.join(", ")})` }} aria-hidden="true" />
+      <div className="absolute bottom-0 left-0 w-full h-2" style={{ background: `linear-gradient(90deg, ${[...ACCENT_COLORS].reverse().join(", ")})` }} aria-hidden="true" />
 
-        <div className="mt-5 flex items-center gap-4">
-          <div className="h-[1px] w-8 bg-[#00D4FF]/30 hidden sm:block" />
-          <div className="text-base sm:text-lg tracking-[0.2em] text-[#6EA8FE] font-light">AI训练师 / 大模型数据专家</div>
-          <div className="h-[1px] w-8 bg-[#00D4FF]/30 hidden sm:block" />
+      {FLOATING_SHAPES.map((shape, i) => (
+        <div
+          key={i}
+          className={`absolute ${shape.size} ${shape.anim} pointer-events-none select-none`}
+          style={{ top: shape.top, left: shape.left, right: shape.right, bottom: shape.bottom, animationDelay: shape.delay, willChange: "transform" } as React.CSSProperties}
+          aria-hidden="true"
+        >
+          {shape.emoji}
+        </div>
+      ))}
+
+      <div className="absolute top-[10%] left-[15%] w-16 h-16 rounded-full animate-spin-slow pointer-events-none" style={{ border: "4px dashed #00F5D4", opacity: 0.2 }} aria-hidden="true" />
+      <div className="absolute bottom-[10%] right-[15%] w-20 h-20 rounded-full animate-spin-slow pointer-events-none" style={{ border: "4px dashed #FFE600", opacity: 0.15, animationDirection: "reverse" }} aria-hidden="true" />
+      <div className="absolute top-[50%] right-[3%] w-6 h-6 rotate-45 animate-float pointer-events-none" style={{ background: "#FF6B35", opacity: 0.3 }} aria-hidden="true" />
+      <div className="absolute top-[25%] left-[3%] w-4 h-4 rotate-12 animate-bounce-subtle pointer-events-none" style={{ background: "#FF3AF2", opacity: 0.25 }} aria-hidden="true" />
+
+      <div className={`relative z-10 flex flex-col items-center text-center px-6 py-16 w-full max-w-3xl transition-all duration-1000 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+        <div className="inline-block px-5 py-1.5 rounded-full mb-8 border-4 border-dashed" style={{ borderColor: "#00F5D4", background: "rgba(45, 27, 78, 0.6)" }}>
+          <span className="text-xs tracking-[0.3em] uppercase font-bold font-space-mono" style={{ color: "#00F5D4" }}>AI Training · Data Engineering · Systems</span>
         </div>
 
-        <p className="mt-8 max-w-lg text-base sm:text-lg leading-[1.8] text-[#8693A8] font-light tracking-[0.03em]">
+        <h1 className="font-outfit font-black tracking-tight text-shadow-mega" style={{ fontSize: "clamp(3rem, 10vw, 7rem)", lineHeight: 1, color: "#FFFFFF" }}>
+          <span className="gradient-text" style={{ display: "inline-block" }}>朱 美 阳</span>
+        </h1>
+
+        <div className="mt-6 flex items-center gap-4">
+          <div className="h-1 w-12 rounded-full" style={{ background: "linear-gradient(90deg, #FF3AF2, transparent)" }} />
+          <div className="px-4 py-1.5 rounded-full border-4" style={{ borderColor: "#FFE600", background: "rgba(45, 27, 78, 0.5)" }}>
+            <span className="text-lg sm:text-xl tracking-[0.15em] font-bold font-outfit uppercase" style={{ color: "#FFE600", textShadow: "2px 2px 0px #7B2FFF" }}>AI训练师 / 大模型数据专家</span>
+          </div>
+          <div className="h-1 w-12 rounded-full" style={{ background: "linear-gradient(270deg, #00F5D4, transparent)" }} />
+        </div>
+
+        <p className="mt-10 max-w-lg text-lg sm:text-xl leading-relaxed text-white/90 font-dm-sans">
           我训练的不只是数据，而是
-          <span className="italic" style={{ color: "#B0C8E8", fontWeight: 500, textShadow: "0 0 6px rgba(110,168,254,0.7), 0 0 14px rgba(110,168,254,0.4), 0 0 30px rgba(110,168,254,0.2), 0 0 60px rgba(0,212,255,0.12), 0 2px 3px rgba(0,0,0,0.4)", display: "inline-block", transform: "skewX(-4deg)", animation: "neon-flicker 4.2s ease-in-out infinite" }}>
+          <span className="font-bold inline-block mx-1 px-2 py-0.5 rounded-lg border-4 border-dashed" style={{ borderColor: "#FF3AF2", color: "#FF3AF2", background: "rgba(255,58,242,0.1)", textShadow: "0 0 10px rgba(255,58,242,0.5)" }}>
             AI 理解人的方式
-          </span>。
+          </span>
+          。
         </p>
 
         <div className="mt-10 flex items-center gap-3">
-          <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-[#6EA8FE]/20" />
-          <div className="h-[3px] w-[3px] rounded-full bg-[#00D4FF]/40" />
-          <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-[#6EA8FE]/20" />
+          {ACCENT_COLORS.map((c, i) => (
+            <div key={i} className="h-2 w-2 rounded-full animate-bounce-subtle" style={{ background: c, animationDelay: `${i * 0.2}s`, boxShadow: `0 0 8px ${c}` }} aria-hidden="true" />
+          ))}
         </div>
 
-        <div className="mt-14">
+        <div className="mt-14 relative">
+          <div className="absolute inset-0 rounded-full animate-pulse-glow" style={{ filter: "blur(20px)" }} aria-hidden="true" />
           <VortexButton onClick={handleClick} disabled={breaking} />
         </div>
 
-        <div className="mt-14 text-[10px] tracking-[0.24em] text-[#6EA8FE]/20 uppercase">Personal Brand · AI Trainer</div>
+        <div className="mt-14 px-4 py-1.5 rounded-full border-2" style={{ borderColor: "rgba(123,47,255,0.4)", background: "rgba(45, 27, 78, 0.3)" }}>
+          <span className="text-[10px] tracking-[0.24em] uppercase font-bold font-space-mono" style={{ color: "#7B2FFF" }}>Personal Brand · AI Trainer</span>
+        </div>
       </div>
     </main>
   );

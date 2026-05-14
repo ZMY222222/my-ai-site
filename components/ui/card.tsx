@@ -1,4 +1,4 @@
-﻿import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 type CardProps = {
   className?: string;
@@ -28,7 +28,7 @@ export function CardContent({ className, children }: CardProps) {
 
 export function CardTitle({ className, children }: CardProps) {
   return (
-    <h3 className={cn("text-xl font-medium leading-8 text-[#E6EAF2]", className)}>
+    <h3 className={cn("text-xl font-medium leading-8 text-[#F5F5F5]", className)}>
       {children}
     </h3>
   );
@@ -36,7 +36,7 @@ export function CardTitle({ className, children }: CardProps) {
 
 export function CardDescription({ className, children }: CardProps) {
   return (
-    <p className={cn("mt-3 text-sm leading-7 text-[#B8C1D0]", className)}>
+    <p className={cn("mt-3 text-sm leading-7 text-[#E0E0E0]", className)}>
       {children}
     </p>
   );

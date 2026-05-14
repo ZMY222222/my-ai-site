@@ -46,17 +46,17 @@ export default function SkillsPage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 pb-20 pt-16 md:px-6 md:pt-20">
-      <TransitionLink href="/home" className="inline-flex items-center gap-2 text-sm text-[#B8C1D0] transition hover:text-[#E6EAF2]">
+      <TransitionLink href="/home" className="inline-flex items-center gap-2 text-sm text-[#E0E0E0] transition hover:text-[#F5F5F5]" style={{ textShadow: "0 0 2px rgba(0,212,255,0.3)" }}>
         <span>←</span><span>返回首页</span>
       </TransitionLink>
 
       <div className="mt-8 rounded-[28px] border border-white/10 bg-[#151B34]/80 p-8 md:p-10">
-        <div className="text-xs uppercase tracking-[0.2em] text-[#6EA8FE]">Skills</div>
-        <h1 className="mt-3 text-3xl font-semibold text-[#E6EAF2]">专业技能</h1>
+        <div className="text-xs uppercase tracking-[0.2em] text-[#00D4FF]">Skills</div>
+        <h1 className="mt-3 text-3xl font-semibold text-[#F5F5F5]">专业技能</h1>
 
         <div className="mt-6 flex flex-wrap gap-2">
           {skills.map((skill) => (
-            <button key={skill} onClick={() => scrollTo(skill)} className="rounded-full border border-[#6EA8FE]/20 bg-[#6EA8FE]/8 px-4 py-2 text-sm text-[#BFC8D6] transition hover:border-[#6EA8FE]/50 hover:bg-[#6EA8FE]/16 hover:text-[#E6EAF2] cursor-pointer">
+            <button key={skill} onClick={() => scrollTo(skill)} className="rounded-full border border-[#00D4FF]/20 bg-[#00D4FF]/8 px-4 py-2 text-sm text-[#E0E0E0] transition hover:border-[#00D4FF]/50 hover:bg-[#00D4FF]/16 hover:text-[#F5F5F5] cursor-pointer">
               {skill}
             </button>
           ))}
@@ -66,27 +66,27 @@ export default function SkillsPage() {
           <ResponsiveContainer width="100%" height={350}>
             <RadarChart data={radarData}>
               <PolarGrid stroke="rgba(255,255,255,0.1)" />
-              <PolarAngleAxis dataKey="skill" tick={{ fill: "#BFC8D6", fontSize: 12 }} axisLine={{ stroke: "rgba(255,255,255,0.08)" }} />
-              <PolarRadiusAxis angle={30} domain={[0, 100]} tick={{ fill: "rgba(110,168,254,0.4)", fontSize: 10 }} axisLine={{ stroke: "rgba(255,255,255,0.06)" }} />
-              <Radar name="技能熟练度" dataKey="value" stroke="#60A5FA" strokeWidth={2} fill="#3B82F6" fillOpacity={0.25} />
+              <PolarAngleAxis dataKey="skill" tick={{ fill: "#E0E0E0", fontSize: 12 }} axisLine={{ stroke: "rgba(255,255,255,0.08)" }} />
+              <PolarRadiusAxis angle={30} domain={[0, 100]} tick={{ fill: "rgba(0,212,255,0.5)", fontSize: 10 }} axisLine={{ stroke: "rgba(255,255,255,0.06)" }} />
+              <Radar name="技能熟练度" dataKey="value" stroke="#00D4FF" strokeWidth={2} fill="#00D4FF" fillOpacity={0.25} />
             </RadarChart>
           </ResponsiveContainer>
         </div>
 
         <div className="mt-8 grid gap-5 md:grid-cols-2">
           {skillCategories.map((item) => (
-            <div key={item.id} id={`skill-${item.id}`} className="rounded-2xl border border-white/10 bg-white/[0.02] p-6 transition-all duration-300 hover:border-white/20 hover:shadow-[0_8px_30px_rgba(96,165,250,0.1)] hover:-translate-y-1">
-              <h2 className="text-base font-semibold text-[#E6EAF2]">{item.title}</h2>
-              <p className="mt-3 text-sm leading-7 text-[#B8C1D0]">{item.text}</p>
+            <div key={item.id} id={`skill-${item.id}`} className="rounded-2xl border border-white/10 bg-white/[0.02] p-6 transition-all duration-300 hover:border-white/20 hover:shadow-[0_8px_30px_rgba(255,107,53,0.08)] hover:-translate-y-1">
+              <h2 className="text-base font-semibold text-[#F5F5F5]">{item.title}</h2>
+              <p className="mt-3 text-sm leading-7 text-[#E0E0E0]">{item.text}</p>
             </div>
           ))}
         </div>
 
-        <div className="mt-8 rounded-2xl border border-[#6EA8FE]/15 bg-[#6EA8FE]/5 p-6">
-          <div className="text-sm font-medium text-[#6EA8FE]">能力标签</div>
+        <div className="mt-8 rounded-2xl border border-[#00D4FF]/15 bg-[#00D4FF]/5 p-6">
+          <div className="text-sm font-medium text-[#00D4FF]">能力标签</div>
           <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
             {[{ num: "6", label: "核心项目" }, { num: "15万+", label: "数据处理" }, { num: "2 年", label: "AI训练经验" }, { num: "10+人", label: "团队管理" }].map((stat) => (
-              <div key={stat.label} className="text-center"><div className="text-2xl font-bold text-[#E6EAF2]">{stat.num}</div><div className="mt-1 text-xs text-[#B8C1D0]">{stat.label}</div></div>
+              <div key={stat.label} className="text-center"><div className="text-2xl font-bold text-[#F5F5F5]">{stat.num}</div><div className="mt-1 text-xs text-[#E0E0E0]">{stat.label}</div></div>
             ))}
           </div>
         </div>

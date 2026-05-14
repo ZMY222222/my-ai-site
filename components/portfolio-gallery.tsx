@@ -7,13 +7,13 @@ export function PortfolioGallery() {
     <section id="portfolio" className="scroll-mt-28 py-4">
       <div className="mx-auto max-w-6xl">
         <div>
-          <div className="text-sm uppercase tracking-[0.24em] text-[#B8C1D0]">
+          <div className="text-sm uppercase tracking-[0.24em] text-[#E0E0E0]">
             Portfolio
           </div>
-          <h2 className="mt-4 text-3xl font-semibold text-[#E6EAF2]">
+          <h2 className="mt-4 text-3xl font-semibold text-[#F5F5F5]">
             作品集
           </h2>
-          <p className="mt-4 max-w-3xl text-base leading-8 text-[#B8C1D0]">
+          <p className="mt-4 max-w-3xl text-base leading-8 text-[#E0E0E0]">
             日常AI使用案例、向AI咨询的技术问题整理、Prompt工程模板与评测报告。
             每张卡片都可以点进去看完整内容。
           </p>
@@ -44,15 +44,15 @@ export function PortfolioGallery() {
 
               <div className="p-5">
                 <div className="flex items-center justify-between">
-                  <div className="text-xs uppercase tracking-[0.18em] text-[#6EA8FE]">
+                  <div className="text-xs uppercase tracking-[0.18em] text-[#00D4FF]">
                     {item.category}
                   </div>
-                  <div className="text-xs text-[#B8C1D0]">{item.date}</div>
+                  <div className="text-xs text-[#E0E0E0]">{item.date}</div>
                 </div>
-                <h3 className="mt-2 text-base font-medium text-[#E6EAF2]">
+                <h3 className="mt-2 text-base font-medium text-[#F5F5F5]">
                   {item.title}
                 </h3>
-                <p className="mt-2 text-sm leading-7 text-[#B8C1D0]">
+                <p className="mt-2 text-sm leading-7 text-[#E0E0E0]">
                   {item.description}
                 </p>
               </div>

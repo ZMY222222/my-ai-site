@@ -62,8 +62,8 @@ export function SlideContainer({ children }: { children: React.ReactNode }) {
             onClick={() => scrollTo(i)}
             className={`shrink-0 rounded-full px-4 py-1.5 text-xs transition ${
               i === activeIndex
-                ? "bg-[#6EA8FE]/15 text-[#6EA8FE] border border-[#6EA8FE]/30"
-                : "border border-white/8 bg-white/[0.02] text-[#B8C1D0] hover:border-white/15 hover:text-[#E6EAF2]"
+                ? "bg-[#00D4FF]/15 text-[#00D4FF] border border-[#00D4FF]/30"
+                : "border border-white/8 bg-white/[0.02] text-[#E0E0E0] hover:border-white/15 hover:text-[#F5F5F5]"
             }`}
           >
             {tab.label}
@@ -74,7 +74,7 @@ export function SlideContainer({ children }: { children: React.ReactNode }) {
       <div className="relative flex-1">
         <button
           onClick={() => scrollBy(-1)}
-          className={`absolute left-0 top-1/2 z-20 -translate-y-1/2 hidden lg:flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-[#11162A]/90 text-[#E6EAF2] backdrop-blur transition hover:border-white/20 hover:bg-[#151B34] ${
+          className={`absolute left-0 top-1/2 z-20 -translate-y-1/2 hidden lg:flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-[#11162A]/90 text-[#F5F5F5] backdrop-blur transition hover:border-white/20 hover:bg-[#151B34] ${
             canScrollLeft ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}
           aria-label="上一页"
@@ -83,7 +83,7 @@ export function SlideContainer({ children }: { children: React.ReactNode }) {
         </button>
         <button
           onClick={() => scrollBy(1)}
-          className={`absolute right-0 top-1/2 z-20 -translate-y-1/2 hidden lg:flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-[#11162A]/90 text-[#E6EAF2] backdrop-blur transition hover:border-white/20 hover:bg-[#151B34] ${
+          className={`absolute right-0 top-1/2 z-20 -translate-y-1/2 hidden lg:flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-[#11162A]/90 text-[#F5F5F5] backdrop-blur transition hover:border-white/20 hover:bg-[#151B34] ${
             canScrollRight ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}
           aria-label="下一页"
@@ -106,7 +106,7 @@ export function SlideContainer({ children }: { children: React.ReactNode }) {
             onClick={() => scrollTo(i)}
             className={`rounded-full transition-all ${
               i === activeIndex
-                ? "h-2 w-5 bg-[#6EA8FE]"
+                ? "h-2 w-5 bg-[#00D4FF]"
                 : "h-2 w-2 bg-white/15 hover:bg-white/25"
             }`}
             aria-label={`切换到${tabs[i].label}`}

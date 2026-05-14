@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Sans, Space_Mono, Noto_Sans_SC } from "next/font/google";
+import { DM_Sans, Space_Mono, Noto_Sans_SC, Outfit } from "next/font/google";
 import "./globals.css";
 import { ConditionalNavbar } from "@/components/conditional-navbar";
 import { RainBackground } from "@/components/rain-background";
@@ -30,6 +30,12 @@ const notoSansSC = Noto_Sans_SC({
   variable: "--font-noto-sans-sc",
 });
 
+const outfit = Outfit({
+  subsets: ["latin"],
+  weight: ["400", "500", "700", "800", "900"],
+  variable: "--font-outfit",
+});
+
 export const metadata: Metadata = {
   title: "朱美阳 | AI训练师 / 大模型数据专家",
   description:
@@ -49,7 +55,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN" className={`h-full antialiased dark ${dmSans.variable} ${spaceMono.variable} ${notoSansSC.variable}`} suppressHydrationWarning>
+    <html lang="zh-CN" className={`h-full antialiased dark ${dmSans.variable} ${spaceMono.variable} ${notoSansSC.variable} ${outfit.variable}`} suppressHydrationWarning>
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <PageTransitionProvider>
           <InitialLoader />

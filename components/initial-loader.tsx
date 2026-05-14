@@ -80,7 +80,7 @@ export function InitialLoader() {
         <div className="text-2xl font-semibold tracking-[0.12em] text-[#E6EAF2] md:text-3xl">
           ZMY 朱美阳
         </div>
-        <div className="mt-3 text-sm tracking-[0.28em] text-[#8B95A4] font-light md:text-base">
+        <div className="mt-3 text-sm tracking-[0.28em] text-[#E0E0E0] font-light md:text-base">
           AI 个人站
         </div>
       </div>
@@ -88,11 +88,11 @@ export function InitialLoader() {
       <div className="mt-10 flex w-full max-w-[200px] flex-col items-center gap-2 px-4">
         <div className="h-[2px] w-full overflow-hidden rounded-full bg-white/8">
           <div
-            className="h-full rounded-full bg-gradient-to-r from-[#6EA8FE] to-[#8B7CFF] shadow-[0_0_6px_rgba(110,168,254,0.5)] transition-[width] duration-200 ease-out"
+            className="h-full rounded-full bg-gradient-to-r from-[#00D4FF] to-[#8B7CFF] shadow-[0_0_6px_rgba(0,212,255,0.5)] transition-[width] duration-200 ease-out"
             style={{ width: `${progress}%` }}
           />
         </div>
-        <div className="text-[10px] tracking-[0.12em] text-[#8B95A4]/50">
+        <div className="text-[10px] tracking-[0.12em] text-[#E0E0E0]/50">
           {progress}%
         </div>
       </div>

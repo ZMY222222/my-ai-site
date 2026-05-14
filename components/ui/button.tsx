@@ -24,10 +24,10 @@ type ButtonProps = ButtonAsButtonProps | ButtonAsLinkProps;
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    "bg-[#6EA8FE] text-[#0B1020] hover:brightness-110 border border-transparent",
+    "bg-[#FF6B35] text-white hover:brightness-110 border border-transparent",
   secondary:
-    "border border-white/10 bg-white/5 text-[#E6EAF2] hover:border-white/20 hover:bg-white/10",
-  ghost: "text-[#E6EAF2] hover:bg-white/5",
+    "border border-white/10 bg-white/5 text-[#F5F5F5] hover:border-white/20 hover:bg-white/10",
+  ghost: "text-[#F5F5F5] hover:bg-white/5",
 };
 
 const sizeClasses: Record<ButtonSize, string> = {

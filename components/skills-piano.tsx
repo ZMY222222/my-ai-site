@@ -282,24 +282,24 @@ export function SkillsPiano() {
 
         .sp-bottom { display: flex; align-items: center; gap: 12px; margin-top: 6px; }
         .sp-hint {
-          font-size: 11px; color: rgba(255,255,255,0.3); letter-spacing: 1.5px;
+          font-size: 11px; color: rgba(255,255,255,0.5); letter-spacing: 1.5px;
           cursor: pointer; padding: 8px 20px; border-radius: 20px;
-          border: 1px solid rgba(255,255,255,0.06);
+          border: 1px solid rgba(255,255,255,0.1);
           transition: background 0.25s, box-shadow 0.25s, color 0.25s, border-color 0.25s;
           -webkit-tap-highlight-color: transparent;
         }
-        .sp-hint:hover { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.5); }
+        .sp-hint:hover { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7); }
         .sp-hint.lit { background: rgba(201,163,78,0.15); box-shadow: 0 0 30px rgba(201,163,78,0.3); border-color: rgba(201,163,78,0.5); color: #c9a34e; text-shadow: 0 0 10px rgba(201,163,78,0.5); }
 
         .sp-music-btn {
-          font-size: 11px; color: rgba(255,255,255,0.3); letter-spacing: 1px;
+          font-size: 11px; color: rgba(255,255,255,0.5); letter-spacing: 1px;
           cursor: pointer; padding: 8px 16px; border-radius: 20px;
-          border: 1px solid rgba(255,255,255,0.06); background: none;
+          border: 1px solid rgba(255,255,255,0.1); background: none;
           font-family: 'Noto Sans SC', sans-serif;
           transition: all 0.25s; display: flex; align-items: center; gap: 6px;
           -webkit-tap-highlight-color: transparent;
         }
-        .sp-music-btn:hover { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.5); }
+        .sp-music-btn:hover { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7); }
         .sp-music-btn.active { background: rgba(201,163,78,0.18); box-shadow: 0 0 30px rgba(201,163,78,0.3); border-color: rgba(201,163,78,0.5); color: #c9a34e; }
         .sp-music-btn .sp-icon { font-size: 14px; }
         .sp-music-btn.active .sp-icon { animation: sp-pulse 1s infinite; }

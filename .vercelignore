@@ -1,3 +1,7 @@
 my-clone/
 .trae/
 .claude/
+.next/
+node_modules/
+.git/
+*.tsbuildinfo

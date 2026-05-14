@@ -29,12 +29,12 @@ function ensureOverlay() {
 
   const line1 = document.createElement("div");
   line1.className = "text-2xl font-semibold tracking-[0.12em] md:text-3xl";
-  line1.style.cssText = "color:#E6EAF2;";
+  line1.style.cssText = "color:#F5F5F5;";
   line1.textContent = "ZMY 朱美阳";
 
   const line2 = document.createElement("div");
   line2.className = "mt-3 text-sm tracking-[0.28em] font-light md:text-base";
-  line2.style.cssText = "color:#8B95A4;";
+  line2.style.cssText = "color:#E0E0E0;";
   line2.textContent = "AI 个人站";
 
   inner.appendChild(line1);
@@ -51,7 +51,7 @@ function ensureOverlay() {
 
   barEl = document.createElement("div");
   barEl.style.cssText =
-    "height:100%;width:0%;border-radius:9999px;background:linear-gradient(to right,#6EA8FE,#8B7CFF);box-shadow:0 0 6px rgba(110,168,254,0.5);transition:width 200ms ease-out;";
+    "height:100%;width:0%;border-radius:9999px;background:linear-gradient(to right,#00D4FF,#8B7CFF);box-shadow:0 0 6px rgba(0,212,255,0.5);transition:width 200ms ease-out;";
 
   track.appendChild(barEl);
   barWrap.appendChild(track);
