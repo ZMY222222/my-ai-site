@@ -118,6 +118,50 @@
   to { transform: scaleX(1); }
 }
 
+@keyframes spaceFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-15px) rotate(3deg); }
+  50% { transform: translateY(-8px) rotate(0deg); }
+  75% { transform: translateY(-22px) rotate(-3deg); }
+}
+
+@keyframes spinPlanet {
+  from { transform: rotate(0deg) scale(1.15); }
+  to { transform: rotate(360deg) scale(1.15); }
+}
+
+@keyframes spaceFall {
+  0% { transform: translateY(-30px) rotate(0deg); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translateY(30px) rotate(5deg); opacity: 0; }
+}
+
+@keyframes spaceRise {
+  0% { transform: translateY(30px) rotate(0deg); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translateY(-30px) rotate(-5deg); opacity: 0; }
+}
+
+@keyframes ufoWave {
+  0% { opacity: 0.9; width: 0; height: 0; marginLeft: 0; marginTop: 0; }
+  100% { opacity: 0; width: 160px; height: 160px; marginLeft: -80px; marginTop: -80px; }
+}
+
+@keyframes signalPulse {
+  0% { opacity: 0.9; width: 0; height: 0; marginLeft: 0; marginTop: 0; }
+  100% { opacity: 0; width: 200px; height: 200px; marginLeft: -100px; marginTop: -100px; }
+}
+
+@keyframes dialogPop {
+  0% { opacity: 0; transform: translateX(-50%) translateY(10px) scale(0.8); }
+  15% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1.05); }
+  25% { transform: translateX(-50%) translateY(0) scale(1); }
+  80% { opacity: 1; }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+}
+
 body {
   background: var(--max-bg);
   color: var(--foreground);

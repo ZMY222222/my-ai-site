@@ -1,10 +1,9 @@
 import { notFound } from "next/navigation";
 import { TransitionLink } from "@/components/page-transition";
-import Image from "next/image";
-import { portfolioItems, PARALLAX_IMAGES } from "@/data/portfolio";
-import { ParallaxGallery } from "@/components/parallax-gallery";
+import { portfolioItems } from "@/data/portfolio";
 import { GalleryGrid } from "@/components/gallery-grid";
 import { VideoCard } from "@/components/video-card";
+import { SpaceDecorations } from "@/components/space-decorations";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -21,8 +20,9 @@ export default async function PortfolioDetailPage({ params }: Props) {
   if (!item) notFound();
 
   return (
-    <>
-      <section className="pb-10 pt-16 md:pb-14 md:pt-20">
+    <div className="relative">
+      <SpaceDecorations />
+      <section className="pb-10 pt-16 md:pb-14 md:pt-20 relative z-[1]">
         <div className="mx-auto max-w-6xl px-6">
           <TransitionLink
             href="/portfolio"
@@ -47,26 +47,18 @@ export default async function PortfolioDetailPage({ params }: Props) {
             </p>
           </div>
 
-          <div className="mt-8 overflow-hidden rounded-[24px] border border-white/10">
-            <div className="aspect-[16/9] bg-[#0D1225] relative">
-              <Image
-                src={item.src}
-                alt={item.title}
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 896px"
-              />
-            </div>
+          <div className="mt-8">
+            <img
+              src={item.src}
+              alt={item.title}
+              className="w-full h-auto rounded-[24px]"
+            />
           </div>
         </div>
       </section>
 
-      {id === "ai-text-to-image-gallery" && (
-        <ParallaxGallery images={PARALLAX_IMAGES} />
-      )}
-
       {item.sections && (
-        <section className="pb-20 md:pb-28">
+        <section className="pb-20 md:pb-28 relative z-[1]">
           <div className="mx-auto max-w-4xl px-6">
             <div className="space-y-10">
               {item.sections.map((section) => (
@@ -89,7 +81,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
       )}
 
       {item.news && (
-        <section className="pb-20 md:pb-28">
+        <section className="pb-20 md:pb-28 relative z-[1]">
           <div className="mx-auto max-w-4xl px-6">
             <h2 className="mb-8 text-2xl font-semibold text-[#F5F5F5]">
               📰 近期AI资讯跟踪
@@ -135,7 +127,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
       )}
 
       {item.galleries && (
-        <>
+        <div className="relative z-[1]">
           {item.galleries.some((g) => g.images?.length) ? (
             <GalleryGrid galleries={item.galleries} />
           ) : null}
@@ -163,10 +155,10 @@ export default async function PortfolioDetailPage({ params }: Props) {
               </div>
             </section>
           ) : null}
-        </>
+        </div>
       )}
 
-      <section className="pb-20 md:pb-28">
+      <section className="pb-20 md:pb-28 relative z-[1]">
         <div className="mx-auto max-w-4xl px-6">
           <div className="border-t border-white/10 pt-8">
             <TransitionLink
@@ -178,6 +170,6 @@ export default async function PortfolioDetailPage({ params }: Props) {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

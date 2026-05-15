@@ -199,8 +199,10 @@ export const portfolioItems: PortfolioItem[] = [
         category: "eval-report",
         label: "评测报告收集",
         images: [
-          { base: "/portfolio/eval-01", alt: "评测报告 · 图1" },
-          { base: "/portfolio/eval-02", alt: "评测报告 · 图2" },
+          { base: "/eval-report-01", alt: "评测报告 · 图1" },
+          { base: "/eval-report-02", alt: "评测报告 · 图2" },
+          { base: "/eval-report-03", alt: "评测报告 · 图3" },
+          { base: "/eval-report-04", alt: "评测报告 · 图4" },
         ],
       },
     ],

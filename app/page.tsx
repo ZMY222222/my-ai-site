@@ -27,7 +27,7 @@ export default function HomePage() {
   const handleClick = () => {
     if (navRef.current) return;
     navRef.current = true;
-    const voice = new Audio("/ttsmaker-file-2026-5-9-20-0-36.mp3");
+    const voice = new Audio(encodeURI("/新录音 7.m4a"));
     voice.volume = 0.7;
     (window as any).__welcomeVoice = voice;
     voice.play().catch(() => {});

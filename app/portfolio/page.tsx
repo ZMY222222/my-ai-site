@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { TransitionLink } from "@/components/page-transition";
 import Image from "next/image";
 import { portfolioItems } from "@/data/portfolio";
+import { SpaceDecorations } from "@/components/space-decorations";
 
 export const metadata: Metadata = {
   title: "作品集 | 朱美阳 · AI训练师",
@@ -10,7 +11,9 @@ export const metadata: Metadata = {
 
 export default function PortfolioPage() {
   return (
-    <div className="mx-auto max-w-6xl px-4 pb-20 pt-16 md:px-6 md:pt-20">
+    <>
+      <SpaceDecorations />
+      <div className="mx-auto max-w-6xl px-4 pb-20 pt-16 md:px-6 md:pt-20 relative z-[1]">
       <TransitionLink
         href="/home"
         className="inline-flex items-center gap-2 text-sm text-[#E0E0E0] transition hover:text-[#F5F5F5]"
@@ -73,6 +76,7 @@ export default function PortfolioPage() {
           ))}
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
