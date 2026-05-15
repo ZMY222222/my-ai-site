@@ -1,14 +1,18 @@
 import type { NextConfig } from "next";
 
-const isCloudBase = process.env.DEPLOY_TARGET === "cloudbase";
+const deployTarget = process.env.DEPLOY_TARGET;
+const isCloudBase = deployTarget === "cloudbase";
+const isStaticExport = isCloudBase || deployTarget === "github-pages";
 
 const nextConfig: NextConfig = {
-  ...(isCloudBase && {
+  ...(isStaticExport && {
     output: "export",
-    basePath: "/zmy123456",
     images: {
       unoptimized: true,
     },
+  }),
+  ...(isCloudBase && {
+    basePath: "/zmy123456",
   }),
 };
 
